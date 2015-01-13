@@ -57,30 +57,6 @@ function play:draw()
 	-- love.graphics.print(tostring((love.math.random()>0.5)), 0, 200)
 end
 
-----------------------------------
------ PC Mouse Debug Control -----
-----------------------------------
-
-function play:mousepressed(x, y, b, isTouch)
-	if b == 'l' then
-		Input.T.isDown = true
-		Input.T.ox = M.getX()
-		Input.T.oy = M.getY()
-		p:AmendOldPos()
-
-		if love.timer.getTime() - Input.T.lastClick < 0.3 then
-			doubleClickAction()
-		end
-
-		Input.T.lastClick = love.timer.getTime()
-	elseif b == 'r' then
-		spawnBullet_f()
-	end
-end
-
-function play:mousereleased(x, y, b)
-	Input.T.isDown = false
-end
 
 -------------------
 ------ Utils ------
@@ -102,9 +78,64 @@ function doubleClickAction()
 	-- love.graphics.setBackgroundColor(255,255,255)
 end
 
+----------------------------------
+------ Mobile Touch Control ------
+----------------------------------
+
+function love.touchpressed(id, x, y)
+	if love.system.getOS() == 'Android' then
+		if id == 0 then
+			Input.T.isDown = true
+			Input.T.ox = gRes.w * x
+			Input.T.oy = gRes.h * y
+			p:AmendOldPos()
+
+			if love.timer.getTime() - Input.T.lastClick < 0.3 then
+				doubleClickAction()
+			end
+
+			if id == 0 then Input.T.lastClick = love.timer.getTime() end
+		elseif id == 1 then
+			spawnBullet_f()
+		end
+	end
+end
+
+function love.touchreleased(id, x, y)
+	if love.system.getOS() == 'Android' and id == 0 then
+		Input.T.isDown = false
+	end
+end
 
 
+----------------------------------
+----- PC Mouse Debug Control -----
+----------------------------------
 
+function play:mousepressed(x, y, b, isTouch)
+	if love.system.getOS() == 'Windows' then
+		if b == 'l' then
+			Input.T.isDown = true
+			Input.T.ox = M.getX()
+			Input.T.oy = M.getY()
+			p:AmendOldPos()
+
+			if love.timer.getTime() - Input.T.lastClick < 0.3 then
+				doubleClickAction()
+			end
+
+			Input.T.lastClick = love.timer.getTime()
+		elseif b == 'r' then
+			spawnBullet_f()
+		end
+	end
+end
+
+function play:mousereleased(x, y, b)
+	if love.system.getOS() == 'Windows' and b == 'l' then
+		Input.T.isDown = false
+	end
+end
 
 
 

@@ -29,8 +29,8 @@ function Player:update(dt)
 	self.lifetime = self.lifetime + dt
 
 	if Input.T.isDown then
-		self.x = self.ox + (M.getX() - Input.T.ox) * G.sensitivity
-		self.y = self.oy + (M.getY() - Input.T.oy) * G.sensitivity
+		self.x = self.ox + (Input.T.getX() - Input.T.ox) * G.sensitivity
+		self.y = self.oy + (Input.T.getY() - Input.T.oy) * G.sensitivity
 	end
 
 	if self.x > gRes.w then self.x = gRes.w end

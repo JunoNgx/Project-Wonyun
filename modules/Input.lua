@@ -29,3 +29,21 @@ end
 function Input:draw()
 
 end
+
+function Input.T.getX()
+	if love.system.getOS() == 'Android' then
+		local id, x, y = love.touch.getTouch(1)
+		return x * gRes.w
+	elseif love.system.getOS() == 'Windows' then
+		return M.getX()
+	end
+end
+
+function Input.T.getY()
+	if love.system.getOS() == 'Android' then
+		local id, x, y = love.touch.getTouch(1)
+		return y * gRes.h
+	elseif love.system.getOS() == 'Windows' then
+		return M.getY()
+	end
+end

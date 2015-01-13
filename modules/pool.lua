@@ -2,7 +2,6 @@
 
 Pool = {
 	bullet_f = {},
-	-- alive = {},
 }
 
 function Pool:init()
@@ -13,9 +12,7 @@ function Pool:init()
 end
 
 function Pool:update(dt)
-	-- for i, bullet_f in pairs(grpBullet_f.alive) do
-	-- 	bullet_f:update(dt)
-	-- end
+	
 end
 
 function Pool:draw()
