@@ -12,7 +12,7 @@ require 'G'
 
 -- Other system module
 require 'modules/Input'
-require 'modules/preload'
+require 'modules/Preload'
 
 -- States inclusion
 require 'introState'

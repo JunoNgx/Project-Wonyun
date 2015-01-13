@@ -1,7 +1,7 @@
 -- Gameplay tuning variables
 
 V = {
-
+	bullet_fVelo = 300,
 }
 
 -- Game Settings and utilities

@@ -4,8 +4,8 @@ function Player:init()
 
 	self.x 			= gRes.w * 0.5
 	self.y 			= gRes.h * 0.75
-	self.w 			= 48
-	self.h 			= 48
+	self.w 			= 36
+	self.h 			= 36
 	self.w2 		= 64
 	self.h2 		= 64
 
