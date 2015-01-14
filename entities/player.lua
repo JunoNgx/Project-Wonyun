@@ -2,6 +2,10 @@ Player = Class {}
 
 function Player:init()
 
+	self.typeid = 'player'
+	self.isHitableByP = false
+	self.isHitableByE = true
+
 	self.x 			= gRes.w * 0.5
 	self.y 			= gRes.h * 0.75
 	self.w 			= 36
@@ -14,7 +18,10 @@ function Player:init()
 	self.oy 		= nil
 
 	self.lifetime 	= 0
-	self.reloaded 	= false
+	self.reloadProcess 	= V.playerReloadTime
+
+	self.alive = true
+	self.exists = true
 
 	self.gfx = loader.Image.player
 end
@@ -27,6 +34,11 @@ end
 function Player:update(dt)
 
 	self.lifetime = self.lifetime + dt
+
+	-- Ready to fire when reaches zero
+	if self.reloadProcess > 0 then 
+		self.reloadProcess  = self.reloadProcess - dt
+	end
 
 	if Input.T.isDown then
 		self.x = self.ox + (Input.T.getX() - Input.T.ox) * G.sensitivity
@@ -52,7 +64,17 @@ function Player:draw()
 	end
 end
 
+----------------------------
+
 function Player:AmendOldPos()
 	self.ox = self.x
 	self.oy = self.y
+end
+
+function Player:readyToFire()
+	return self.reloadProcess <= 0
+end
+
+function Player:fire()
+	self.reloadProcess = V.playerReloadTime
 end

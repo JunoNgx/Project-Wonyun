@@ -19,7 +19,6 @@ require 'introState'
 require 'playState'
 
 function love.load()
-   require 'modules/preload'
 
    loader = require 'libs/loader'
    loader.setBaseImageDir('assets')
@@ -31,6 +30,8 @@ function love.load()
       x = love.graphics.getWidth()/gRes.w,
       y = love.graphics.getHeight()/gRes.h
    }
+
+   love.graphics.setDefaultFilter( 'nearest', 'nearest')
 
    preload()
    Input:init()

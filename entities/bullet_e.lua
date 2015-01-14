@@ -1,11 +1,11 @@
-Bullet_f = Class {}
+Bullet_e = Class {}
 
-function Bullet_f:init()
+function Bullet_e:init()
 
-	self.typeid = 'bullet_f'
+	self.typeid = 'bullet_e'
 	self.isHitableByP = false
 	self.isHitableByE = false
-	self.damage = V.bullet_fDamage
+	self.damage = V.bullet_eDamage
 
 	self.x = 0
 	self.y = 0
@@ -19,10 +19,10 @@ function Bullet_f:init()
 	self.alive = false
 	self.exists = false
 
-	self.gfx_norm = loader.Image.bullet_f
-	self.gfx_muzzle = loader.Image.bullet_f_muzzle
+	-- self.gfx_norm = loader.Image.bullet_e
+	-- self.gfx_muzzle = loader.Image.bullet_f_muzzle
 
-	-- self.gfx = self.gfx_muzzle
+	self.gfx = loader.Image.bullet_e
 end
 
 -- function Bullet_f:endstats(self)
@@ -30,14 +30,14 @@ end
 -- 		self.x, self.y)
 -- end
 
-function Bullet_f:update(dt)
+function Bullet_e:update(dt)
 	if self.exists then
 
 		self.lifetime = self.lifetime + dt
 
-		if self.lifetime > V.bullet_fMuzzleTime and self.gfx == self.gfx_muzzle then
-			self.gfx = self.gfx_norm
-		end
+		-- if self.lifetime > V.bullet_fMuzzleTime and self.gfx == self.gfx_muzzle then
+		-- 	self.gfx = self.gfx_norm
+		-- end
 
 		if self.alive then
 			self.x = self.x + self.velo*math.cos(self.r)*dt
@@ -48,8 +48,8 @@ function Bullet_f:update(dt)
 	end
 end
 
-function Bullet_f:draw()
-	love.graphics.setColor(255,0,0,255)
+function Bullet_e:draw()
+	love.graphics.setColor(0,0,255,255)
 	Jutils.draw(self.gfx, self.x, self.y, self.r)
 
 	if G.debugMode then
@@ -60,24 +60,24 @@ end
 
 ------------------------------------
 
-function Bullet_f:kill()
+function Bullet_e:kill()
 	self.alive = false
 end
 
-function Bullet_f:finishKill()
+function Bullet_e:finishKill()
 	self.velo = 0
 
 	self.alive 	= false
 	self.exists = false
 end
 
-function Bullet_f:spawn(x, y, r)
+function Bullet_e:spawn(x, y, r)
 	self.x 			= x
 	self.y 			= y
-	self.velo 		= V.bullet_fVelo
-	self.r 			= r or math.pi/2
+	self.velo 		= V.bullet_eVelo
+	self.r 			= r or -math.pi/2
 
-	self.gfx 		= self.gfx_muzzle
+	-- self.gfx 		= self.gfx_muzzle
 	self.lifetime 	= 0
 
 	self.alive 		= true

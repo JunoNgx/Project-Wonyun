@@ -8,6 +8,8 @@ require 'modules/director'
 -- Entities
 require 'entities/player'
 require 'entities/bullet_f'
+require 'entities/fighter'
+require 'entities/bullet_e'
 
 play = {}
 
@@ -21,6 +23,17 @@ function play:enter()
 
 	-- entities
 	p = Player()
+	table.insert(Director.alive, p)
+
+	-- debug codes
+	Timer.addPeriodic(1, function()
+		local x = love.math.random(gRes.w)
+		local y = 0
+
+		spawnFighter(x, y)
+		end)
+
+	collided = false
 end
 
 function play:update(dt)
@@ -30,9 +43,10 @@ function play:update(dt)
 	-- modules
 	Input:update(dt)
 	Director:update(dt)
+	Director:updateCollision(dt)
 
 	-- entities
-	p:update(dt)
+	-- p:update(dt)
 end
 
 function play:draw()
@@ -40,21 +54,21 @@ function play:draw()
 	Director:drawEntities()
 
 	-- entities
-	p:draw()
+	-- p:draw()
 
 	love.graphics.setColor(c.white)
 	love.graphics.setFont(debugFont)
-	love.graphics.print(tostring(#Pool.bullet_f), 0, 0)
-	love.graphics.print(tostring(#Director.alive), 0, 20)
+	love.graphics.print('Bullets in pool: '..tostring(#Pool.bullet_f), 0, 0)
+	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 20)
 	-- love.graphics.print(tostring(Input.T.ox), 0, 40)
 	-- love.graphics.print(tostring(Input.T.ox), 0, 60)
 	-- love.graphics.print(tostring(Input.T.isOn), 0, 80)
 	-- love.graphics.print(tostring(M.getX()), 0, 100)
 	-- love.graphics.print(tostring(M.getY()), 0, 120)
-	-- love.graphics.print(tostring(M.getX() - Input.T.ox), 0, 140)
-	-- love.graphics.print(tostring(M.getY() - Input.T.oy), 0, 160)
-	-- love.graphics.print(tostring(Input.T.lastClick), 0, 180)
-	-- love.graphics.print(tostring((love.math.random()>0.5)), 0, 200)
+	love.graphics.print(tostring(p.x), 0, 140)
+	love.graphics.print(tostring(p.y), 0, 160)
+	love.graphics.print(tostring(p.lifetime), 0, 180)
+	love.graphics.print(tostring(collided), 0, 200)
 end
 
 
@@ -62,16 +76,14 @@ end
 ------ Utils ------
 -------------------
 
-function IsColliding(map, x, y)
-	-- local layer = map.layers[1]
-	-- local layer = map.layers[2]
-    local cx, cy = math.ceil(x / map.tilewidth), math.ceil(y / map.tileheight)
-    
-	if map.layers['collision'].data[cy][cx] then
-		return true
-	else
-		return false
-	end
+function IsColliding(e1, e2)
+	return (
+		e1.x < e2.x + e2.w and
+		e2.x < e1.x + e1.w and
+
+		e1.y < e2.y + e2.h and
+		e2.y < e1.y + e1.h
+		)
 end
 
 function doubleClickAction()
@@ -84,19 +96,30 @@ end
 
 function love.touchpressed(id, x, y)
 	if love.system.getOS() == 'Android' then
+
+		-- Move the ship with single touch
 		if id == 0 then
 			Input.T.isDown = true
 			Input.T.ox = gRes.w * x
 			Input.T.oy = gRes.h * y
 			p:AmendOldPos()
 
+			-- Double click action
 			if love.timer.getTime() - Input.T.lastClick < 0.3 then
 				doubleClickAction()
 			end
 
+			-- Record last click for next double click
 			if id == 0 then Input.T.lastClick = love.timer.getTime() end
+
 		elseif id == 1 then
-			spawnBullet_f()
+
+			-- Firing with multitouch
+			if p:readyToFire() then
+				p:fire()
+				spawnBullet_f()
+			end
+			
 		end
 	end
 end
@@ -126,7 +149,10 @@ function play:mousepressed(x, y, b, isTouch)
 
 			Input.T.lastClick = love.timer.getTime()
 		elseif b == 'r' then
-			spawnBullet_f()
+			if p:readyToFire() then
+				p:fire()
+				spawnBullet_f()
+			end
 		end
 	end
 end

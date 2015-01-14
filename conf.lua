@@ -5,8 +5,8 @@ function love.conf(t)
     --t.console = true         				-- Produce a console window     (boolean)
 
 
-    t.window.width 		= 1600              -- The window width (number)
-    t.window.height 	= 900            	-- The window height (number)
+    t.window.width 		= 1280              -- The window width (number)
+    t.window.height 	= 720            	-- The window height (number)
     t.window.borderless = true
     -- t.window.resizable = true
    

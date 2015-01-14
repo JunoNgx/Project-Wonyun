@@ -1,13 +1,25 @@
 -- Gameplay tuning variables
 
 V = {
-	bullet_fVelo = 300,
+	gameplayMargin = 200,
+
+	playerReloadTime = 1,
+
+	e_fighterFireRate = 1.5,
+	e_fighterVelo = 100,
+
+	bullet_fDamage = 4,
+	bullet_fVelo = 1000,
+	bullet_fMuzzleTime = 0.02,
+
+	bullet_eDamage = 1,
+	bullet_eVelo = 600,
 }
 
 -- Game Settings and utilities
 
 G = {
-	debugMode = true,
+	debugMode = false,
 	sensitivity = 1.2
 }
 
@@ -15,12 +27,12 @@ G = {
 
 if love.system.getOS() ~= 'Android' then
 	gRes = {
-		w = 1600,
-		h = 900
+		w = 1280,
+		h = 720
 	}
 else
     gRes = {
-    	w = 1600
+    	w = 1280
     }
     local ratioLandscape = love.graphics.getWidth()/love.graphics.getHeight()
     local ratioPortrait = love.graphics.getHeight()/love.graphics.getWidth()
