@@ -1,5 +1,5 @@
-flux = require 'libs/flux'
--- Timer = require 'libs/hump.timer'
+local flux = require 'libs/flux'
+local Alarm = require 'libs/Jalarm'
 
 -- Gameplay modules
 require 'modules/pool'
@@ -21,6 +21,12 @@ function play:enter()
 	Pool:init()
 	Director:init()
 
+	Alarm:reset()
+
+	-- settings
+	play.state = 'initialising'
+	Alarm:after(1, function() play.state = 'inPlay' end)
+
 	-- entities
 	p = Player()
 	table.insert(Director.alive, p)
@@ -37,6 +43,7 @@ function play:enter()
 end
 
 function play:update(dt)
+	Alarm:update(dt)
 	Timer.update(dt)
 	flux.update(dt)
 
@@ -47,6 +54,13 @@ function play:update(dt)
 
 	-- entities
 	-- p:update(dt)
+
+	-- event
+	-- if p.exists == false then
+	-- 	Alarm:after(2, function()
+	-- 		Gamestate.switch(result)
+	-- 	end)
+	-- end
 end
 
 function play:draw()
@@ -62,7 +76,7 @@ function play:draw()
 	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 20)
 	-- love.graphics.print(tostring(Input.T.ox), 0, 40)
 	-- love.graphics.print(tostring(Input.T.ox), 0, 60)
-	-- love.graphics.print(tostring(Input.T.isOn), 0, 80)
+	love.graphics.print(tostring(play.state), 0, 80)
 	-- love.graphics.print(tostring(M.getX()), 0, 100)
 	-- love.graphics.print(tostring(M.getY()), 0, 120)
 	love.graphics.print(tostring(p.x), 0, 140)
@@ -71,6 +85,9 @@ function play:draw()
 	love.graphics.print(tostring(collided), 0, 200)
 end
 
+function play:leave()
+	Timer.clear()
+end
 
 -------------------
 ------ Utils ------
@@ -95,38 +112,42 @@ end
 ----------------------------------
 
 function play:touchpressed(id, x, y)
-	if love.system.getOS() == 'Android' then
+	if play.state == 'inPlay' then
+		if love.system.getOS() == 'Android' then
 
-		-- Move the ship with single touch
-		if id == 0 then
-			Input.T.isDown = true
-			Input.T.ox = gRes.w * x
-			Input.T.oy = gRes.h * y
-			p:AmendOldPos()
+			-- Move the ship with single touch
+			if id == 0 then
+				Input.T.isDown = true
+				Input.T.ox = gRes.w * x
+				Input.T.oy = gRes.h * y
+				p:AmendOldPos()
 
-			-- Double click action
-			if love.timer.getTime() - Input.T.lastClick < 0.3 then
-				doubleClickAction()
+				-- Double click action
+				if love.timer.getTime() - Input.T.lastClick < 0.3 then
+					doubleClickAction()
+				end
+
+				-- Record last click for next double click
+				if id == 0 then Input.T.lastClick = love.timer.getTime() end
+
+			elseif id == 1 then
+
+				-- Firing with multitouch
+				if p.alive and p:readyToFire() then
+					p:fire()
+					spawnBullet_f()
+				end
+				
 			end
-
-			-- Record last click for next double click
-			if id == 0 then Input.T.lastClick = love.timer.getTime() end
-
-		elseif id == 1 then
-
-			-- Firing with multitouch
-			if p:readyToFire() then
-				p:fire()
-				spawnBullet_f()
-			end
-			
 		end
 	end
 end
 
 function play:touchreleased(id, x, y)
-	if love.system.getOS() == 'Android' and id == 0 then
-		Input.T.isDown = false
+	if play.state == 'inPlay' then
+		if love.system.getOS() == 'Android' and id == 0 then
+			Input.T.isDown = false
+		end
 	end
 end
 
@@ -136,30 +157,34 @@ end
 ----------------------------------
 
 function play:mousepressed(x, y, b, isTouch)
-	if love.system.getOS() == 'Windows' then
-		if b == 'l' then
-			Input.T.isDown = true
-			Input.T.ox = M.getX()
-			Input.T.oy = M.getY()
-			p:AmendOldPos()
+	if play.state == 'inPlay' then
+		if love.system.getOS() == 'Windows' then
+			if b == 'l' then
+				Input.T.isDown = true
+				Input.T.ox = M.getX()
+				Input.T.oy = M.getY()
+				p:AmendOldPos()
 
-			if love.timer.getTime() - Input.T.lastClick < 0.3 then
-				doubleClickAction()
-			end
+				if love.timer.getTime() - Input.T.lastClick < 0.3 then
+					doubleClickAction()
+				end
 
-			Input.T.lastClick = love.timer.getTime()
-		elseif b == 'r' then
-			if p:readyToFire() then
-				p:fire()
-				spawnBullet_f()
+				Input.T.lastClick = love.timer.getTime()
+			elseif b == 'r' then
+				if p.alive and p:readyToFire() then
+					p:fire()
+					spawnBullet_f()
+				end
 			end
 		end
 	end
 end
 
 function play:mousereleased(x, y, b)
-	if love.system.getOS() == 'Windows' and b == 'l' then
-		Input.T.isDown = false
+	if play.state == 'inPlay' then
+		if love.system.getOS() == 'Windows' and b == 'l' then
+			Input.T.isDown = false
+		end
 	end
 end
 

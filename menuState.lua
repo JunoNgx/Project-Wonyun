@@ -2,10 +2,12 @@ menu = {}
 
 function menu:enter()
 	love.graphics.setBackgroundColor(20,20,20)
+
+	menu.lifetime = 0
 end
 
 function menu:update(dt)
-
+	menu.lifetime = menu.lifetime + dt
 end
 
 function menu:draw()
@@ -34,7 +36,15 @@ function menu:draw()
 	-- Settings
 	Jutils.print('sensitivity: '..'medium', 0.5, 0.85, m_SmaFont, true)
 
+	-- Copyright
 	Jutils.print('2015 Aureoline Tetrahedron', 0.5, 0.95, SubtitleFont, true)
+
+	-- Debug
+	love.graphics.setFont(loader.Font(12))
+	    love.graphics.print(menu.lifetime,
+    	gRes.w - love.graphics.getFont( ):getWidth(menu.lifetime),
+    	gRes.h - love.graphics.getFont( ):getHeight(menu.lifetime)
+    	)
 end
 
 function menu:touchpressed(id, x, y)

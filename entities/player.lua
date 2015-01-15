@@ -3,8 +3,8 @@ Player = Class {}
 function Player:init()
 
 	self.typeid = 'player'
-	self.isHitableByP = false
-	self.isHitableByE = true
+	self.objType = 'vessel'
+	self.alliance = 'friendly'
 
 	self.x 			= gRes.w * 0.5
 	self.y 			= gRes.h * 0.75
@@ -77,4 +77,18 @@ end
 
 function Player:fire()
 	self.reloadProcess = V.playerReloadTime
+end
+
+function Player:kill()
+	self.alive = false
+end
+
+function Player:finishKill()
+	self.alive = false
+	self.exists = false
+
+	-- Debug code
+	Alarm:after(2, function()
+		Gamestate.switch(result)
+	end)
 end

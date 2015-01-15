@@ -33,18 +33,47 @@ function Director:update(dt)
 end
 
 function Director:updateCollision(dt)
-	for i, hittingEntity in ipairs(Director.alive) do
-		for i, hitEntity in ipairs(Director.alive) do
-			if hittingEntity ~= hitEntity then
-				if IsColliding(hittingEntity, hitEntity) then
-					
-					collided = true
-				else
-					collided = false
+	for i, entity in ipairs(Director.alive) do
 
+		-- Player hit by other things
+		if entity.typeid == 'player' then
+			for i, hitEntity in ipairs(Director.alive) do
+				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
+					if hitEntity.faction ~= 'friendly' then
+
+						entity:finishKill()
+						hitEntity:finishKill()
+					end
 				end
 			end
 		end
+
+		-- Friendly bullets hit others
+		if entity.typeid == 'bullet_f' then
+			for i, hitEntity in ipairs(Director.alive) do
+				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
+					if hitEntity.objType == 'vessel' and hitEntity.faction ~= 'friendly' then
+
+						entity:finishKill()
+						hitEntity:finishKill()
+					end
+				end
+			end
+		end
+
+
+		-- if entity.typeid == 'player' then
+		-- 	for i, hitEntity in ipairs(Director.alive) do
+		-- 		if entity ~= hitEntity and IsColliding(entity, hitEntity) then
+		-- 			if hitEntity.faction ~= 'friendly' then
+
+		-- 				entity:finishKill()
+		-- 				hitEntity:finishKill()
+		-- 			end
+		-- 		end
+		-- 	end
+		-- end
+
 	end
 end
 

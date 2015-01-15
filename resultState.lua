@@ -23,10 +23,12 @@ function result:enter()
 		b = 0.5,
 		c = 0.8,
 	}
+
+	result.lifetime = 0
 end
 
 function result:update(dt)
-
+	result.lifetime = result.lifetime + dt
 end
 
 function result:draw()
@@ -62,16 +64,36 @@ function result:draw()
 	Jutils.print('MAKE THE RUN', column.b, row.h, PlayButtonFont, true)
 	Jutils.print('again', column.b, row.i, m_SmaFont, true)
 
+	-- Debug
+	love.graphics.setFont(loader.Font(12))
+    love.graphics.print(result.lifetime,
+	gRes.w - love.graphics.getFont( ):getWidth(result.lifetime),
+	gRes.h - love.graphics.getFont( ):getHeight(result.lifetime)
+	)
+
 end
 
 function result:touchpressed(id, x, y)
+	-- if id == 0 then
+	-- 	Gamestate.switch(menu)
+	-- else
 	if id == 1 then
 		Gamestate.switch(play)
 	end
 end
 
 function result:mousepressed(x, y, b)
-	if b == 'r' then
-    	Gamestate.switch(play)
+	if love.system.getOS() == 'Windows' then
+		if b == 'l' then
+	    	Gamestate.switch(intro)
+		elseif b == 'r' then
+			Gamestate.switch(play)
+		end
+	end
+end
+
+function result:keypressed(k)
+	if k == 'z' then
+		Gamestate.switch(intro)
 	end
 end

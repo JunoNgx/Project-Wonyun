@@ -3,8 +3,8 @@ Fighter = Class {}
 function Fighter:init()
 
 	self.typeid = 'fighter'
-	self.isHitableByP = true
-	self.isHitableByE = false
+	self.objType = 'vessel'
+	self.alliance = 'hostile'
 
 	self.x = 0
 	self.y = 0

@@ -13,7 +13,7 @@ V = {
 	bullet_fMuzzleTime = 0.02,
 
 	bullet_eDamage = 1,
-	bullet_eVelo = 600,
+	bullet_eVelo = 300,
 }
 
 -- Game Settings and utilities
@@ -22,7 +22,7 @@ G = {
 	version = 'pre-alpha',
 
 	-- debugMode = true,
-	debugMode = false,
+	debugMode = true,
 	sensitivity = 1.2
 }
 

@@ -3,8 +3,8 @@ Bullet_e = Class {}
 function Bullet_e:init()
 
 	self.typeid = 'bullet_e'
-	self.isHitableByP = false
-	self.isHitableByE = false
+	self.objType = 'bullet'
+	self.alliance = 'hostile'
 	self.damage = V.bullet_eDamage
 
 	self.x = 0

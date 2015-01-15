@@ -2,8 +2,10 @@ Input = {
 	T = {
 		index = nil,
 		isDown = false,
-		ox = nil,
-		oy = nil,
+		-- ox = nil,
+		-- oy = nil,
+		ox = 0,
+		oy = 0,
 		lastClick = love.timer.getTime(),
 	},
 	-- R = {
