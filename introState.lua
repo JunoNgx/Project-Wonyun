@@ -21,8 +21,8 @@ function intro:enter()
 		flux.to(overlay, 1, {20,20,20,255}):delay(2):ease('linear'):oncomplete(switchToMenuIn1Sec)
 	end
 
-	switchToMenuIn1Sec = function()	
-		Alarm:after(1, function() Gamestate.switch(menu) end)
+	switchToMenuIn1Sec = function()
+		Alarm:after(1, function() if Gamestate.current() == intro then Gamestate.switch(menu) end end)
 	end
 
 	fadeIn()
@@ -59,7 +59,7 @@ function intro:draw()
 end
 
 function intro:leave()
-
+	Alarm:reset()
 end
 
 function intro:mousereleased()

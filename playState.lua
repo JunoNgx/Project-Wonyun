@@ -14,6 +14,7 @@ require 'entities/bullet_e'
 play = {}
 
 function play:enter()
+
 	love.graphics.setBackgroundColor(c.grey)
 
 	-- modules
@@ -86,7 +87,7 @@ function play:draw()
 end
 
 function play:leave()
-	Timer.clear()
+	Alarm:reset()
 end
 
 -------------------
