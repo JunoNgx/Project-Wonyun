@@ -1,5 +1,6 @@
 local flux = require 'libs/flux'
 local Alarm = require 'libs/Jalarm'
+local Timer = require "libs/hump.timer"
 
 -- Gameplay modules
 require 'modules/pool'
@@ -58,7 +59,7 @@ function play:update(dt)
 
 	-- event
 	-- if p.exists == false then
-	-- 	Alarm:after(2, function()
+	-- 	Timer.add(2, function()
 	-- 		Gamestate.switch(result)
 	-- 	end)
 	-- end
