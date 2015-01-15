@@ -3,7 +3,7 @@
 V = {
 	gameplayMargin = 200,
 
-	playerReloadTime = 1,
+	playerReloadTime = 0.2,
 
 	e_fighterFireRate = 1.5,
 	e_fighterVelo = 100,
@@ -19,6 +19,9 @@ V = {
 -- Game Settings and utilities
 
 G = {
+	version = 'pre-alpha',
+
+	-- debugMode = true,
 	debugMode = false,
 	sensitivity = 1.2
 }

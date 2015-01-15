@@ -1,5 +1,5 @@
 flux = require 'libs/flux'
-Timer = require 'libs/hump.timer'
+-- Timer = require 'libs/hump.timer'
 
 -- Gameplay modules
 require 'modules/pool'
@@ -94,7 +94,7 @@ end
 ------ Mobile Touch Control ------
 ----------------------------------
 
-function love.touchpressed(id, x, y)
+function play:touchpressed(id, x, y)
 	if love.system.getOS() == 'Android' then
 
 		-- Move the ship with single touch
@@ -124,7 +124,7 @@ function love.touchpressed(id, x, y)
 	end
 end
 
-function love.touchreleased(id, x, y)
+function play:touchreleased(id, x, y)
 	if love.system.getOS() == 'Android' and id == 0 then
 		Input.T.isDown = false
 	end

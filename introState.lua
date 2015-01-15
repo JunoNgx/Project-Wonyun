@@ -1,5 +1,3 @@
-Timer = require 'libs/hump.timer'
-
 intro = {}
 
 function intro:enter()
@@ -17,7 +15,7 @@ function intro:enter()
 		end)
 	Timer.add(6, function()
 			if Gamestate.current() == intro then
-				Gamestate.switch(play)
+				Gamestate.switch(menu)
 			end
 		end)
 end
@@ -41,5 +39,5 @@ function intro:draw()
 end
 
 function intro:mousereleased()
-    Gamestate.switch(play)
+    Gamestate.switch(menu)
 end

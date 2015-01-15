@@ -3,6 +3,7 @@ require 'libs/utils'
 
 Gamestate = require 'libs/hump.gamestate'
 Class = require 'libs/hump.class'
+Timer = require 'libs/hump.timer'
 lume = require 'libs/lume'
 
 Jutils = require 'libs/Jutils'
@@ -16,7 +17,11 @@ require 'modules/Preload'
 
 -- States inclusion
 require 'introState'
+require 'menuState'
 require 'playState'
+require 'resultState'
+require 'endingState'
+require 'creditState'
 
 function love.load()
 
@@ -37,7 +42,9 @@ function love.load()
    Input:init()
 
 	Gamestate.registerEvents()
-	Gamestate.switch(play)
+   -- Gamestate.switch(intro)
+   Gamestate.switch(result)
+	-- Gamestate.switch(play)
 
 end
 
