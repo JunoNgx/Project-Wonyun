@@ -30,7 +30,7 @@ function play:enter()
 	Alarm:after(1, function() play.state = 'inPlay' end)
 
 	-- entities
-	p = Player()
+	p = Player(1, true, false)
 	table.insert(Director.alive, p)
 
 	-- debug codes
@@ -87,14 +87,26 @@ function play:draw()
 	love.graphics.print(tostring(play.state), 0, 80)
 	-- love.graphics.print(tostring(M.getX()), 0, 100)
 	-- love.graphics.print(tostring(M.getY()), 0, 120)
-	love.graphics.print(tostring(p.x), 0, 140)
-	love.graphics.print(tostring(p.y), 0, 160)
-	love.graphics.print(tostring(p.lifetime), 0, 180)
-	love.graphics.print(tostring(collided), 0, 200)
+	-- love.graphics.print(tostring(p.x), 0, 140)
+	-- love.graphics.print(tostring(p.y), 0, 160)
+	-- love.graphics.print(tostring(p.lifetime), 0, 180)
+	-- love.graphics.print(tostring(collided), 0, 200)
+
+	-- rightside
+	love.graphics.print('ammo '..tostring(p.ammo), 700, 0)
+	love.graphics.print('armor '..tostring(p.isArmoured), 700, 20)
+	love.graphics.print('shield '..tostring(p.isShielded), 700, 40)
+	love.graphics.print('reloaded '..tostring(p:readyToFire()), 700, 60)
+	love.graphics.print('ammo check '..tostring(p:checkAmmo()), 700, 80)
+	-- -- love.graphics.print(tostring(M.getX()), 700, 100)
+	-- -- love.graphics.print(tostring(M.getY()), 700, 120)
+	-- love.graphics.print(tostring(p.x), 700, 140)
+	-- love.graphics.print(tostring(p.y), 700, 160)
 end
 
 function play:leave()
 	Alarm:reset()
+	Timer.clear()
 end
 
 -------------------
@@ -139,12 +151,15 @@ function play:touchpressed(id, x, y)
 				if id == 0 then Input.T.lastClick = love.timer.getTime() end
 
 			elseif id == 1 then
-
-				-- Firing with multitouch
-				if p.alive and p:readyToFire() then
+				if p:checkVitals() then
 					p:fire()
-					spawnBullet_f()
 				end
+
+				-- -- Firing with multitouch
+				-- if p.alive and p:readyToFire() then
+				-- 	p:fire()
+					
+				-- end
 				
 			end
 		end
@@ -179,10 +194,13 @@ function play:mousepressed(x, y, b, isTouch)
 
 				Input.T.lastClick = love.timer.getTime()
 			elseif b == 'r' then
-				if p.alive and p:readyToFire() then
+				if p:checkVitals() then
 					p:fire()
-					spawnBullet_f()
 				end
+				-- if p.alive and p:readyToFire() then
+				-- 	p:fire()
+				-- 	spawnBullet_f()
+				-- end
 			end
 		end
 	end

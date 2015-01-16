@@ -1,6 +1,6 @@
 Player = Class {}
 
-function Player:init()
+function Player:init(extraAmmo, armoured, shielded)
 
 	self.typeid = 'player'
 	self.objType = 'vessel'
@@ -14,8 +14,11 @@ function Player:init()
 	self.h2 		= 64
 
 	self.r 			= -math.pi/2
-	self.ox 		= nil
-	self.oy 		= nil
+	self.oldx 		= self.x
+	self.oldy 		= self.y
+	self.isArmoured = armoured or false
+	self.isShielded = shielded or false
+	self.ammo 		= 10 + 10 * extraAmmo
 
 	self.lifetime 	= 0
 	self.reloadProcess 	= V.playerReloadTime
@@ -41,8 +44,8 @@ function Player:update(dt)
 	end
 
 	if Input.T.isDown then
-		self.x = self.ox + (Input.T.getX() - Input.T.ox) * G.sensitivity
-		self.y = self.oy + (Input.T.getY() - Input.T.oy) * G.sensitivity
+		self.x = self.oldx + (Input.T.getX() - Input.T.ox) * G.sensitivity
+		self.y = self.oldy + (Input.T.getY() - Input.T.oy) * G.sensitivity
 	end
 
 	if self.x > gRes.w then self.x = gRes.w end
@@ -66,21 +69,19 @@ end
 
 ----------------------------
 
-function Player:AmendOldPos()
-	self.ox = self.x
-	self.oy = self.y
-end
-
-function Player:readyToFire()
-	return self.reloadProcess <= 0
-end
-
-function Player:fire()
-	self.reloadProcess = V.playerReloadTime
+function Player:hit()
+	if self.isShielded and self.isArmoured then
+		self.isShielded = false
+	elseif not self.isShielded and self.isArmoured then
+		self.isArmoured = false
+	elseif not self.isShielded and not self.isArmoured then
+		self:kill()
+	end
 end
 
 function Player:kill()
 	self.alive = false
+	self:finishKill()
 end
 
 function Player:finishKill()
@@ -91,4 +92,40 @@ function Player:finishKill()
 	-- Alarm:after(2, function()
 	-- 	Gamestate.switch(result)
 	-- end)
+end
+
+----------------------------
+-- Offensive functions
+----------------------------
+
+function Player:fire()
+	if self:readyToFire() then
+		if self:checkAmmo() then
+			spawnBullet_f()
+			
+			self.reloadProcess = V.playerReloadTime
+			self.ammo = self.ammo - 1
+		else
+			-- love.audio.play(sfx_pNoAmmo)
+		end
+	end
+end
+
+function Player:checkAmmo()
+	return self.ammo > 0
+end
+
+function Player:readyToFire()
+	return self.reloadProcess <= 0
+end
+
+function Player:checkVitals()
+	return self.alive
+end
+
+-----------------------------
+
+function Player:AmendOldPos()
+	self.oldx = self.x
+	self.oldy = self.y
 end

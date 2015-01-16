@@ -60,8 +60,13 @@ end
 
 ------------------------------------
 
+function Bullet_f:hit()
+	self:kill()
+end
+
 function Bullet_f:kill()
 	self.alive = false
+	self:finishKill()
 end
 
 function Bullet_f:finishKill()

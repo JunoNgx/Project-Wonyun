@@ -56,8 +56,15 @@ function Fighter:draw()
 	end
 end
 
+--------------------------------
+
+function Fighter:hit()
+	self:kill()
+end
+
 function Fighter:kill()
 	self.alive = false
+	self:finishKill()
 end
 
 function Fighter:finishKill()

@@ -3,7 +3,7 @@
 V = {
 	gameplayMargin = 200,
 
-	distanceDestination = 2500,
+	distanceDestination = 7000,
 
 	playerReloadTime = 0.2,
 

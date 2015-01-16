@@ -54,7 +54,7 @@ function result:draw()
 	love.graphics.setColor(c.grey)
 	Jutils.print('(not important)', column.a, row.b, m_SmaFont, true)
 	Jutils.print('(most important)', column.b, row.b, m_SmaFont, true)
-	Jutils.print('(quite important)', column.c, row.b, m_SmaFont, true)
+	Jutils.print('(fairly important)', column.c, row.b, m_SmaFont, true)
 
 	Jutils.print('(for the sake of score only)', column.b, row.e, m_SmaFont, true)
 

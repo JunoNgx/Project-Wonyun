@@ -48,8 +48,8 @@ function Director:updateCollision(dt)
 				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
 					if hitEntity.faction ~= 'friendly' then
 
-						entity:finishKill()
-						hitEntity:finishKill()
+						entity:hit()
+						hitEntity:hit()
 					end
 				end
 			end
@@ -61,8 +61,8 @@ function Director:updateCollision(dt)
 				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
 					if hitEntity.objType == 'vessel' and hitEntity.faction ~= 'friendly' then
 
-						entity:finishKill()
-						hitEntity:finishKill()
+						entity:hit()
+						hitEntity:hit()
 					end
 				end
 			end
@@ -113,6 +113,7 @@ function spawnBullet_f(r)
 	local bullet_f = Pool.bullet_f[1]
 
 	bullet_f:spawn(p.x, p.y - 32, r)
+	-- love.audio.play(sfx_pFire)
 
 	table.insert(Director.alive, bullet_f)
 	table.remove(Pool.bullet_f, 1)
@@ -133,6 +134,7 @@ function spawnBullet_e(x, y, r)
 	local bullet_e = Pool.bullet_e[1]
 
 	bullet_e:spawn(x, y, r)
+	-- love.audio.play(sfx_eFire)
 
 	table.insert(Director.alive, bullet_e)
 	table.remove(Pool.bullet_e, 1)
