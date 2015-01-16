@@ -52,17 +52,20 @@ function play:update(dt)
 	-- modules
 	Input:update(dt)
 	Director:update(dt)
+	Director:updateEntities(dt)
 	Director:updateCollision(dt)
 
 	-- entities
 	-- p:update(dt)
 
 	-- event
-	-- if p.exists == false then
-	-- 	Timer.add(2, function()
-	-- 		Gamestate.switch(result)
-	-- 	end)
-	-- end
+	if p.exists == false then
+		Alarm:after(2, function() Gamestate.switch(result) end)
+	end
+
+	if Director.distanceTravelled >= V.distanceDestination then
+		Alarm:after(2, function() Gamestate.switch(ending) end)
+	end
 end
 
 function play:draw()
@@ -71,6 +74,9 @@ function play:draw()
 
 	-- entities
 	-- p:draw()
+
+	-- UI
+	Director:drawUI()
 
 	love.graphics.setColor(c.white)
 	love.graphics.setFont(debugFont)
@@ -126,7 +132,7 @@ function play:touchpressed(id, x, y)
 
 				-- Double click action
 				if love.timer.getTime() - Input.T.lastClick < 0.3 then
-					doubleClickAction()
+					doubleClickAction() 
 				end
 
 				-- Record last click for next double click

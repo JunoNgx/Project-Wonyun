@@ -11,24 +11,25 @@ function Alarm:after(timer, funct)
 	local event = {
 		countdown = timer,
 		doStuff = funct,
-		done = false
+		-- done = false
 	}
 	table.insert(self.events, event)
 end
 
 function Alarm:update(dt)
 	for i, event in ipairs(self.events) do
+		if self.events[i] ~= nil then
+			local event = self.events[i]
 
-		local event = self.events[i]
-
-		if not event.done then
-			if event.countdown > 0 then
-				event.countdown = event.countdown - dt
-			else
-				table.remove(self.events, i)
-				event.doStuff()
-				event.done = true
-			end
+			-- if not event.done then
+				if event.countdown > 0 then
+					event.countdown = event.countdown - dt
+				else
+					table.remove(self.events, i)
+					event.doStuff()
+					event.done = true
+				end
+			-- end
 		end
 	end
 end

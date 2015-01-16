@@ -88,7 +88,7 @@ function Player:finishKill()
 	self.exists = false
 
 	-- Debug code
-	Alarm:after(2, function()
-		Gamestate.switch(result)
-	end)
+	-- Alarm:after(2, function()
+	-- 	Gamestate.switch(result)
+	-- end)
 end

@@ -12,5 +12,8 @@ function preload()
 	-- m_LarFont:setFilter('nearest','nearest')
 	m_SmaFont = love.graphics.newFont('assets/futura-normal-regular.ttf', 30)
 	-- m_SmaFont:setFilter('nearest','nearest')
+
+	-- Play
+	counterFont = love.graphics.newFont('assets/consola.ttf', 30)
 	
 end

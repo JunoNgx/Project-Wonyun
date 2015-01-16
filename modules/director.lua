@@ -4,9 +4,16 @@ Director = {
 
 function Director:init()
 	Director.alive = {}
+	Director.distanceTravelled = 0
 end
 
+-- self mechanic update
 function Director:update(dt)
+	Director.distanceTravelled = Director.distanceTravelled + dt * 420
+end
+
+-- Entities update
+function Director:updateEntities(dt)
 	for i, entity in ipairs(Director.alive) do
 		entity:update(dt)
 
@@ -77,11 +84,29 @@ function Director:updateCollision(dt)
 	end
 end
 
+
+
+-- ================== --
+-- Spawning functions --
+-- ================== --
+
+
+
 function Director:drawEntities()
 	for i = 1, #Director.alive do
 		Director.alive[i]:draw()
 	end
 end
+
+function Director:drawUI()
+	love.graphics.setColor(255,255,255)
+	Jutils.print(humanizeCounter(math.floor(Director.distanceTravelled)),
+		0.5, 0.05, counterFont, true)
+end
+
+-- ================== --
+-- Spawning functions --
+-- ================== --
 
 function spawnBullet_f(r)
 	local r = r or -math.pi/2
@@ -111,4 +136,26 @@ function spawnBullet_e(x, y, r)
 
 	table.insert(Director.alive, bullet_e)
 	table.remove(Pool.bullet_e, 1)
+end
+
+-- =============== --
+-- Utitlities func --
+-- =============== --
+
+function humanizeCounter(nummer)
+	if nummer > 1000 then
+		local part1 = tostring(math.floor(nummer/1000))
+		local part2 = nummer % 1000
+		if part2 < 10 then
+			part2 = '00'..tostring(part2)
+		elseif part2 < 100 then
+			part2 = '0'..tostring(part2)
+		elseif part2 < 1000 then
+			part2 = tostring(part2)
+		end
+		
+		return tostring(part1..','..part2)
+	else
+		return tostring(nummer)
+	end
 end

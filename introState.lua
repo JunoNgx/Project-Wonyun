@@ -1,10 +1,14 @@
 local flux = require 'libs/flux'
-local Timer = require "libs/hump.timer"
+-- local Timer = require "libs/hump.timer"
+
 
 intro = {}
 
 function intro:enter()
 	love.graphics.setBackgroundColor(20,20,20)
+
+	local Alarm = require 'libs/Jalarm'
+	Alarm:reset()
 
 	imgAureo = love.graphics.newImage('assets/AureolineTetrahedron.png')
 	overlay = {20, 20, 20, 255}
@@ -18,7 +22,7 @@ function intro:enter()
 	end
 
 	switchToMenuIn1Sec = function()
-		Timer.add(1, function() if Gamestate.current() == intro then Gamestate.switch(menu) end end)
+		Alarm:after(1, function() if Gamestate.current() == intro then Gamestate.switch(menu) end end)
 	end
 
 	fadeIn()
@@ -26,7 +30,8 @@ function intro:enter()
 end
 
 function intro:update(dt)
-	Timer.update(dt)
+	-- Timer.update(dt)
+	Alarm:update(dt)
 	flux.update(dt)
 end
 
@@ -46,7 +51,8 @@ function intro:draw()
 end
 
 function intro:leave()
-	Timer.clear()
+	-- Timer.clear()
+	Alarm:reset()
 end
 
 function intro:mousereleased()

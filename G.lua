@@ -3,6 +3,8 @@
 V = {
 	gameplayMargin = 200,
 
+	distanceDestination = 2500,
+
 	playerReloadTime = 0.2,
 
 	e_fighterFireRate = 1.5,
