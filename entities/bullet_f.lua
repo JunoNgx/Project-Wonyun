@@ -5,7 +5,7 @@ function Bullet_f:init()
 	self.typeid = 'bullet_f'
 	self.objType = 'bullet'
 	self.alliance = 'friendly'
-	self.damage = V.bullet_fDamage
+	-- self.damage = V.bullet_fDamage
 
 	self.x = 0
 	self.y = 0

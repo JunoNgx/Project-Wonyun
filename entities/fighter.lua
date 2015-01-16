@@ -14,7 +14,11 @@ function Fighter:init()
 
 	self.lifetime 	= 0
 	self.reloadProcess = V.e_fighterFireRate
-	self.velo = 0
+	-- self.velo = 0
+	self.velo = {
+		x = 0,
+		y = V.e_fighterVeloY,
+	}
 
 	self.alive = false
 	self.exists = false
@@ -38,8 +42,12 @@ function Fighter:update(dt)
 		end
 
 		if self.alive then
-			self.x = self.x + self.velo*math.cos(self.r)*dt
-			self.y = self.y + self.velo*math.sin(self.r)*dt
+			-- self.x = self.x + self.velo*math.cos(self.r)*dt
+			-- self.y = self.y + self.velo*math.sin(self.r)*dt
+
+			self.x = self.x + self.velo.x * dt
+			self.y = self.y + self.velo.y * dt
+
 			if self.x < 0 - V.gameplayMargin or self.x > gRes.w + V.gameplayMargin then self:finishKill() end
 			if self.y < 0 - V.gameplayMargin or self.y > gRes.h + V.gameplayMargin then self:finishKill() end
 		end
@@ -83,11 +91,16 @@ function Fighter:fire()
 	spawnBullet_e(self.x, self.y)
 end
 
-function Fighter:spawn(x, y, r)
+function Fighter:spawn(x, y, velo_x, extraVelo_y)
 	self.x 					= x
 	self.y 					= y
-	self.velo 				= V.e_fighterVelo
-	self.r 					= r or math.pi/2
+	-- self.velo 				= V.e_fighterVelo
+	-- self.r 					= r or math.pi/2
+
+	local velo_x = velo_x or 0
+	self.velo.x = velo_x
+	local extraVelo_y = extraVelo_y or 0
+	self.velo.y = self.velo.y + extraVelo_y
 
 	self.reloadedProcess 	= V.e_fighterFireRate
 	self.lifetime 			= 0

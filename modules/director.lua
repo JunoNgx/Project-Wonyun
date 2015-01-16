@@ -119,21 +119,21 @@ function spawnBullet_f(r)
 	table.remove(Pool.bullet_f, 1)
 end
 
-function spawnFighter(x, y, r)
-	local r = r or math.pi/2
+function spawnFighter(x, y, velo_x, velo_y)
+	-- local r = r or math.pi/2
 	local fighter = Pool.fighter[1]
 
-	fighter:spawn(x, y, r)
+	fighter:spawn(x, y, velo_x, velo_y)
 
 	table.insert(Director.alive, fighter)
 	table.remove(Pool.fighter, 1)
 end
 
-function spawnBullet_e(x, y, r)
-	local r = r or math.pi/2
+function spawnBullet_e(x, y, velo_x, velo_y)
+	-- local r = r or math.pi/2
 	local bullet_e = Pool.bullet_e[1]
 
-	bullet_e:spawn(x, y, r)
+	bullet_e:spawn(x, y, velo_x, velo_y)
 	-- love.audio.play(sfx_eFire)
 
 	table.insert(Director.alive, bullet_e)

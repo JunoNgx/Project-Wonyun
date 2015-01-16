@@ -5,16 +5,19 @@ function Bullet_e:init()
 	self.typeid = 'bullet_e'
 	self.objType = 'bullet'
 	self.alliance = 'hostile'
-	self.damage = V.bullet_eDamage
+	-- self.damage = V.bullet_eDamage
 
 	self.x = 0
 	self.y = 0
 	self.w = 16
 	self.h = 16
-	self.r = -math.pi/2
+	-- self.r = -math.pi/2
 
 	self.lifetime = 0
-	self.velo = 0
+	self.velo = {
+		x = 0,
+		y = V.bullet_eVeloY,
+	}
 
 	self.alive = false
 	self.exists = false
@@ -40,8 +43,12 @@ function Bullet_e:update(dt)
 		-- end
 
 		if self.alive then
-			self.x = self.x + self.velo*math.cos(self.r)*dt
-			self.y = self.y + self.velo*math.sin(self.r)*dt
+			-- self.x = self.x + self.velo*math.cos(self.r)*dt
+			-- self.y = self.y + self.velo*math.sin(self.r)*dt
+
+			self.x = self.x + self.velo.x * dt
+			self.y = self.y + self.velo.y * dt
+
 			if self.x < 0 - V.gameplayMargin or self.x > gRes.w + V.gameplayMargin then self:finishKill() end
 			if self.y < 0 - V.gameplayMargin or self.y > gRes.h + V.gameplayMargin then self:finishKill() end
 		end
@@ -50,7 +57,7 @@ end
 
 function Bullet_e:draw()
 	love.graphics.setColor(0,0,255,255)
-	Jutils.draw(self.gfx, self.x, self.y, self.r)
+	Jutils.draw(self.gfx, self.x, self.y)
 
 	if G.debugMode then
 		love.graphics.setColor(255,0,0,255)
@@ -76,13 +83,18 @@ function Bullet_e:finishKill()
 	self.exists = false
 end
 
-function Bullet_e:spawn(x, y, r)
+function Bullet_e:spawn(x, y, velo_x, extraVelo_y)
 	self.x 			= x
 	self.y 			= y
-	self.velo 		= V.bullet_eVelo
-	self.r 			= r or -math.pi/2
+	-- self.velo 		= V.bullet_eVelo
+	-- self.r 			= r or -math.pi/2
 
 	-- self.gfx 		= self.gfx_muzzle
+	local velo_x = velo_x or 0
+	self.velo.x = velo_x
+	local extraVelo_y = extraVelo_y or 0
+	self.velo.y = self.velo.y + extraVelo_y
+
 	self.lifetime 	= 0
 
 	self.alive 		= true

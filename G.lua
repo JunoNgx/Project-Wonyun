@@ -8,14 +8,15 @@ V = {
 	playerReloadTime = 0.2,
 
 	e_fighterFireRate = 1.5,
-	e_fighterVelo = 100,
+	e_fighterVeloY = 100,
 
 	bullet_fDamage = 4,
 	bullet_fVelo = 1000,
 	bullet_fMuzzleTime = 0.02,
 
 	bullet_eDamage = 1,
-	bullet_eVelo = 300,
+	-- bullet_eVeloX = 300,
+	bullet_eVeloY = 300,
 }
 
 -- Game Settings and utilities
