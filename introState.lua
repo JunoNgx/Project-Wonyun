@@ -7,7 +7,7 @@ intro = {}
 function intro:enter()
 	love.graphics.setBackgroundColor(20,20,20)
 
-	-- Alarm:reset()
+	Alarm:reset()
 
 	imgAureo = love.graphics.newImage('assets/AureolineTetrahedron.png')
 	overlay = {20, 20, 20, 255}
