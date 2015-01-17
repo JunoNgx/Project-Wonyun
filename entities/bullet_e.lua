@@ -77,7 +77,11 @@ function Bullet_e:kill()
 end
 
 function Bullet_e:finishKill()
-	self.velo = 0
+	-- self.velo = 0
+	-- self.velo = {
+	-- 	x = 0,
+	-- 	y = V.bullet_eVeloY,
+	-- }
 
 	self.alive 	= false
 	self.exists = false

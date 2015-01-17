@@ -76,6 +76,7 @@ function play:draw()
 	-- p:draw()
 
 	-- UI
+	Input:draw()
 	Director:drawUI()
 
 	love.graphics.setColor(c.white)
@@ -98,8 +99,8 @@ function play:draw()
 	love.graphics.print('shield '..tostring(p.isShielded), 700, 40)
 	love.graphics.print('reloaded '..tostring(p:readyToFire()), 700, 60)
 	love.graphics.print('ammo check '..tostring(p:checkAmmo()), 700, 80)
-	-- -- love.graphics.print(tostring(M.getX()), 700, 100)
-	-- -- love.graphics.print(tostring(M.getY()), 700, 120)
+	love.graphics.print('velo x '..tostring(p.velo.x), 700, 100)
+	love.graphics.print('velo y '..tostring(p.velo.y), 700, 120)
 	-- love.graphics.print(tostring(p.x), 700, 140)
 	-- love.graphics.print(tostring(p.y), 700, 160)
 end
@@ -137,10 +138,13 @@ function play:touchpressed(id, x, y)
 
 			-- Move the ship with single touch
 			if id == 0 then
+				p.tweenDue = 0
 				Input.T.isDown = true
-				Input.T.ox = gRes.w * x
-				Input.T.oy = gRes.h * y
-				p:AmendOldPos()
+				Input.T.recordDue = 0
+
+				-- Input.T.ox = gRes.w * x
+				-- Input.T.oy = gRes.h * y
+				-- p:AmendOldPos()
 
 				-- Double click action
 				if love.timer.getTime() - Input.T.lastClick < 0.3 then
@@ -184,9 +188,10 @@ function play:mousepressed(x, y, b, isTouch)
 		if love.system.getOS() == 'Windows' then
 			if b == 'l' then
 				Input.T.isDown = true
-				Input.T.ox = M.getX()
-				Input.T.oy = M.getY()
-				p:AmendOldPos()
+				Input.T.recordDue = 0
+				-- Input.T.ox = M.getX()
+				-- Input.T.oy = M.getY()
+				-- p:AmendOldPos()
 
 				if love.timer.getTime() - Input.T.lastClick < 0.3 then
 					doubleClickAction()
@@ -211,6 +216,7 @@ function play:mousereleased(x, y, b)
 		if love.system.getOS() == 'Windows' and b == 'l' then
 			Input.T.isDown = false
 		end
+		-- p:brake()
 	end
 end
 

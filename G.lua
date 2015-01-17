@@ -3,7 +3,11 @@
 V = {
 	gameplayMargin = 200,
 
-	distanceDestination = 7000,
+	-- Control
+	inputRecordRate = 0.05,
+	inputTweenTime = 0.2,
+
+	distanceDestination = 15000,
 
 	playerReloadTime = 0.2,
 
@@ -25,8 +29,8 @@ G = {
 	version = 'pre-alpha',
 
 	-- debugMode = true,
-	debugMode = true,
-	sensitivity = 1.2
+	debugMode = false,
+	sensitivity = 70
 }
 
 -- Game design resolution

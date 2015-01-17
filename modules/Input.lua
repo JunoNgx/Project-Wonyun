@@ -25,11 +25,23 @@ function Input:init()
 end
 
 function Input:update(dt)
+	if Input.T.isDown then
+		Input.T.recordDue = Input.T.recordDue - dt
 
+		if Input.T.recordDue <= 0 then
+			Input.T.rx = Input.T.getX()
+			Input.T.ry = Input.T.getY()
+
+			Input.T.recordDue = V.inputRecordRate
+		end
+	end
 end
 
 function Input:draw()
-
+	if Input.T.isDown and G.debugMode then
+		love.graphics.setColor(255,123,231, 255)
+		love.graphics.circle('line', Input.T.rx, Input.T.ry, 15)
+	end
 end
 
 function Input.T.getX()

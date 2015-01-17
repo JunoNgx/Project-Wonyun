@@ -61,6 +61,9 @@ function Fighter:draw()
 	if G.debugMode then
 		love.graphics.setColor(255,0,0,255)
 		love.graphics.rectangle('line', self.x - self.w/2, self.y - self.h/2, self.w, self.h)
+
+		love.graphics.setColor(255,255,255)
+		love.graphics.print(self.velo.y, self.x + 32, self.y)
 	end
 end
 
@@ -76,7 +79,11 @@ function Fighter:kill()
 end
 
 function Fighter:finishKill()
-	self.velo = 0
+	-- self.velo = 0
+	-- self.velo = {
+	-- 	x = 0,
+	-- 	y = V.bullet_eVeloY,
+	-- }
 
 	self.alive = false
 	self.exists = false
