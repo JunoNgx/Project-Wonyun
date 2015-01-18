@@ -25,6 +25,7 @@ function play:enter()
 	Director:init()
 
 	Alarm:reset()
+	Timer.clear()
 
 	-- settings
 	play.state = 'initialising'
@@ -48,26 +49,28 @@ function play:enter()
 end
 
 function play:update(dt)
-	Alarm:update(dt)
-	Timer.update(dt)
-	flux.update(dt)
+	if play.state ~= 'paused' then
+		Alarm:update(dt)
+		Timer.update(dt)
+		flux.update(dt)
 
-	-- modules
-	Input:update(dt)
-	Director:update(dt)
-	Director:updateEntities(dt)
-	Director:updateCollision(dt)
+		-- modules
+		Input:update(dt)
+		Director:update(dt)
+		Director:updateEntities(dt)
+		Director:updateCollision(dt)
 
-	-- entities
-	-- p:update(dt)
+		-- entities
+		-- p:update(dt)
 
-	-- event
-	if p.exists == false then
-		Alarm:after(2, function() Gamestate.switch(result) end)
-	end
+		-- event
+		if p.exists == false then
+			Alarm:after(2, function() Gamestate.switch(result) end)
+		end
 
-	if Director.distanceTravelled >= V.distanceDestination then
-		Alarm:after(2, function() Gamestate.switch(ending) end)
+		if Director.distanceTravelled >= V.distanceDestination then
+			Alarm:after(2, function() Gamestate.switch(ending) end)
+		end
 	end
 end
 
@@ -109,8 +112,21 @@ function play:draw()
 end
 
 function play:leave()
-	Alarm:reset()
-	Timer.clear()
+	-- Alarm:reset()
+	-- Timer.clear()
+end
+
+------------------------------
+-- Functional functions ------
+------------------------------
+
+function play:pause()
+	play.state = 'paused'
+	Gamestate.push(pause)
+end
+
+function play:resume()
+	play.state = 'inPlay'
 end
 
 -------------------
@@ -223,6 +239,12 @@ function play:mousereleased(x, y, b)
 	end
 end
 
-
-
-
+function play:keypressed(k)
+	if k == 'p' then
+		if play.state == 'inPlay' then
+			play:pause()
+		elseif play.state == 'paused' then
+			play:resume()
+		end
+	end
+end
