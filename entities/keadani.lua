@@ -3,9 +3,9 @@ Keadani = Class {}
 function Keadani:init()
 
 	self.baseid = 'keadani'
-
-	self.typeid = 'undefined'
 	self.objType = 'vessel'
+
+	self.typeid = 'undefinedEnemy'
 	self.alliance = 'hostile'
 	self.fireRate = V.k_defaultFireRate
 	
@@ -23,7 +23,7 @@ function Keadani:init()
 		y = 0,
 	}
 
-	self.alive = false
+	self.alive 	= false
 	self.exists = false
 
 	-- self.gfx = loader.Image.fighter
@@ -81,7 +81,7 @@ function Keadani:kill()
 end
 
 function Keadani:finishKill()
-	self.typeid = 'undefined'
+	self.typeid = 'undefinedEnemy'
 	self.velo 	= {x = 0, y = 0}
 	self.alive 	= false
 	self.exists = false
@@ -93,10 +93,11 @@ end
 
 function Keadani:fire()
 	self.reloadProcess = self.fireRate
-	spawnBullet_e(self.x, self.y)
+	-- spawnBullet(alliance, x, y, velo_x, velo_y)
+	spawnBullet(2, self.x, self.y + 16)
 end
 
-function Keadani:spawn(unitType, x, y, velo_x, extraVelo_y)
+function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 
 	if unitType == 1 then -- riley
 		self.w 					= 48

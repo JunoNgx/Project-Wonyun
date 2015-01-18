@@ -25,5 +25,8 @@ function preload()
 	gfx_dulce 		= love.graphics.newImage('assets/dulce.png')
 	gfx_hammerhead 	= love.graphics.newImage('assets/hammerhead.png')
 	gfx_koltar 		= love.graphics.newImage('assets/koltar.png')
+
+	gfx_bullet_f	= love.graphics.newImage('assets/bullet_f.png')
+	gfx_bullet_e	= love.graphics.newImage('assets/bullet_e.png')
 	
 end

@@ -17,13 +17,13 @@ V = {
 	k_rileyFireRate = 1.5,
 	-- k_fighterVeloY = 100,
 
-	bullet_fDamage = 4,
-	bullet_fVelo = 1000,
-	bullet_fMuzzleTime = 0.02,
+	-- bullet_fDamage = 4,
+	bf_veloY = -1000,
+	-- bullet_fMuzzleTime = 0.02,
 
-	bullet_eDamage = 1,
+	-- bullet_eDamage = 1,
 	-- bullet_eVeloX = 300,
-	bullet_eVeloY = 300,
+	be_veloY = 300,
 }
 
 -- Game Settings and utilities

@@ -179,7 +179,8 @@ end
 function Player:fire()
 	if self:readyToFire() then
 		if self:checkAmmo() then
-			spawnBullet_f()
+			-- spawnBullet(alliance, x, y, velo_x, velo_y)
+			spawnBullet(1, p.x, p.y - 16)
 			
 			self.reloadProcess = V.playerReloadTime
 			self.ammo = self.ammo - 1

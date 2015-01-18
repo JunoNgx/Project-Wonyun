@@ -20,16 +20,20 @@ function Director:updateEntities(dt)
 		if not entity.exists then
 			-- Alive entity removal codes here --
 
-			if entity.typeid == 'bullet_f' then
-				table.insert(Pool.bullet_f, entity)
-			end
+			-- if entity.typeid == 'bullet_f' then
+			-- 	table.insert(Pool.bullet_f, entity)
+			-- end
 
 			if entity.baseid == 'keadani' then
 				table.insert(Pool.keadani, entity)
 			end
 
-			if entity.typeid == 'bullet_e' then
-				table.insert(Pool.bullet_e, entity)
+			-- if entity.typeid == 'bullet_e' then
+			-- 	table.insert(Pool.bullet_e, entity)
+			-- end
+
+			if entity.baseid == 'bullet' then
+				table.insert(Pool.bullet, entity)
 			end
 
 			-- Removal codes ends here --
@@ -46,7 +50,7 @@ function Director:updateCollision(dt)
 		if entity.typeid == 'player' then
 			for i, hitEntity in ipairs(Director.alive) do
 				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
-					if hitEntity.faction ~= 'friendly' then
+					if hitEntity.alliance ~= 'friendly' then
 
 						entity:hit()
 						hitEntity:hit()
@@ -59,7 +63,7 @@ function Director:updateCollision(dt)
 		if entity.typeid == 'bullet_f' then
 			for i, hitEntity in ipairs(Director.alive) do
 				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
-					if hitEntity.objType == 'vessel' and hitEntity.faction ~= 'friendly' then
+					if hitEntity.objType == 'vessel' and hitEntity.alliance ~= 'friendly' then
 
 						entity:hit()
 						hitEntity:hit()
@@ -108,16 +112,16 @@ end
 -- Spawning functions --
 -- ================== --
 
-function spawnBullet_f(r)
-	local r = r or -math.pi/2
-	local bullet_f = Pool.bullet_f[1]
+-- function spawnBullet_f(r)
+-- 	local r = r or -math.pi/2
+-- 	local bullet_f = Pool.bullet_f[1]
 
-	bullet_f:spawn(p.x, p.y - 32, r)
-	-- love.audio.play(sfx_pFire)
+-- 	bullet_f:spawn(p.x, p.y - 32, r)
+-- 	-- love.audio.play(sfx_pFire)
 
-	table.insert(Director.alive, bullet_f)
-	table.remove(Pool.bullet_f, 1)
-end
+-- 	table.insert(Director.alive, bullet_f)
+-- 	table.remove(Pool.bullet_f, 1)
+-- end
 
 function spawnKeadani(unitType, x, y, velo_x, velo_y)
 	-- local r = r or math.pi/2
@@ -130,15 +134,25 @@ function spawnKeadani(unitType, x, y, velo_x, velo_y)
 	table.remove(Pool.keadani, 1)
 end
 
-function spawnBullet_e(x, y, velo_x, velo_y)
-	-- local r = r or math.pi/2
-	local bullet_e = Pool.bullet_e[1]
+-- function spawnBullet_e(x, y, velo_x, velo_y)
+-- 	-- local r = r or math.pi/2
+-- 	local bullet_e = Pool.bullet_e[1]
 
-	bullet_e:spawn(x, y, velo_x, velo_y)
+-- 	bullet_e:spawn(x, y, velo_x, velo_y)
+-- 	-- love.audio.play(sfx_eFire)
+
+-- 	table.insert(Director.alive, bullet_e)
+-- 	table.remove(Pool.bullet_e, 1)
+-- end
+
+function spawnBullet(alliance, x, y, velo_x, velo_y)
+	local bullet = Pool.bullet[1]
+
+	bullet:spawn(alliance, x, y, velo_x, velo_y)
 	-- love.audio.play(sfx_eFire)
 
-	table.insert(Director.alive, bullet_e)
-	table.remove(Pool.bullet_e, 1)
+	table.insert(Director.alive, bullet)
+	table.remove(Pool.bullet, 1)
 end
 
 -- =============== --

@@ -8,9 +8,10 @@ require 'modules/director'
 
 -- Entities
 require 'entities/player'
-require 'entities/bullet_f'
+-- require 'entities/bullet_f'
 require 'entities/keadani'
-require 'entities/bullet_e'
+-- require 'entities/bullet_e'
+require 'entities/bullet'
 
 play = {}
 
@@ -83,9 +84,9 @@ function play:draw()
 
 	love.graphics.setColor(c.white)
 	love.graphics.setFont(debugFont)
-	love.graphics.print('Bullets in pool: '..tostring(#Pool.bullet_f), 0, 0)
-	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 20)
-	-- love.graphics.print(tostring(Input.T.ox), 0, 40)
+	love.graphics.print('Bullets in pool: '..tostring(#Pool.bullet), 0, 0)
+	love.graphics.print('Keadani in play: '..tostring(#Pool.keadani), 0, 20)
+	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 40)
 	-- love.graphics.print(tostring(Input.T.ox), 0, 60)
 	love.graphics.print(tostring(play.state), 0, 80)
 	-- love.graphics.print(tostring(M.getX()), 0, 100)
