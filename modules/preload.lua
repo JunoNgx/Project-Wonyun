@@ -15,5 +15,15 @@ function preload()
 
 	-- Play
 	counterFont = love.graphics.newFont('assets/consola.ttf', 30)
+
+
+
+
+	-- GFX assets
+	gfx_riley 		= love.graphics.newImage('assets/riley.png')
+	gfx_augustus 	= love.graphics.newImage('assets/augustus.png')
+	gfx_dulce 		= love.graphics.newImage('assets/dulce.png')
+	gfx_hammerhead 	= love.graphics.newImage('assets/hammerhead.png')
+	gfx_koltar 		= love.graphics.newImage('assets/koltar.png')
 	
 end

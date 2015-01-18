@@ -15,12 +15,12 @@ require 'modules/Input'
 require 'modules/Preload'
 
 -- States inclusion
-require 'introState'
-require 'menuState'
-require 'playState'
-require 'resultState'
-require 'endingState'
-require 'creditState'
+require 'states/introState'
+require 'states/menuState'
+require 'states/playState'
+require 'states/resultState'
+require 'states/endingState'
+require 'states/creditState'
 
 function love.load()
 

@@ -15,11 +15,11 @@ function Pool:init()
 		table.insert(Pool.bullet_f, bullet_f)
 	end
 
-	-- enemy fighters
-	self.fighter = {}
-	for i = 1, 20 do
-		local fighter = Fighter()
-		table.insert(Pool.fighter, fighter)
+	-- Keadani, hostiles
+	self.keadani = {}
+	for i = 1, 100 do
+		local keadani = Keadani()
+		table.insert(Pool.keadani, keadani)
 	end
 
 	-- bullet_e

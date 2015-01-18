@@ -9,7 +9,7 @@ require 'modules/director'
 -- Entities
 require 'entities/player'
 require 'entities/bullet_f'
-require 'entities/fighter'
+require 'entities/keadani'
 require 'entities/bullet_e'
 
 play = {}
@@ -38,10 +38,12 @@ function play:enter()
 		local x = love.math.random(gRes.w)
 		local y = 0
 
-		spawnFighter(x, y)
+		-- spawnKeadani(x, y)
+		-- spawnKeadani(unitType, x, y, velo_x, velo_y)
+		spawnKeadani(1, x, y)
 		end)
 
-	collided = false
+	-- collided = false
 end
 
 function play:update(dt)

@@ -24,8 +24,8 @@ function Director:updateEntities(dt)
 				table.insert(Pool.bullet_f, entity)
 			end
 
-			if entity.typeid == 'fighter' then
-				table.insert(Pool.fighter, entity)
+			if entity.baseid == 'keadani' then
+				table.insert(Pool.keadani, entity)
 			end
 
 			if entity.typeid == 'bullet_e' then
@@ -119,14 +119,15 @@ function spawnBullet_f(r)
 	table.remove(Pool.bullet_f, 1)
 end
 
-function spawnFighter(x, y, velo_x, velo_y)
+function spawnKeadani(unitType, x, y, velo_x, velo_y)
 	-- local r = r or math.pi/2
-	local fighter = Pool.fighter[1]
+	local keadani = Pool.keadani[1]
+	local unitType = unitType
 
-	fighter:spawn(x, y, velo_x, velo_y)
+	keadani:spawn(unitType, x, y, velo_x, velo_y)
 
-	table.insert(Director.alive, fighter)
-	table.remove(Pool.fighter, 1)
+	table.insert(Director.alive, keadani)
+	table.remove(Pool.keadani, 1)
 end
 
 function spawnBullet_e(x, y, velo_x, velo_y)

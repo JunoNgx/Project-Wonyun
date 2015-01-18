@@ -11,8 +11,11 @@ V = {
 
 	playerReloadTime = 0.2,
 
-	e_fighterFireRate = 1.5,
-	e_fighterVeloY = 100,
+	k_defaultVeloY = 100,
+	k_defaultFireRate = 1.5,
+
+	k_rileyFireRate = 1.5,
+	-- k_fighterVeloY = 100,
 
 	bullet_fDamage = 4,
 	bullet_fVelo = 1000,
