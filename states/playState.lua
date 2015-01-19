@@ -18,7 +18,7 @@ play = {}
 
 function play:enter()
 
-	love.graphics.setBackgroundColor(c.viridian)
+	love.graphics.setBackgroundColor(90,70,70,20)
 
 	-- modules
 	Input:init()
@@ -38,11 +38,15 @@ function play:enter()
 	table.insert(Director.alive, p)
 
 	-- debug codes
+	filter = {opacity = 255}
 	Timer.addPeriodic(1, function()
 		local x = love.math.random(gRes.w)
 		local y = 0
 
 		spawnKeadani(1, x, y)
+		end)
+	Timer.addPeriodic(2, function()
+			flux.to(filter, 2, {opacity = love.math.random(50,250)})
 		end)
 end
 
@@ -75,8 +79,8 @@ end
 
 function play:draw()
 	-- background layer
-	love.graphics.setColor(255,255,255)
-	love.graphics.draw(debugGalaxy)
+	love.graphics.setColor(255,255,255, filter.opacity)
+	love.graphics.draw(debugFilter)
 	Roadie:draw()
 
 	-- main gameplay layer

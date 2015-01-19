@@ -36,7 +36,7 @@ function Wonyun:init(extraAmmo, armoured, shielded)
 	self.gfx = gfx_wonyun
 
 	self.throttle_gfx = gfx_throttle1
-	self.throttle_dist = 42
+	self.throttle_dist = 40
 end
 
 function Wonyun:update(dt)
@@ -95,7 +95,7 @@ function Wonyun:draw()
 
 	if self.velo.y < -100 then -- moving up, big throttle
 		scale_x = love.math.random(25,40)/100
-		scale_y = love.math.random(15,25)/100
+		scale_y = love.math.random(20,30)/100
 	elseif self.velo.y > 50 then -- moving down, no/small throttle
 		scale_x = love.math.random(5,10)/100
 		scale_y = love.math.random(7,8)/100
@@ -112,7 +112,7 @@ function Wonyun:draw()
 	Jutils.draw(self.throttle_gfx,
 		self.x - self.throttle_dist * math.cos(radian),
 		self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(radian),
-		radian,
+		radian + love.math.random(-20,20)/100,
 		scale_x, scale_y)
 
 

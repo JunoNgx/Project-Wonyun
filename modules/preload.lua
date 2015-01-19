@@ -39,5 +39,6 @@ function preload()
 
 	-- debug objects
 	debugGalaxy			= love.graphics.newImage('assets/galaxy.png')
+	debugFilter			= love.graphics.newImage('assets/backgroundFilter.png')
 	
 end
