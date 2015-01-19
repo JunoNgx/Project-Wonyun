@@ -35,7 +35,7 @@ function Wonyun:init(extraAmmo, armoured, shielded)
 
 	self.gfx = gfx_wonyun
 
-	self.throttle_gfx = gfx_wonyun_throttle
+	self.throttle_gfx = gfx_throttle1
 	self.throttle_dist = 42
 end
 
@@ -65,6 +65,7 @@ function Wonyun:update(dt)
 			self.flux.to(self.velo, V.inputTweenTime, {x = 0, y = 0}):ease('linear')
 		end
 
+		-- Turns when moved horizontally
 		local turningSpeed = 4
 
 		local maxVelo = 600
@@ -93,8 +94,8 @@ function Wonyun:draw()
 	local scale_y
 
 	if self.velo.y < -100 then -- moving up, big throttle
-		scale_x = love.math.random(25,45)/100
-		scale_y = love.math.random(25,45)/100
+		scale_x = love.math.random(25,40)/100
+		scale_y = love.math.random(15,25)/100
 	elseif self.velo.y > 50 then -- moving down, no/small throttle
 		scale_x = love.math.random(5,10)/100
 		scale_y = love.math.random(7,8)/100
@@ -104,35 +105,16 @@ function Wonyun:draw()
 	end
 
 	-- local radian = self.r + love.math.random(-math.pi, math.pi)
-	local randomizer = love.math.random(-7,7)/100
+	local randomizer = love.math.random(-4,4)/100
 	local radian = self.r + randomizer
 
 	love.graphics.setColor(150, 220, 200, 255)
-	for i = 1, 3 do
-		-- Jutils.draw(self.throttle_gfx,
-		-- 	self.x - self.throttle_dist * math.cos(radian),
-		-- 	self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(radian),
-		-- 	radian + love.math.random(-100,100)/100,
-		-- 	scale_x, scale_y)
+	Jutils.draw(self.throttle_gfx,
+		self.x - self.throttle_dist * math.cos(radian),
+		self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(radian),
+		radian,
+		scale_x, scale_y)
 
-		Jutils.draw(self.throttle_gfx,
-			self.x - self.throttle_dist * math.cos(self.r),
-			self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(self.r),
-			self.r + love.math.random(-1,1),
-			scale_x, scale_y)
-	end
-
-	-- Jutils.draw(self.throttle_gfx,
-	-- 	self.x - self.throttle_dist * math.cos(radian),n
-	-- 	self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(radian),
-	-- 	radian,
-	-- 	scale_x, scale_y)
-
-	-- Jutils.draw(self.throttle_gfx,
-	-- 	self.x - self.throttle_dist * math.cos(radian),
-	-- 	self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(radian),
-	-- 	radian,
-	-- 	scale_x, scale_y)
 
 	if G.debugMode then
 		love.graphics.setColor(255, 0, 0, 255)

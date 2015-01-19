@@ -21,7 +21,6 @@ function preload()
 
 	-- GFX assets
 	gfx_wonyun 			= love.graphics.newImage('assets/wonyun.png')
-	gfx_wonyun_throttle	= love.graphics.newImage('assets/wonyun_throttle.png')
 
 	gfx_riley 			= love.graphics.newImage('assets/riley.png')
 	gfx_augustus 		= love.graphics.newImage('assets/augustus.png')
@@ -31,6 +30,9 @@ function preload()
 
 	gfx_bullet_f		= love.graphics.newImage('assets/bullet_f.png')
 	gfx_bullet_e		= love.graphics.newImage('assets/bullet_e.png')
+
+	gfx_throttle1		= love.graphics.newImage('assets/throttle1.png')
+	gfx_throttle2		= love.graphics.newImage('assets/throttle2.png')
 
 	-- decor objects
 	gfx_star 			= love.graphics.newImage('assets/star.png')

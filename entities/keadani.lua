@@ -27,6 +27,8 @@ function Keadani:init()
 	self.exists = false
 
 	-- self.gfx = loader.Image.fighter
+	self.throttle_gfx = nil
+	self.throttle_dist = nil
 end
 
 function Keadani:update(dt)
@@ -47,9 +49,6 @@ function Keadani:update(dt)
 		
 			updateVelocity(self, dt)
 
-			-- if self.x < 0 - V.gameplayMargin or self.x > gRes.w + V.gameplayMargin then self:finishKill() end
-			-- if self.y < 0 - V.gameplayMargin or self.y > gRes.h + V.gameplayMargin then self:finishKill() end
-
 			if outOfBounds(self) then self:finishKill() end
 		end
 	end
@@ -59,6 +58,24 @@ function Keadani:draw()
 	if self.exists then
 		love.graphics.setColor(255,255,255,255)
 		Jutils.draw(self.gfx, self.x, self.y, self.r)
+
+		-- Throttle
+		local scale_x = love.math.random(15,30)/100
+		local scale_y = love.math.random(10,20)/100
+
+		local randomizer = love.math.random(-7,7)/100
+		local radian = self.r + randomizer
+
+		love.graphics.setColor(150, 220, 200, 255)
+		if self.typeid == 'riley' then
+			for i = 1, 3 do
+			Jutils.draw(self.throttle_gfx,
+				self.x - self.throttle_dist * math.cos(radian),
+				self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(radian),
+				radian + love.math.random(-100,100)/100,
+				scale_x, scale_y)
+			end
+		end
 
 		if G.debugMode then
 			love.graphics.setColor(255,0,0,255)
@@ -101,35 +118,50 @@ end
 function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 
 	if unitType == 1 then -- riley
+		self.typeid				= 'riley'
 		self.w 					= 48
 		self.h 					= 48
 		self.fireRate 			= V.k_rileyFireRate
 
 		self.gfx 				= gfx_riley
+		self.throttle_gfx 		= gfx_throttle1
+		self.throttle_dist		= 44
 	elseif unitType == 2 then -- augustus/frigate
+		self.typeid				= 'augustus'
 		self.w 					= 52
 		self.h 					= 64
 		self.fireRate 			= V.k_defaultFireRate
 
 		self.gfx 				= gfx_augustus
+		self.throttle_gfx 		= gfx_throttle1
+		self.throttle_dist		= 46
 	elseif unitType == 3 then -- dulce/drone, homing fire
+		self.typeid				= 'dulce'
 		self.w 					= 36
 		self.h 					= 36
 		self.fireRate 			= V.k_defaultFireRate
 
 		self.gfx 				= gfx_dulce
+		self.throttle_gfx 		= gfx_throttle1
+		self.throttle_dist		= 46
 	elseif unitType == 4 then -- hammerhead/sidefire
+		self.typeid				= 'hammerhead'
 		self.w 					= 48
 		self.h 					= 48
 		self.fireRate 			= V.k_defaultFireRate
 
 		self.gfx 				= gfx_hammerhead
+		self.throttle_gfx 		= gfx_throttle1
+		self.throttle_dist		= 46
 	elseif unitType == 5 then -- koltar/boss, 8-direction shot
+		self.typeid				= 'koltar'
 		self.w 					= 48
 		self.h 					= 48
 		self.fireRate 			= V.k_defaultFireRate
 
 		self.gfx 				= gfx_koltar
+		self.throttle_gfx 		= gfx_throttle1
+		self.throttle_dist		= 46
 	end
 
 	self.reloadProcess 		= self.fireRate
