@@ -1,12 +1,15 @@
 -- Gameplay tuning variables
 
 V = {
-	gameplayMargin = 200,
+	margin_rtlt = 200,
+	margin_top = 500,
+	margin_bottom = 200,
 
 	-- Control
 	inputRecordRate = 0.05,
 	inputTweenTime = 0.2,
 
+	-- Gameplay
 	distanceDestination = 15000,
 
 	-- Wonyun/player
@@ -15,19 +18,15 @@ V = {
 	-- Keadani
 	k_defaultVeloY = 100,
 	k_defaultFireRate = 1.5,
-
 	k_rileyFireRate = 1.5,
-	-- k_fighterVeloY = 100,
 
-	-- bullet_fDamage = 4,
+	-- Bullets
 	bf_veloY = -1000,
-	-- bullet_fMuzzleTime = 0.02,
-
-	-- bullet_eDamage = 1,
-	-- bullet_eVeloX = 300,
 	be_veloY = 300,
-
 	b_captureVelo = 1000,
+
+	-- Stars
+	s_veloY = 80,
 }
 
 -- Game Settings and utilities

@@ -5,8 +5,11 @@ local Timer = require "libs/hump.timer"
 -- Gameplay modules
 require 'modules/pool'
 require 'modules/director'
+require 'modules/roadie'
 
 -- Entities
+require 'entities/star'
+
 require 'entities/wonyun'
 require 'entities/keadani'
 require 'entities/bullet'
@@ -15,12 +18,13 @@ play = {}
 
 function play:enter()
 
-	love.graphics.setBackgroundColor(c.grey)
+	love.graphics.setBackgroundColor(c.viridian)
 
 	-- modules
 	Input:init()
 	Pool:init()
 	Director:init()
+	Roadie:init()
 
 	Alarm:reset()
 	Timer.clear()
@@ -38,11 +42,8 @@ function play:enter()
 		local x = love.math.random(gRes.w)
 		local y = 0
 
-		-- spawnKeadani(unitType, x, y, velo_x, velo_y)
 		spawnKeadani(1, x, y)
 		end)
-
-	-- collided = false
 end
 
 function play:update(dt)
@@ -56,6 +57,7 @@ function play:update(dt)
 		Director:update(dt)
 		Director:updateEntities(dt)
 		Director:updateCollision(dt)
+		Roadie:update(dt)
 
 		-- entities
 		-- p:update(dt)
@@ -72,11 +74,13 @@ function play:update(dt)
 end
 
 function play:draw()
-	-- modules
-	Director:drawEntities()
+	-- background layer
+	love.graphics.setColor(255,255,255)
+	love.graphics.draw(debugGalaxy)
+	Roadie:draw()
 
-	-- entities
-	-- p:draw()
+	-- main gameplay layer
+	Director:drawEntities()
 
 	-- UI
 	Input:draw()
@@ -94,7 +98,7 @@ function play:draw()
 	-- love.graphics.print(tostring(p.x), 0, 140)
 	-- love.graphics.print(tostring(p.y), 0, 160)
 	-- love.graphics.print(tostring(p.lifetime), 0, 180)
-	-- love.graphics.print(tostring(collided), 0, 200)
+	love.graphics.print(tostring(love.math.random(-1,1)), 0, 200)
 
 	-- rightside
 	love.graphics.print('ammo '..tostring(p.ammo), 700, 0)
@@ -130,19 +134,13 @@ end
 ------ Utils ------
 -------------------
 
-function IsColliding(e1, e2)
-	return (
-		e1.x < e2.x + e2.w and
-		e2.x < e1.x + e1.w and
 
-		e1.y < e2.y + e2.h and
-		e2.y < e1.y + e1.h
-		)
-end
 
 function doubleClickAction()
 	-- love.graphics.setBackgroundColor(255,255,255)
 end
+
+
 
 ----------------------------------
 ------ Mobile Touch Control ------

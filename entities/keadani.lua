@@ -45,11 +45,12 @@ function Keadani:update(dt)
 				self:fire()
 			end
 		
-			self.x = self.x + self.velo.x * dt
-			self.y = self.y + self.velo.y * dt
+			updateVelocity(self, dt)
 
-			if self.x < 0 - V.gameplayMargin or self.x > gRes.w + V.gameplayMargin then self:finishKill() end
-			if self.y < 0 - V.gameplayMargin or self.y > gRes.h + V.gameplayMargin then self:finishKill() end
+			-- if self.x < 0 - V.gameplayMargin or self.x > gRes.w + V.gameplayMargin then self:finishKill() end
+			-- if self.y < 0 - V.gameplayMargin or self.y > gRes.h + V.gameplayMargin then self:finishKill() end
+
+			if outOfBounds(self) then self:finishKill() end
 		end
 	end
 end

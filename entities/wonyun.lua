@@ -33,7 +33,10 @@ function Wonyun:init(extraAmmo, armoured, shielded)
 	self.alive = true
 	self.exists = true
 
-	self.gfx = loader.Image.wonyun
+	self.gfx = gfx_wonyun
+
+	self.throttle_gfx = gfx_wonyun_throttle
+	self.throttle_dist = 42
 end
 
 function Wonyun:update(dt)
@@ -45,8 +48,7 @@ function Wonyun:update(dt)
 			self.reloadProcess  = self.reloadProcess - dt
 		end
 
-		self.x = self.x + self.velo.x * dt
-		self.y = self.y + self.velo.y * dt
+		updateVelocity(self, dt)
 
 		self.flux.update(dt)
 		if Input.T.isDown then
@@ -87,12 +89,57 @@ function Wonyun:draw()
 	love.graphics.setColor(c.white)
 	Jutils.draw(self.gfx, self.x, self.y, self.r)
 
+	local scale_x
+	local scale_y
+
+	if self.velo.y < -100 then -- moving up, big throttle
+		scale_x = love.math.random(25,45)/100
+		scale_y = love.math.random(25,45)/100
+	elseif self.velo.y > 50 then -- moving down, no/small throttle
+		scale_x = love.math.random(5,10)/100
+		scale_y = love.math.random(7,8)/100
+	else -- normal throttle
+		scale_x = love.math.random(15,30)/100
+		scale_y = love.math.random(10,20)/100
+	end
+
+	-- local radian = self.r + love.math.random(-math.pi, math.pi)
+	local randomizer = love.math.random(-7,7)/100
+	local radian = self.r + randomizer
+
+	love.graphics.setColor(150, 220, 200, 255)
+	for i = 1, 3 do
+		-- Jutils.draw(self.throttle_gfx,
+		-- 	self.x - self.throttle_dist * math.cos(radian),
+		-- 	self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(radian),
+		-- 	radian + love.math.random(-100,100)/100,
+		-- 	scale_x, scale_y)
+
+		Jutils.draw(self.throttle_gfx,
+			self.x - self.throttle_dist * math.cos(self.r),
+			self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(self.r),
+			self.r + love.math.random(-1,1),
+			scale_x, scale_y)
+	end
+
+	-- Jutils.draw(self.throttle_gfx,
+	-- 	self.x - self.throttle_dist * math.cos(radian),n
+	-- 	self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(radian),
+	-- 	radian,
+	-- 	scale_x, scale_y)
+
+	-- Jutils.draw(self.throttle_gfx,
+	-- 	self.x - self.throttle_dist * math.cos(radian),
+	-- 	self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(radian),
+	-- 	radian,
+	-- 	scale_x, scale_y)
+
 	if G.debugMode then
-		love.graphics.setColor(255,0,0,255)
+		love.graphics.setColor(255, 0, 0, 255)
 		love.graphics.point(self.x, self.y)
 		love.graphics.rectangle('line', self.x - self.w/2, self.y - self.h/2, self.w, self.h)
 
-		love.graphics.setColor(0,0,255,255)
+		love.graphics.setColor(0, 0, 255, 255)
 		love.graphics.rectangle('line', self.x - self.w2/2, self.y - self.h2/2, self.w2, self.h2)
 	end
 end

@@ -20,13 +20,22 @@ function preload()
 
 
 	-- GFX assets
-	gfx_riley 		= love.graphics.newImage('assets/riley.png')
-	gfx_augustus 	= love.graphics.newImage('assets/augustus.png')
-	gfx_dulce 		= love.graphics.newImage('assets/dulce.png')
-	gfx_hammerhead 	= love.graphics.newImage('assets/hammerhead.png')
-	gfx_koltar 		= love.graphics.newImage('assets/koltar.png')
+	gfx_wonyun 			= love.graphics.newImage('assets/wonyun.png')
+	gfx_wonyun_throttle	= love.graphics.newImage('assets/wonyun_throttle.png')
 
-	gfx_bullet_f	= love.graphics.newImage('assets/bullet_f.png')
-	gfx_bullet_e	= love.graphics.newImage('assets/bullet_e.png')
+	gfx_riley 			= love.graphics.newImage('assets/riley.png')
+	gfx_augustus 		= love.graphics.newImage('assets/augustus.png')
+	gfx_dulce 			= love.graphics.newImage('assets/dulce.png')
+	gfx_hammerhead 		= love.graphics.newImage('assets/hammerhead.png')
+	gfx_koltar 			= love.graphics.newImage('assets/koltar.png')
+
+	gfx_bullet_f		= love.graphics.newImage('assets/bullet_f.png')
+	gfx_bullet_e		= love.graphics.newImage('assets/bullet_e.png')
+
+	-- decor objects
+	gfx_star 			= love.graphics.newImage('assets/star.png')
+
+	-- debug objects
+	debugGalaxy			= love.graphics.newImage('assets/galaxy.png')
 	
 end

@@ -11,6 +11,7 @@ Jutils = require 'libs/Jutils'
 require 'G'
 
 -- Other system module
+require 'modules/Utils'
 require 'modules/Input'
 require 'modules/Preload'
 

@@ -31,11 +31,12 @@ function Bullet:update(dt)
 		self.lifetime = self.lifetime + dt
 
 		if self.alive then
-			self.x = self.x + self.velo.x * dt
-			self.y = self.y + self.velo.y * dt
+			updateVelocity (self, dt)
 
-			if self.x < 0 - V.gameplayMargin or self.x > gRes.w + V.gameplayMargin then self:finishKill() end
-			if self.y < 0 - V.gameplayMargin or self.y > gRes.h + V.gameplayMargin then self:finishKill() end
+			-- if self.x < 0 - V.gameplayMargin or self.x > gRes.w + V.gameplayMargin then self:finishKill() end
+			-- if self.y < 0 - V.gameplayMargin or self.y > gRes.h + V.gameplayMargin then self:finishKill() end
+
+			if outOfBounds(self) then self:finishKill() end
 		end
 	end
 end
@@ -57,6 +58,7 @@ function Bullet:draw()
 		if G.debugMode then
 			love.graphics.setColor(255,0,0,255)
 			love.graphics.rectangle('line', self.x - self.w/2, self.y - self.h/2, self.w, self.h)
+			love.graphics.print(self.alliance, self.x + 16, self.y)
 		end
 	end
 end

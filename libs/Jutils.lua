@@ -1,6 +1,6 @@
 Jutils = {}
 
-function Jutils.draw(image, x, y, radian, scale)
+function Jutils.draw(image, x, y, radian, scale_x, scale_y)
 	local x = x or 0
 	local y = y or 0
 
@@ -8,10 +8,11 @@ function Jutils.draw(image, x, y, radian, scale)
 	if y == 'mid' then y = love.graphics.getHeight()/2 end
 
 	local radian = radian or 0
-	local scale = scale or 1
+	local scale_x = scale_x or 1
+	local scale_y = scale_y or 1
 
 	love.graphics.draw(image, x, y,
-		radian, scale, scale,
+		radian, scale_x, scale_y,
 		image:getWidth()/2, image:getHeight()/2)
 end
 
