@@ -21,6 +21,7 @@ require 'states/playState'
 require 'states/resultState'
 require 'states/endingState'
 require 'states/creditState'
+require 'states/pauseState'
 
 function love.load()
 

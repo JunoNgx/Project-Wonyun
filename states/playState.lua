@@ -7,10 +7,8 @@ require 'modules/pool'
 require 'modules/director'
 
 -- Entities
-require 'entities/player'
--- require 'entities/bullet_f'
+require 'entities/wonyun'
 require 'entities/keadani'
--- require 'entities/bullet_e'
 require 'entities/bullet'
 
 play = {}
@@ -32,7 +30,7 @@ function play:enter()
 	Alarm:after(1, function() play.state = 'inPlay' end)
 
 	-- entities
-	p = Player(1, true, false)
+	p = Wonyun(1, true, false)
 	table.insert(Director.alive, p)
 
 	-- debug codes
@@ -40,7 +38,6 @@ function play:enter()
 		local x = love.math.random(gRes.w)
 		local y = 0
 
-		-- spawnKeadani(x, y)
 		-- spawnKeadani(unitType, x, y, velo_x, velo_y)
 		spawnKeadani(1, x, y)
 		end)
@@ -161,10 +158,6 @@ function play:touchpressed(id, x, y)
 				Input.T.isDown = true
 				Input.T.recordDue = 0
 
-				-- Input.T.ox = gRes.w * x
-				-- Input.T.oy = gRes.h * y
-				-- p:AmendOldPos()
-
 				-- Double click action
 				if love.timer.getTime() - Input.T.lastClick < 0.3 then
 					doubleClickAction() 
@@ -174,16 +167,11 @@ function play:touchpressed(id, x, y)
 				if id == 0 then Input.T.lastClick = love.timer.getTime() end
 
 			elseif id == 1 then
+
 				if p:checkVitals() then
 					p:fire()
 				end
 
-				-- -- Firing with multitouch
-				-- if p.alive and p:readyToFire() then
-				-- 	p:fire()
-					
-				-- end
-				
 			end
 		end
 	end
@@ -208,23 +196,19 @@ function play:mousepressed(x, y, b, isTouch)
 			if b == 'l' then
 				Input.T.isDown = true
 				Input.T.recordDue = 0
-				-- Input.T.ox = M.getX()
-				-- Input.T.oy = M.getY()
-				-- p:AmendOldPos()
 
 				if love.timer.getTime() - Input.T.lastClick < 0.3 then
 					doubleClickAction()
 				end
 
-				Input.T.lastClick = love.timer.getTime()
+				if id == 0 then Input.T.lastClick = love.timer.getTime() end
+
 			elseif b == 'r' then
+
 				if p:checkVitals() then
 					p:fire()
 				end
-				-- if p.alive and p:readyToFire() then
-				-- 	p:fire()
-				-- 	spawnBullet_f()
-				-- end
+
 			end
 		end
 	end
@@ -235,7 +219,7 @@ function play:mousereleased(x, y, b)
 		if love.system.getOS() == 'Windows' and b == 'l' then
 			Input.T.isDown = false
 		end
-		-- p:brake()
+
 	end
 end
 

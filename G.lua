@@ -9,8 +9,10 @@ V = {
 
 	distanceDestination = 15000,
 
-	playerReloadTime = 0.2,
+	-- Wonyun/player
+	w_ReloadTime = 0.2,
 
+	-- Keadani
 	k_defaultVeloY = 100,
 	k_defaultFireRate = 1.5,
 
@@ -24,6 +26,8 @@ V = {
 	-- bullet_eDamage = 1,
 	-- bullet_eVeloX = 300,
 	be_veloY = 300,
+
+	b_captureVelo = 1000,
 }
 
 -- Game Settings and utilities

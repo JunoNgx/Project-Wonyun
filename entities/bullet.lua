@@ -7,7 +7,6 @@ function Bullet:init()
 
 	self.typeid = 'undefinedBullet'
 	self.alliance = 'undefinedAlliance'
-	-- self.damage = V.bullet_fDamage
 
 	self.x = 0
 	self.y = 0
@@ -31,10 +30,6 @@ function Bullet:update(dt)
 
 		self.lifetime = self.lifetime + dt
 
-		-- if self.lifetime > V.bullet_fMuzzleTime and self.gfx == self.gfx_muzzle then
-		-- 	self.gfx = self.gfx_norm
-		-- end
-
 		if self.alive then
 			self.x = self.x + self.velo.x * dt
 			self.y = self.y + self.velo.y * dt
@@ -46,7 +41,7 @@ function Bullet:update(dt)
 end
 
 function Bullet:draw()
-	-- if self.exists then
+	if self.exists then
 		if self.alliance == 'friendly' then
 			love.graphics.setColor(255,0,0,255)
 			Jutils.draw(self.gfx, self.x, self.y, self.r)
@@ -63,7 +58,7 @@ function Bullet:draw()
 			love.graphics.setColor(255,0,0,255)
 			love.graphics.rectangle('line', self.x - self.w/2, self.y - self.h/2, self.w, self.h)
 		end
-	-- end
+	end
 end
 
 ------------------------------------
@@ -116,4 +111,20 @@ function Bullet:spawn(alliance, x, y, velo_x, velo_y)
 
 	self.alive 		= true
 	self.exists 	= true
+end
+
+-----------------------------------
+
+-- Prototype feature: capturing non-friendly bullets to replenish ammo
+
+function Bullet:captured()
+	self.alliance 	= 'captured'
+	self.velo 		= {x = 0, y = 0}
+end
+
+function Bullet:moveTo(des_x, des_y)
+	local r = lume.angle(self.x, self.y, des_x, des_y)
+
+	self.velo.x = V.b_captureVelo * math.cos(r)
+	self.velo.y = V.b_captureVelo * math.sin(r)
 end
