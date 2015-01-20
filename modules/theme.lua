@@ -1,6 +1,7 @@
 Themes = {
 	'surrounded',
-	'siege',
+	'under siege',
+	'gone wrong',
 	'stranded',
 	'adrifted',
 	'far from home',
@@ -21,4 +22,22 @@ Themes = {
 	'comrades',
 	'brethrens',
 	'mission',
+}
+
+Tagline = {
+	'the wonyun must go home',
+	'we shouldn\'s have taken this mission in the first place',
+	'some things are not meant to be completed',
+	'will someone ever going to make it?',
+	'is it worth it?',
+	'why are we here in the first place?',
+	'i hate this world',
+	'parallel universes in which hope still shines',
+	'decisions are made in seconds and paid for with all the times that remain',
+	'talk to me babe',
+	'those beatiful skies',
+	'val, i haven\'t told you how beautiful you are', -- 24
+	'i miss you',
+	'are we seeing each other again?',
+	''
 }

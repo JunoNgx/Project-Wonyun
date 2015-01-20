@@ -23,7 +23,7 @@ function Star:update(dt)
 end
 
 function Star:draw()
-	love.graphics.setColor(255,255,255,255)
+	love.graphics.setColor(255,255,255,170)
 	Jutils.draw(self.gfx, self.x, self.y, 0, self.scale, self.scale)
 end
 

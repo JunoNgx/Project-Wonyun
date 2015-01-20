@@ -34,7 +34,7 @@ function play:enter()
 	Alarm:after(1, function() play.state = 'inPlay' end)
 
 	-- entities
-	p = Wonyun(1, true, false)
+	p = Wonyun(1, true, true, true)
 	table.insert(Director.alive, p)
 
 	-- debug codes
@@ -51,7 +51,7 @@ function play:enter()
 end
 
 function play:update(dt)
-	if play.state ~= 'paused' then
+	if Gamestate.current() == play and play.state ~= 'paused' then
 		Alarm:update(dt)
 		Timer.update(dt)
 		flux.update(dt)

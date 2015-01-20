@@ -1,25 +1,26 @@
 Wonyun = Class {}
 
-function Wonyun:init(extraAmmo, armoured, shielded)
+function Wonyun:init(extraAmmo, armoured, shielded, barriered)
 	self.flux = require 'libs/flux'
 
 	self.typeid = 'wonyun'
 	self.objType = 'vessel'
 	self.alliance = 'friendly'
 
-	self.x 			= gRes.w * 0.5
-	self.y 			= gRes.h * 0.75
-	self.w 			= 36
-	self.h 			= 36
-	self.w2 		= 64
-	self.h2 		= 64
+	self.x 				= gRes.w * 0.5
+	self.y 				= gRes.h * 0.75
+	self.w 				= 36
+	self.h 				= 36
+	self.w2 			= 64
+	self.h2 			= 64
 
-	self.r 			= -math.pi/2
-	self.oldx 		= self.x
-	self.oldy 		= self.y
-	self.isArmoured = armoured or false
-	self.isShielded = shielded or false
-	self.ammo 		= 10 + 10 * extraAmmo
+	self.r 				= -math.pi/2
+	self.oldx 			= self.x
+	self.oldy 			= self.y
+	self.isArmoured 	= armoured or false
+	self.isShielded 	= shielded or false
+	self.isBarriered	= barriered or false
+	self.ammo 			= 10 + 10 * extraAmmo
 
 	self.velo = {
 		x = 0,
@@ -90,6 +91,7 @@ function Wonyun:draw()
 	love.graphics.setColor(c.white)
 	Jutils.draw(self.gfx, self.x, self.y, self.r)
 
+	-- Throttle
 	local scale_x
 	local scale_y
 
@@ -114,6 +116,14 @@ function Wonyun:draw()
 		self.y - (self.throttle_dist + love.math.random(-5,5))* math.sin(radian),
 		radian + love.math.random(-20,20)/100,
 		scale_x, scale_y)
+	-- Throttle ends
+
+	-- Barrier
+	if self.isBarriered then
+		love.graphics.setColor(150, 220, 200, 255)
+		love.graphics.circle('line', self.x, self.y, 40)
+	end
+	-- Barrier ends
 
 
 	if G.debugMode then
@@ -129,11 +139,13 @@ end
 ----------------------------
 
 function Wonyun:hit()
-	if self.isShielded and self.isArmoured then
+	if self.isBarriered and self.isShielded and self.isArmoured then
+		self.isBarriered = false
+	elseif not self.isBarriered and self.isShielded and self.isArmoured then
 		self.isShielded = false
-	elseif not self.isShielded and self.isArmoured then
+	elseif not self.isBarriered and not self.isShielded and self.isArmoured then
 		self.isArmoured = false
-	elseif not self.isShielded and not self.isArmoured then
+	elseif not self.isBarriered and not self.isShielded and not self.isArmoured then
 		self:kill()
 	end
 end
