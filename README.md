@@ -9,9 +9,33 @@ Gameplay: distance counting and finish
 Gameplay: fail result screen
 Powerup: ammunition
 Powerup: shield
-Additional: enemy drones
-Additional: enemy freighter
-Gameplay:enemy formation
+-- Above is roughly done
+
+-- Trailer stuff
+State: trailerState
+GFX: riley
+GFX: augustus
+GFX: dulce
+GFX: hammerhead
+GFX: koltar
+Decor: tunnel
+Decor: tunnel light
+Decor: a couple more of sky colors
+Decor: distant asteroid shadows
+Audio: tunnel light passby
+Audio: tunnel light
+Audio: dramatic awe upon exiting the tunnel
+Decor: gusts of air
+Audio: mild engine sound
+Entity: meteor
+Decor: dust/smoke
+Decor: Messsage "incoming meteor"
+Audio: dramatic closing sound
+
+
+
+Gameplay: keadani individual behaviour and shot round
+Gameplay: enemy formation
 E:asteroids
 E:Large asteroids
 Gameplay: intervals

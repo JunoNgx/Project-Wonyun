@@ -6,6 +6,7 @@ local Timer = require "libs/hump.timer"
 require 'modules/pool'
 require 'modules/director'
 require 'modules/roadie'
+require 'modules/assistant'
 
 -- Entities
 require 'entities/star'
@@ -13,6 +14,8 @@ require 'entities/star'
 require 'entities/wonyun'
 require 'entities/keadani'
 require 'entities/bullet'
+
+require 'entities/dust'
 
 play = {}
 
@@ -25,6 +28,7 @@ function play:enter()
 	Pool:init()
 	Director:init()
 	Roadie:init()
+	Assistant:init()
 
 	Alarm:reset()
 	Timer.clear()
@@ -62,9 +66,13 @@ function play:update(dt)
 		Director:updateEntities(dt)
 		Director:updateCollision(dt)
 		Roadie:update(dt)
+		Assistant:update(dt)
 
 		-- entities
 		-- p:update(dt)
+		if love.keyboard.isDown('d') then
+			spawnDust(M.getX(), M.getY(), love.math.random(math.pi*2), 20)
+		end
 
 		-- event
 		if p.exists == false then
@@ -86,6 +94,9 @@ function play:draw()
 	-- main gameplay layer
 	Director:drawEntities()
 
+	-- top decor layers
+	Assistant:draw()
+
 	-- UI
 	Input:draw()
 	Director:drawUI()
@@ -93,16 +104,16 @@ function play:draw()
 	love.graphics.setColor(c.white)
 	love.graphics.setFont(debugFont)
 	love.graphics.print('Bullets in pool: '..tostring(#Pool.bullet), 0, 0)
-	love.graphics.print('Keadani in play: '..tostring(#Pool.keadani), 0, 20)
+	love.graphics.print('Keadani in pool: '..tostring(#Pool.keadani), 0, 20)
 	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 40)
-	-- love.graphics.print(tostring(Input.T.ox), 0, 60)
-	love.graphics.print(tostring(play.state), 0, 80)
-	-- love.graphics.print(tostring(M.getX()), 0, 100)
+	love.graphics.print('Star in roadie b1 : '..tostring(#Roadie.b1), 0, 60)
+	love.graphics.print('Dust in pool : '..tostring(#Pool.dust), 0, 80)
+	love.graphics.print('Dust in play : '..tostring(#Assistant.t1), 0, 100)
 	-- love.graphics.print(tostring(M.getY()), 0, 120)
 	-- love.graphics.print(tostring(p.x), 0, 140)
 	-- love.graphics.print(tostring(p.y), 0, 160)
 	-- love.graphics.print(tostring(p.lifetime), 0, 180)
-	love.graphics.print(tostring(love.math.random(-1,1)), 0, 200)
+	love.graphics.print(tostring(play.state), 0, 200)
 
 	-- rightside
 	love.graphics.print('ammo '..tostring(p.ammo), 700, 0)

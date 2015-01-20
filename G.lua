@@ -26,7 +26,11 @@ V = {
 	b_captureVelo = 1000,
 
 	-- Stars
+	s_maxNum = 30,
 	s_veloY = 80,
+
+	-- Dust
+	d_fadingSpeed = 1.5
 }
 
 -- Game Settings and utilities
@@ -34,8 +38,8 @@ V = {
 G = {
 	version = 'pre-alpha',
 
-	-- debugMode = true,
 	debugMode = false,
+	debugMode = true,
 	sensitivity = 70
 }
 

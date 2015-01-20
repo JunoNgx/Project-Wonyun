@@ -11,9 +11,9 @@ Jutils = require 'libs/Jutils'
 require 'G'
 
 -- Other system module
-require 'modules/Utils'
-require 'modules/Input'
-require 'modules/Preload'
+require 'modules/a_Utils'
+require 'modules/a_Input'
+require 'modules/a_Preload'
 
 -- States inclusion
 require 'states/introState'
@@ -45,7 +45,7 @@ function love.load()
 	Gamestate.registerEvents()
    Gamestate.switch(intro)
    -- Gamestate.switch(result)
-   -- Gamestate.switch(play)
+   Gamestate.switch(play)
 	-- Gamestate.switch(ending)
 
 end

@@ -25,13 +25,23 @@ function spawnBullet(alliance, x, y, velo_x, velo_y)
 end
 
 function initStars()
-	for i = 1, 20 do
+	for i = 1, V.s_maxNum do
 		local star = Star()
 
 		star:reset()
 		star:spread()
-		table.insert(Roadie.alive, star)
+		table.insert(Roadie.b1, star)
 	end
+end
+
+function spawnDust(x, y, r, variance)
+	local dust = Pool.dust[1]
+	local variance = variance or 0
+
+	dust:spawn(x, y, r, variance)
+
+	table.insert(Assistant.t1, dust)
+	table.remove(Pool.dust, 1)
 end
 
 -- =============== --

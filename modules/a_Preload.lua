@@ -40,6 +40,7 @@ function preload()
 
 	-- decor objects
 	gfx_star 			= love.graphics.newImage('assets/star.png')
+	gfx_dust			= love.graphics.newImage('assets/dust.png')
 
 	-- debug objects
 	debugGalaxy			= love.graphics.newImage('assets/galaxy.png')

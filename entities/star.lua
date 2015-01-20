@@ -11,7 +11,8 @@ function Star:init()
 
 	self.scale = 1
 	self.velo = {x = 0, y = 0}
-	self.alive = false
+	-- self.alive = false
+	self.exists = false
 
 	self.gfx = gfx_star
 end
@@ -25,6 +26,12 @@ end
 function Star:draw()
 	love.graphics.setColor(255,255,255,170)
 	Jutils.draw(self.gfx, self.x, self.y, 0, self.scale, self.scale)
+
+	if G.debugMode then
+		love.graphics.setColor(255,255,255,170)
+		love.graphics.print(self.velo.y, self.x + 16, self.y)
+		love.graphics.print(self.scale, self.x + 16, self.y + 16)
+	end
 end
 
 function Star:reset()
@@ -36,7 +43,8 @@ function Star:reset()
 	self.scale = randomizer
 	self.velo.y = randomizer * V.s_veloY
 
-	self.alive = true
+	-- self.alive = true
+	self.exists = true
 end
 
 function Star:spread()
@@ -45,5 +53,6 @@ function Star:spread()
 end
 
 function Star:kill()
-	self.alive = false
+	-- self.alive = false
+	self.exists = false
 end

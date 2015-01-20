@@ -15,6 +15,13 @@ function Pool:init()
 		local bullet = Bullet()
 		table.insert(Pool.bullet, bullet)
 	end
+
+	-- Dust
+	self.dust = {}
+	for i = 1, 400 do
+		local dust = Dust()
+		table.insert(Pool.dust, dust)
+	end
 	
 end
 
