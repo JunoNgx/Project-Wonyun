@@ -111,8 +111,8 @@ function play:draw()
 	love.graphics.print('Dust in play : '..tostring(#Assistant.t1), 0, 100)
 	-- love.graphics.print(tostring(M.getY()), 0, 120)
 	-- love.graphics.print(tostring(p.x), 0, 140)
-	-- love.graphics.print(tostring(p.y), 0, 160)
-	-- love.graphics.print(tostring(p.lifetime), 0, 180)
+	love.graphics.print(tostring(love.graphics.getWidth()), 0, 160)
+	love.graphics.print(tostring(love.graphics.getHeight()), 0, 180)
 	love.graphics.print(tostring(play.state), 0, 200)
 
 	-- rightside
