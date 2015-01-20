@@ -14,19 +14,11 @@ function Keadani:init()
 	-- self.w = 1
 	-- self.h = 1
 	self.r = math.pi/2
-
 	self.lifetime = 0
-	-- self.reloadProcess = V.e_fighterFireRate
-
-	self.velo = {
-		x = 0,
-		y = 0,
-	}
-
+	self.velo = {x = 0, y = 0}
 	self.alive 	= false
 	self.exists = false
 
-	-- self.gfx = loader.Image.fighter
 	self.throttle_gfx = nil
 	self.throttle_dist = nil
 end
@@ -173,8 +165,6 @@ function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 	self.velo.x = velo_x
 	local velo_y = velo_y or V.k_defaultVeloY
 	self.velo.y = velo_y
-	-- local extraVelo_y = extraVelo_y or 0
-	-- self.velo.y = self.velo.y + extraVelo_y
 
 	self.alive 	= true
 	self.exists = true

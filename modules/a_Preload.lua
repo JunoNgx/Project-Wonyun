@@ -32,6 +32,8 @@ function preload()
 	gfx_hammerhead 		= love.graphics.newImage('assets/hammerhead.png')
 	gfx_koltar 			= love.graphics.newImage('assets/koltar.png')
 
+	gfx_meteor			= love.graphics.newImage('assets/meteor.png')
+
 	gfx_bullet_f		= love.graphics.newImage('assets/bullet_f.png')
 	gfx_bullet_e		= love.graphics.newImage('assets/bullet_e.png')
 
@@ -43,7 +45,7 @@ function preload()
 	gfx_dust			= love.graphics.newImage('assets/dust.png')
 
 	-- debug objects
-	debugGalaxy			= love.graphics.newImage('assets/galaxy.png')
+	-- debugGalaxy			= love.graphics.newImage('assets/galaxy.png')
 	debugFilter			= love.graphics.newImage('assets/backgroundFilter.png')
 	
 end

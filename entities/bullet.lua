@@ -42,25 +42,25 @@ function Bullet:update(dt)
 end
 
 function Bullet:draw()
-	if self.exists then
-		if self.alliance == 'friendly' then
-			love.graphics.setColor(255,0,0,255)
-			Jutils.draw(self.gfx, self.x, self.y, self.r)
-		elseif self.alliance == 'hostile' then
-			-- love.graphics.setColor(140,200,220,255)
-			love.graphics.setColor(50,80,150,255)
-			Jutils.draw(self.gfx, self.x, self.y)
-		elseif self.alliance == 'neutral' then
-			love.graphics.setColor(250,240,120,255)
-			Jutils.draw(self.gfx, self.x, self.y)
-		end
-
-		if G.debugMode then
-			love.graphics.setColor(255,0,0,255)
-			love.graphics.rectangle('line', self.x - self.w/2, self.y - self.h/2, self.w, self.h)
-			love.graphics.print(self.alliance, self.x + 16, self.y)
-		end
+	-- if self.exists then
+	if self.alliance == 'friendly' then
+		love.graphics.setColor(255,0,0,255)
+		Jutils.draw(self.gfx, self.x, self.y, self.r)
+	elseif self.alliance == 'hostile' then
+		-- love.graphics.setColor(140,200,220,255)
+		love.graphics.setColor(50,80,150,255)
+		Jutils.draw(self.gfx, self.x, self.y)
+	elseif self.alliance == 'neutral' then
+		love.graphics.setColor(250,240,120,255)
+		Jutils.draw(self.gfx, self.x, self.y)
 	end
+
+	if G.debugMode then
+		love.graphics.setColor(255,0,0,255)
+		love.graphics.rectangle('line', self.x - self.w/2, self.y - self.h/2, self.w, self.h)
+		love.graphics.print(self.alliance, self.x + 16, self.y)
+	end
+	-- end
 end
 
 ------------------------------------
@@ -108,9 +108,9 @@ function Bullet:spawn(alliance, x, y, velo_x, velo_y)
 
 	self.x 			= x
 	self.y 			= y
-	self.lifetime 	= 0
 	self.velo.x 	= velo_x or 0
 
+	self.lifetime 	= 0
 	self.alive 		= true
 	self.exists 	= true
 end

@@ -27,6 +27,10 @@ function Director:updateEntities(dt)
 				table.insert(Pool.keadani, entity)
 			end
 
+			if entity.baseid == 'meteor' then
+				table.insert(Pool.meteor, entity)
+			end
+
 			if entity.baseid == 'bullet' then
 				table.insert(Pool.bullet, entity)
 			end
@@ -63,6 +67,31 @@ function Director:updateCollision(dt)
 						entity:hit()
 						hitEntity:hit()
 					end
+				end
+			end
+		end
+
+		-- Enemy vessel hit by anything non-hostile
+		if entity.baseid == 'keadani' then
+			for i, hitEntity in ipairs(Director.alive) do
+				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
+					if hitEntity.alliance ~= 'hostile' then
+
+						entity:hit()
+						hitEntity:hit()
+					end
+				end
+			end
+		end
+
+		-- Neutral vessels hit by everything not itself
+		if entity.alliance == 'neutral' and entity.objType == 'vessel' then
+			for i, hitEntity in ipairs(Director.alive) do
+				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
+
+					entity:hit()
+					hitEntity:hit()
+					
 				end
 			end
 		end

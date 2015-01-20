@@ -13,6 +13,15 @@ function spawnKeadani(unitType, x, y, velo_x, velo_y)
 	table.remove(Pool.keadani, 1)
 end
 
+function spawnMeteor(x, y, r, velo, scaleSize)
+	local meteor = Pool.meteor[1]
+
+	meteor:spawn(x, y, r, velo, scaleSize)
+
+	table.insert(Director.alive, meteor)
+	table.remove(Pool.meteor, 1)
+end
+
 
 function spawnBullet(alliance, x, y, velo_x, velo_y)
 	local bullet = Pool.bullet[1]

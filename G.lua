@@ -20,6 +20,11 @@ V = {
 	k_defaultFireRate = 1.5,
 	k_rileyFireRate = 1.5,
 
+	-- Meteor
+	m_defaultSize = 48,
+	m_defaultVelo = 300,
+	m_emitRate = 0.01,
+
 	-- Bullets
 	bf_veloY = -1000,
 	be_veloY = 300,
@@ -30,7 +35,7 @@ V = {
 	s_veloY = 80,
 
 	-- Dust
-	d_fadingSpeed = 1.5
+	d_fadingSpeed = 1.5,
 }
 
 -- Game Settings and utilities

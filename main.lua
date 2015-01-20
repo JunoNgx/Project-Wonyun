@@ -45,7 +45,7 @@ function love.load()
 	Gamestate.registerEvents()
    Gamestate.switch(intro)
    -- Gamestate.switch(result)
-   -- Gamestate.switch(play)
+   Gamestate.switch(play)
 	-- Gamestate.switch(ending)
 
 end

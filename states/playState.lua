@@ -14,6 +14,7 @@ require 'entities/star'
 require 'entities/wonyun'
 require 'entities/keadani'
 require 'entities/bullet'
+require 'entities/meteor'
 
 require 'entities/dust'
 
@@ -49,9 +50,20 @@ function play:enter()
 
 		spawnKeadani(1, x, y)
 		end)
+
 	Timer.addPeriodic(2, function()
-			flux.to(filter, 2, {opacity = love.math.random(50,250)})
+		flux.to(filter, 2, {opacity = love.math.random(50,250)})
 		end)
+
+	Timer.addPeriodic(1, function()
+		local x = love.math.random(gRes.w)
+		local y = 0 - 300
+		local r = love.math.random(8,23)/10
+		-- local r = math.pi/2
+
+		spawnMeteor(x, y, r)
+		end)
+
 end
 
 function play:update(dt)
@@ -72,6 +84,10 @@ function play:update(dt)
 		-- p:update(dt)
 		if love.keyboard.isDown('d') then
 			spawnDust(M.getX(), M.getY(), love.math.random(math.pi*2), 20)
+		end
+
+		if love.keyboard.isDown('m') then
+			spawnMeteor(M.getX(), M.getY(), math.pi/2)
 		end
 
 		-- event
@@ -105,12 +121,12 @@ function play:draw()
 	love.graphics.setFont(debugFont)
 	love.graphics.print('Bullets in pool: '..tostring(#Pool.bullet), 0, 0)
 	love.graphics.print('Keadani in pool: '..tostring(#Pool.keadani), 0, 20)
-	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 40)
+	love.graphics.print('Meteors in pool: '..tostring(#Pool.meteor), 0, 40)
 	love.graphics.print('Star in roadie b1 : '..tostring(#Roadie.b1), 0, 60)
 	love.graphics.print('Dust in pool : '..tostring(#Pool.dust), 0, 80)
 	love.graphics.print('Dust in play : '..tostring(#Assistant.t1), 0, 100)
 	-- love.graphics.print(tostring(M.getY()), 0, 120)
-	-- love.graphics.print(tostring(p.x), 0, 140)
+	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 140)
 	love.graphics.print(tostring(love.graphics.getWidth()), 0, 160)
 	love.graphics.print(tostring(love.graphics.getHeight()), 0, 180)
 	love.graphics.print(tostring(play.state), 0, 200)

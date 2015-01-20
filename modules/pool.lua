@@ -4,9 +4,16 @@ function Pool:init()
 
 	-- Keadani base, hostiles
 	self.keadani = {}
-	for i = 1, 100 do
+	for i = 1, 50 do
 		local keadani = Keadani()
 		table.insert(Pool.keadani, keadani)
+	end
+
+	-- Meteor, neutral, natural hazard
+	self.meteor = {}
+	for i = 1, 50 do
+		local meteor = Meteor()
+		table.insert(Pool.meteor, meteor)
 	end
 
 	-- Bullet base
@@ -18,7 +25,7 @@ function Pool:init()
 
 	-- Dust
 	self.dust = {}
-	for i = 1, 400 do
+	for i = 1, 2000 do
 		local dust = Dust()
 		table.insert(Pool.dust, dust)
 	end
