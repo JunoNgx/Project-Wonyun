@@ -10,6 +10,7 @@ require 'modules/assistant'
 
 -- Entities
 require 'entities/star'
+require 'entities/light'
 
 require 'entities/wonyun'
 require 'entities/keadani'
@@ -43,7 +44,8 @@ function play:enter()
 	table.insert(Director.alive, p)
 
 	-- debug codes
-	filter = {opacity = 255}
+
+	-- enemy spawn
 	Timer.addPeriodic(1, function()
 		local x = love.math.random(gRes.w)
 		local y = 0
@@ -51,10 +53,13 @@ function play:enter()
 		spawnKeadani(1, x, y)
 		end)
 
+	-- Sky filter
+	filter = {opacity = 255}
 	Timer.addPeriodic(2, function()
 		flux.to(filter, 2, {opacity = love.math.random(50,250)})
 		end)
 
+	-- Meteor
 	Timer.addPeriodic(1, function()
 		local x = love.math.random(gRes.w)
 		local y = 0 - 300
@@ -62,6 +67,9 @@ function play:enter()
 		-- local r = math.pi/2
 
 		spawnMeteor(x, y, r)
+		end)
+	Timer.addPeriodic(1, function()
+		spawnLight()
 		end)
 
 end
@@ -125,9 +133,9 @@ function play:draw()
 	love.graphics.print('Star in roadie b1 : '..tostring(#Roadie.b1), 0, 60)
 	love.graphics.print('Dust in pool : '..tostring(#Pool.dust), 0, 80)
 	love.graphics.print('Dust in play : '..tostring(#Assistant.t1), 0, 100)
-	-- love.graphics.print(tostring(M.getY()), 0, 120)
+	love.graphics.print('Light in play : '..tostring(#Roadie.b3), 0, 120)
 	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 140)
-	love.graphics.print(tostring(love.graphics.getWidth()), 0, 160)
+	love.graphics.print('Light in pool: '..tostring(#Pool.light), 0, 160)
 	love.graphics.print(tostring(love.graphics.getHeight()), 0, 180)
 	love.graphics.print(tostring(play.state), 0, 200)
 

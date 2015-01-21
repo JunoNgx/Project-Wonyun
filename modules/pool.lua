@@ -29,6 +29,13 @@ function Pool:init()
 		local dust = Dust()
 		table.insert(Pool.dust, dust)
 	end
+
+	-- tunnel light
+	self.light = {}
+	for i = 1, 20 do
+		local light = Light()
+		table.insert(self.light, light)
+	end
 	
 end
 

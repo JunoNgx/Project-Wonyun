@@ -9,6 +9,6 @@ function love.conf(t)
     t.window.height 	= 720            	-- The window height (number)
     t.window.borderless = true
     -- t.window.resizable = true
+    -- t.window.fullscreen = true
    
-	
 end

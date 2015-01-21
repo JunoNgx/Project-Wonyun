@@ -25,6 +25,9 @@ require 'states/creditState'
 require 'states/pauseState'
 
 function love.load()
+   
+   -- love.window.setMode(0,0, {fullscreen=false})
+   -- love.window.setFullscreen(true)
 
    loader = require 'libs/loader'
    loader.setBaseImageDir('assets')

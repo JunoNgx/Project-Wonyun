@@ -36,6 +36,10 @@ V = {
 
 	-- Dust
 	d_fadingSpeed = 1.5,
+
+	-- Light
+	l_veloY = 3000,
+
 }
 
 -- Game Settings and utilities
@@ -44,7 +48,7 @@ G = {
 	version = 'pre-alpha',
 
 	debugMode = false,
-	debugMode = true,
+	-- debugMode = true,
 	sensitivity = 70
 }
 

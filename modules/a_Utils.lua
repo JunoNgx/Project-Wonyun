@@ -43,6 +43,15 @@ function initStars()
 	end
 end
 
+function spawnLight()
+	local light = Pool.light[1]
+
+	light:spawn()
+
+	table.insert(Roadie.b3, light)
+	table.remove(Pool.light, 1)
+end
+
 function spawnDust(x, y, r, variance)
 	local dust = Pool.dust[1]
 	local variance = variance or 0
