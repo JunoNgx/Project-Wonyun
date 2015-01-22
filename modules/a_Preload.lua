@@ -45,6 +45,18 @@ function preload()
 	gfx_dust			= love.graphics.newImage('assets/dust.png')
 	gfx_light			= love.graphics.newImage('assets/light.png')
 
+	gfx_explosion		= {
+		love.graphics.newImage('assets/explosion_1.png'),
+		love.graphics.newImage('assets/explosion_2.png'),
+		love.graphics.newImage('assets/explosion_3.png'),
+		love.graphics.newImage('assets/explosion_4.png'),
+		love.graphics.newImage('assets/explosion_5.png'),
+		love.graphics.newImage('assets/explosion_6.png'),
+		love.graphics.newImage('assets/explosion_7.png'),
+		love.graphics.newImage('assets/explosion_8.png'),
+		love.graphics.newImage('assets/explosion_9.png'),
+	}
+
 	-- debug objects
 	-- debugGalaxy			= love.graphics.newImage('assets/galaxy.png')
 	debugFilter			= love.graphics.newImage('assets/backgroundFilter.png')

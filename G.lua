@@ -40,6 +40,10 @@ V = {
 	-- Light
 	l_veloY = 3000,
 
+	-- explosion
+	e_lifetimeMax = 1,
+	e_frameRate = 0.02,
+
 }
 
 -- Game Settings and utilities
@@ -48,7 +52,7 @@ G = {
 	version = 'pre-alpha',
 
 	debugMode = false,
-	-- debugMode = true,
+	debugMode = true,
 	sensitivity = 70
 }
 

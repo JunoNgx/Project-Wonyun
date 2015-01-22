@@ -36,6 +36,13 @@ function Pool:init()
 		local light = Light()
 		table.insert(self.light, light)
 	end
+
+	-- explosion
+	self.explosion = {}
+	for i = 1, 40 do
+		local explosion = Explosion()
+		table.insert(self.explosion, explosion)
+	end
 	
 end
 

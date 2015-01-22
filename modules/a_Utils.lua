@@ -52,6 +52,18 @@ function spawnLight()
 	table.remove(Pool.light, 1)
 end
 
+function spawnExplosion(x, y, variance, bigExplosion)
+	local explosion = Pool.explosion[1]
+	local bigExplosion = bigExplosion or false
+
+	explosion:spawn(x, y, variance)
+
+	-- camera:shake()
+
+	table.insert(Assistant.t2, explosion)
+	table.remove(Pool.explosion, 1)
+end
+
 function spawnDust(x, y, r, variance)
 	local dust = Pool.dust[1]
 	local variance = variance or 0

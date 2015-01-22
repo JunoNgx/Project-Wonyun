@@ -18,6 +18,7 @@ require 'entities/bullet'
 require 'entities/meteor'
 
 require 'entities/dust'
+require 'entities/explosion'
 
 play = {}
 

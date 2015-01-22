@@ -65,6 +65,8 @@ end
 function Meteor:kill()
 	self.alive = false
 	self:finishKill()
+
+	spawnExplosion(self.x, self.y)
 end
 
 function Meteor:finishKill()

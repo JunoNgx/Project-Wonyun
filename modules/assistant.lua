@@ -2,6 +2,7 @@ Assistant = {}
 
 function Assistant:init()
 	self.t1 = {}
+	self.t2 = {}
 	-- initDust()
 	-- initGust()
 end
@@ -25,6 +26,17 @@ function Assistant:update(dt)
 			table.remove(self.t1, i)
 		end
 	end
+
+	for i, object in ipairs(self.t2) do
+		if object.exists then
+			object:update(dt)
+		else
+			if object.typeid == 'explosion' then
+				table.insert(Pool.explosion, object)
+			end
+			table.remove(self.t2, i)
+		end
+	end
 end
 
 function Assistant:draw()
@@ -32,6 +44,9 @@ function Assistant:draw()
 	-- 	self.t1[i]:draw()
 	-- end
 	for i, object in ipairs(self.t1) do
+		object:draw()
+	end
+	for i, object in ipairs(self.t2) do
 		object:draw()
 	end
 end

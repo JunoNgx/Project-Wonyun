@@ -88,6 +88,8 @@ end
 function Keadani:kill()
 	self.alive = false
 	self:finishKill()
+
+	spawnExplosion(self.x, self.y)
 end
 
 function Keadani:finishKill()
