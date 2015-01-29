@@ -10,7 +10,7 @@ V = {
 	inputTweenTime = 0.2,
 
 	-- Gameplay
-	distanceDestination = 15000,
+	distanceDestination = 250000,
 
 	-- Wonyun/player
 	w_ReloadTime = 0.2,
@@ -36,6 +36,8 @@ V = {
 
 	-- Dust
 	d_fadingSpeed = 1.5,
+	d_fadingSpeedMin = 1.2,
+	d_fadingSpeedMax = 1.7,
 
 	-- Light
 	l_veloY = 3000,
@@ -43,6 +45,7 @@ V = {
 	-- explosion
 	e_lifetimeMax = 1,
 	e_frameRate = 0.02,
+	-- e_frameRate = 0.5,
 
 }
 
@@ -60,8 +63,8 @@ G = {
 
 if love.system.getOS() ~= 'Android' then
 	gRes = {
-		w = 1280,
-		h = 720
+		w = 1920,
+		h = 1080
 	}
 else
     gRes = {

@@ -52,16 +52,19 @@ function spawnLight()
 	table.remove(Pool.light, 1)
 end
 
-function spawnExplosion(x, y, variance, bigExplosion)
-	local explosion = Pool.explosion[1]
-	local bigExplosion = bigExplosion or false
+function spawnExplosion(x, y, variance, nummer)
+	-- local bigExplosion = bigExplosion or false
+	local nummer = nummer or 1
 
-	explosion:spawn(x, y, variance)
+	for i = 1, nummer do
+		local explosion = Pool.explosion[i]
+		explosion:spawn(x, y, variance)
+
+		table.insert(Assistant.t2, explosion)
+		table.remove(Pool.explosion, 1)
+	end
 
 	-- camera:shake()
-
-	table.insert(Assistant.t2, explosion)
-	table.remove(Pool.explosion, 1)
 end
 
 function spawnDust(x, y, r, variance)
@@ -97,11 +100,11 @@ end
 -- Check if two objects are colliding
 function IsColliding(e1, e2)
 	return (
-		e1.x < e2.x + e2.w and
-		e2.x < e1.x + e1.w and
+		e1.x - e1.w/2 < e2.x - e2.w/2 + e2.w and
+		e2.x - e2.w/2 < e1.x - e1.w/2 + e1.w and
 
-		e1.y < e2.y + e2.h and
-		e2.y < e1.y + e1.h
+		e1.y - e1.h/2 < e2.y - e2.h/2 + e2.h and
+		e2.y - e2.h/2 < e1.y - e1.h/2 + e1.h
 		)
 end
 

@@ -41,7 +41,7 @@ function play:enter()
 	Alarm:after(1, function() play.state = 'inPlay' end)
 
 	-- entities
-	p = Wonyun(1, true, true, true)
+	p = Wonyun(50, true, true, true)
 	table.insert(Director.alive, p)
 
 	-- debug codes
@@ -51,7 +51,7 @@ function play:enter()
 		local x = love.math.random(gRes.w)
 		local y = 0
 
-		spawnKeadani(1, x, y)
+		spawnKeadani(love.math.random(1,5), x, y)
 		end)
 
 	-- Sky filter
@@ -69,9 +69,11 @@ function play:enter()
 
 		spawnMeteor(x, y, r)
 		end)
-	Timer.addPeriodic(1, function()
-		spawnLight()
-		end)
+
+	-- Spawn Light
+	-- Timer.addPeriodic(1, function()
+	-- 	spawnLight()
+	-- 	end)
 
 end
 
@@ -113,7 +115,8 @@ end
 function play:draw()
 	-- background layer
 	love.graphics.setColor(255,255,255, filter.opacity)
-	love.graphics.draw(debugFilter)
+	-- love.graphics.draw(debugFilter)
+	Jutils.draw(debugFilter, gRes.w/2, gRes.h/2, 0, love.graphics.getWidth()/debugFilter:getWidth(), love.graphics.getHeight()/debugFilter:getHeight())
 	Roadie:draw()
 
 	-- main gameplay layer
@@ -128,26 +131,26 @@ function play:draw()
 
 	love.graphics.setColor(c.white)
 	love.graphics.setFont(debugFont)
-	love.graphics.print('Bullets in pool: '..tostring(#Pool.bullet), 0, 0)
-	love.graphics.print('Keadani in pool: '..tostring(#Pool.keadani), 0, 20)
-	love.graphics.print('Meteors in pool: '..tostring(#Pool.meteor), 0, 40)
-	love.graphics.print('Star in roadie b1 : '..tostring(#Roadie.b1), 0, 60)
-	love.graphics.print('Dust in pool : '..tostring(#Pool.dust), 0, 80)
-	love.graphics.print('Dust in play : '..tostring(#Assistant.t1), 0, 100)
-	love.graphics.print('Light in play : '..tostring(#Roadie.b3), 0, 120)
-	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 140)
-	love.graphics.print('Light in pool: '..tostring(#Pool.light), 0, 160)
-	love.graphics.print(tostring(love.graphics.getHeight()), 0, 180)
-	love.graphics.print(tostring(play.state), 0, 200)
+	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 0)
+	love.graphics.print('Explosions: '..tostring(#Assistant.t2), 0, 20)
+	-- love.graphics.print('Meteors in pool: '..tostring(#Pool.meteor), 0, 40)
+	-- love.graphics.print('Star in roadie b1 : '..tostring(#Roadie.b1), 0, 60)
+	-- love.graphics.print('Dust in pool : '..tostring(#Pool.dust), 0, 80)
+	-- love.graphics.print('Dust in play : '..tostring(#Assistant.t1), 0, 100)
+	-- love.graphics.print('Light in play : '..tostring(#Roadie.b3), 0, 120)
+	-- love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 140)
+	-- love.graphics.print('Light in pool: '..tostring(#Pool.light), 0, 160)
+	-- love.graphics.print(tostring(love.graphics.getHeight()), 0, 180)
+	-- love.graphics.print(tostring(play.state), 0, 200)
 
 	-- rightside
 	love.graphics.print('ammo '..tostring(p.ammo), 700, 0)
-	love.graphics.print('armor '..tostring(p.isArmoured), 700, 20)
-	love.graphics.print('shield '..tostring(p.isShielded), 700, 40)
-	love.graphics.print('reloaded '..tostring(p:readyToFire()), 700, 60)
-	love.graphics.print('ammo check '..tostring(p:checkAmmo()), 700, 80)
-	love.graphics.print('velo x '..tostring(p.velo.x), 700, 100)
-	love.graphics.print('velo y '..tostring(p.velo.y), 700, 120)
+	-- love.graphics.print('armor '..tostring(p.isArmoured), 700, 20)
+	-- love.graphics.print('shield '..tostring(p.isShielded), 700, 40)
+	-- love.graphics.print('reloaded '..tostring(p:readyToFire()), 700, 60)
+	-- love.graphics.print('ammo check '..tostring(p:checkAmmo()), 700, 80)
+	-- love.graphics.print('velo x '..tostring(p.velo.x), 700, 100)
+	-- love.graphics.print('velo y '..tostring(p.velo.y), 700, 120)
 	-- love.graphics.print(tostring(p.x), 700, 140)
 	-- love.graphics.print(tostring(p.y), 700, 160)
 end
@@ -268,5 +271,9 @@ function play:keypressed(k)
 		elseif play.state == 'paused' then
 			play:resume()
 		end
+	end
+
+	if k == 'e' then
+		spawnExplosion(M.getX(), M.getY(), 48, love.math.random(4,8))
 	end
 end

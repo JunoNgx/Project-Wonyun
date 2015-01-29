@@ -35,9 +35,9 @@ function Keadani:update(dt)
 
 		if self.alive then
 			-- Fire when ready
-			if self:readyToFire() then 
-				self:fire()
-			end
+			-- if self:readyToFire() then 
+			-- 	self:fire()
+			-- end
 		
 			updateVelocity(self, dt)
 
@@ -75,6 +75,7 @@ function Keadani:draw()
 
 			love.graphics.setColor(255,255,255)
 			love.graphics.print(self.velo.y, self.x + 32, self.y)
+			love.graphics.print(self.typeid, self.x + 48, self.y)
 		end
 	end
 end
@@ -87,9 +88,20 @@ end
 
 function Keadani:kill()
 	self.alive = false
-	self:finishKill()
+	
+	if self.typeid == 'riley' then
+		spawnExplosion(self.x, self.y, 24, love.math.random(2,3))
+	elseif self.typeid == 'augustus' then
+		spawnExplosion(self.x, self.y, 24, love.math.random(2,3))
+	elseif self.typeid == 'dulce' then
+		spawnExplosion(self.x, self.y)
+	elseif self.typeid == 'hammerhead' then
+		spawnExplosion(self.x, self.y, 60, love.math.random(3,6))
+	elseif self.typeid == 'koltar' then
+		spawnExplosion(self.x, self.y, 48, love.math.random(4,7))
+	end
 
-	spawnExplosion(self.x, self.y)
+	self:finishKill()
 end
 
 function Keadani:finishKill()
@@ -113,17 +125,17 @@ function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 
 	if unitType == 1 then -- riley
 		self.typeid				= 'riley'
-		self.w 					= 48
-		self.h 					= 48
+		self.w 					= 140
+		self.h 					= 64
 		self.fireRate 			= V.k_rileyFireRate
 
 		self.gfx 				= gfx_riley
 		self.throttle_gfx 		= gfx_throttle1
-		self.throttle_dist		= 44
+		self.throttle_dist		= 24
 	elseif unitType == 2 then -- augustus/frigate
 		self.typeid				= 'augustus'
-		self.w 					= 52
-		self.h 					= 64
+		self.w 					= 72
+		self.h 					= 72
 		self.fireRate 			= V.k_defaultFireRate
 
 		self.gfx 				= gfx_augustus
@@ -131,8 +143,8 @@ function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 		self.throttle_dist		= 46
 	elseif unitType == 3 then -- dulce/drone, homing fire
 		self.typeid				= 'dulce'
-		self.w 					= 36
-		self.h 					= 36
+		self.w 					= 100
+		self.h 					= 48
 		self.fireRate 			= V.k_defaultFireRate
 
 		self.gfx 				= gfx_dulce
@@ -140,8 +152,8 @@ function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 		self.throttle_dist		= 46
 	elseif unitType == 4 then -- hammerhead/sidefire
 		self.typeid				= 'hammerhead'
-		self.w 					= 48
-		self.h 					= 48
+		self.w 					= 96
+		self.h 					= 144
 		self.fireRate 			= V.k_defaultFireRate
 
 		self.gfx 				= gfx_hammerhead
@@ -149,7 +161,7 @@ function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 		self.throttle_dist		= 46
 	elseif unitType == 5 then -- koltar/boss, 8-direction shot
 		self.typeid				= 'koltar'
-		self.w 					= 48
+		self.w 					= 160
 		self.h 					= 48
 		self.fireRate 			= V.k_defaultFireRate
 

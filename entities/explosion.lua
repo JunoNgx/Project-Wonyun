@@ -34,7 +34,7 @@ function Explosion:update(dt)
 end
 
 function Explosion:draw()
-	love.graphics.setColor(255,255,255)
+	love.graphics.setColor(240,120,120)
 	Jutils.draw(self.gfx, self.x, self.y, self.r, self.scale, self.scale)
 
 	if G.debugMode then

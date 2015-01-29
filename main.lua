@@ -26,7 +26,7 @@ require 'states/pauseState'
 
 function love.load()
    
-   -- love.window.setMode(0,0, {fullscreen=false})
+   -- love.window.setMode(0,0, {fullscreen=true})
    -- love.window.setFullscreen(true)
 
    loader = require 'libs/loader'
@@ -40,7 +40,7 @@ function love.load()
       y = love.graphics.getHeight()/gRes.h
    }
 
-   love.graphics.setDefaultFilter( 'nearest', 'nearest')
+   -- love.graphics.setDefaultFilter( 'nearest', 'nearest')
 
    preload()
    Input:init()

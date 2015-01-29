@@ -9,8 +9,8 @@ function Wonyun:init(extraAmmo, armoured, shielded, barriered)
 
 	self.x 				= gRes.w * 0.5
 	self.y 				= gRes.h * 0.75
-	self.w 				= 36
-	self.h 				= 36
+	self.w 				= 32
+	self.h 				= 32
 	self.w2 			= 64
 	self.h2 			= 64
 
@@ -35,6 +35,7 @@ function Wonyun:init(extraAmmo, armoured, shielded, barriered)
 	self.exists = true
 
 	self.gfx = gfx_wonyun
+	self.gfx_armor = gfx_wonyun_armor
 
 	self.throttle_gfx = gfx_throttle1
 	self.throttle_dist = 40
@@ -124,6 +125,13 @@ function Wonyun:draw()
 		love.graphics.circle('line', self.x, self.y, 40)
 	end
 	-- Barrier ends
+
+	-- Armor
+	if self.isArmoured then
+		love.graphics.setColor(255, 255, 255, 255)
+		Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
+	end
+	-- Armor ends
 
 
 	if G.debugMode then
