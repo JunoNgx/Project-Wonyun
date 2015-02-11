@@ -2,36 +2,7 @@
 -- Spawning functions --
 -- ================== --
 
-function spawnKeadani(unitType, x, y, velo_x, velo_y)
-	-- local r = r or math.pi/2
-	local keadani = Pool.keadani[1]
-	local unitType = unitType
 
-	keadani:spawn(unitType, x, y, velo_x, velo_y)
-
-	table.insert(Director.alive, keadani)
-	table.remove(Pool.keadani, 1)
-end
-
-function spawnMeteor(x, y, r, velo, scaleSize)
-	local meteor = Pool.meteor[1]
-
-	meteor:spawn(x, y, r, velo, scaleSize)
-
-	table.insert(Director.alive, meteor)
-	table.remove(Pool.meteor, 1)
-end
-
-
-function spawnBullet(alliance, x, y, velo_x, velo_y)
-	local bullet = Pool.bullet[1]
-
-	bullet:spawn(alliance, x, y, velo_x, velo_y)
-	-- love.audio.play(sfx_eFire)
-
-	table.insert(Director.alive, bullet)
-	table.remove(Pool.bullet, 1)
-end
 
 function initStars()
 	for i = 1, V.s_maxNum do
@@ -43,39 +14,6 @@ function initStars()
 	end
 end
 
-function spawnLight()
-	local light = Pool.light[1]
-
-	light:spawn()
-
-	table.insert(Roadie.b3, light)
-	table.remove(Pool.light, 1)
-end
-
-function spawnExplosion(x, y, variance, nummer)
-	-- local bigExplosion = bigExplosion or false
-	local nummer = nummer or 1
-
-	for i = 1, nummer do
-		local explosion = Pool.explosion[i]
-		explosion:spawn(x, y, variance)
-
-		table.insert(Assistant.t2, explosion)
-		table.remove(Pool.explosion, 1)
-	end
-
-	-- camera:shake()
-end
-
-function spawnDust(x, y, r, variance)
-	local dust = Pool.dust[1]
-	local variance = variance or 0
-
-	dust:spawn(x, y, r, variance)
-
-	table.insert(Assistant.t1, dust)
-	table.remove(Pool.dust, 1)
-end
 
 -- =============== --
 -- Utitlities func --
@@ -127,3 +65,7 @@ function humanizeCounter(nummer)
 	end
 end
 
+function math.lerp(a, b, t)
+	if a < b then return a + (b - a) * t
+	else return b end
+end

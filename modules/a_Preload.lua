@@ -1,6 +1,6 @@
 function preload()
 	-- Shared
-	debugFont =	love.graphics.newFont('assets/SourceCodePro-Medium.ttf',20)
+	debugFont =	love.graphics.newFont('assets/SourceCodePro-Medium.ttf',10)
 	debugFont:setFilter('nearest','nearest')
 
 	-- Menu
@@ -45,6 +45,7 @@ function preload()
 	gfx_star 			= love.graphics.newImage('assets/star.png')
 	gfx_dust			= love.graphics.newImage('assets/dust.png')
 	gfx_light			= love.graphics.newImage('assets/light.png')
+	gfx_fragment		= love.graphics.newImage('assets/fragment.png')
 
 	gfx_explosion		= {
 		love.graphics.newImage('assets/explosion_1.png'),

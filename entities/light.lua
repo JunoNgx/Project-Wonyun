@@ -1,5 +1,14 @@
 Light = Class {}
 
+function spawnLight()
+	local light = Pool.light[1]
+
+	light:spawn()
+
+	table.insert(Roadie.b3, light)
+	table.remove(Pool.light, 1)
+end
+
 function Light:init()
 	self.baseid = 'light'
 	self.typeid = 'light'

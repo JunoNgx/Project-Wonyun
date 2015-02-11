@@ -33,6 +33,8 @@ function Assistant:update(dt)
 		else
 			if object.typeid == 'explosion' then
 				table.insert(Pool.explosion, object)
+			elseif object.typeid == 'fragment' then
+				table.insert(Pool.fragment, object)
 			end
 			table.remove(self.t2, i)
 		end

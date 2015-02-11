@@ -8,8 +8,8 @@ function love.conf(t)
     -- t.window.width 		= 1280              -- The window width (number)
     -- t.window.height 	= 720            	-- The window height (number)
 
-    t.window.width 		= 1920              -- The window width (number)
-    t.window.height 	= 1080            	-- The window height (number)
+    t.window.width 		= 1280              -- The window width (number)
+    t.window.height 	= 720            	-- The window height (number)
     t.window.borderless = true
     -- t.window.resizable = true
     -- t.window.fullscreen = true

@@ -1,5 +1,45 @@
 Explosion = Class {}
 
+function spawnExplosion(x, y, variance, nummer, isBig)
+	local isBig = isBig or false
+	local nummer = nummer or 1
+
+	for i = 1, nummer do
+		local explosion = Pool.explosion[i]
+		explosion:spawn(x, y, variance)
+
+		table.insert(Assistant.t2, explosion)
+		table.remove(Pool.explosion, 1)
+	end
+
+	if isBig then
+		local nummer = love.math.random(2,5)
+		for i = 1, nummer do
+			spawnFragment(M.getX(), M.getY(), love.math.random(math.pi*2), true)
+		end
+	end
+
+	-- camera:shake()
+end
+
+-- function spawnBigExplosion(x, y, variance, nummer)
+-- 	local nummer = nummer or 1
+
+-- 	for i = 1, nummer do
+-- 		local explosion = Pool.explosion[i]
+-- 		explosion:spawn(x, y, variance)
+
+-- 		table.insert(Assistant.t2, explosion)
+-- 		table.remove(Pool.explosion, 1)
+-- 	end
+
+-- 	local nummer = love.math.random(2,5)
+-- 	for i = 1, nummer do
+-- 		spawnFragment(M.getX(), M.getY(), love.math.random(math.pi*2), true)
+-- 	end
+
+-- end
+
 function Explosion:init()
 
 	self.baseid = 'explosion'
@@ -54,7 +94,7 @@ function Explosion:spawn(x, y, variance)
 	self.x = x + love.math.random(-variance, variance)
 	self.y = y + love.math.random(-variance, variance)
 
-	self.scale = love.math.random(8,12)/10
+	self.scale = love.math.random(5,8)/10
 	self.r = love.math.random(0,4) * math.pi
 	self.lifetime = 0
 

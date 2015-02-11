@@ -1,5 +1,9 @@
 Mine = Class {}
 
+function spawnMine()
+
+end
+
 function Mine:init()
 
 end

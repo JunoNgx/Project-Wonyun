@@ -1,5 +1,15 @@
 Bullet = Class {}
 
+function spawnBullet(alliance, x, y, velo_x, velo_y)
+	local bullet = Pool.bullet[1]
+
+	bullet:spawn(alliance, x, y, velo_x, velo_y)
+	-- love.audio.play(sfx_eFire)
+
+	table.insert(Director.alive, bullet)
+	table.remove(Pool.bullet, 1)
+end
+
 function Bullet:init()
 
 	self.baseid = 'bullet'

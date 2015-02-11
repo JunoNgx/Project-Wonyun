@@ -35,6 +35,7 @@ V = {
 	s_veloY = 80,
 
 	-- Dust
+	d_velo = 50,
 	d_fadingSpeed = 1.5,
 	d_fadingSpeedMin = 1.2,
 	d_fadingSpeedMax = 1.7,
@@ -46,6 +47,15 @@ V = {
 	e_lifetimeMax = 1,
 	e_frameRate = 0.02,
 	-- e_frameRate = 0.5,
+
+	--fragments
+	f_minmaxLifetime = 2,
+	f_maxmaxLifetime = 9,
+	f_emitRate = 0.01,
+	f_minturnSpeed = 5,
+	f_maxturnSpeed = 500,
+	f_minVelo = 200,
+	f_maxVelo = 400,
 
 }
 
@@ -63,12 +73,12 @@ G = {
 
 if love.system.getOS() ~= 'Android' then
 	gRes = {
-		w = 1920,
-		h = 1080
+		w = 640,
+		h = 360
 	}
 else
     gRes = {
-    	w = 1280
+    	w = 640
     }
     local ratioLandscape = love.graphics.getWidth()/love.graphics.getHeight()
     local ratioPortrait = love.graphics.getHeight()/love.graphics.getWidth()

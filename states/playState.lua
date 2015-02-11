@@ -19,6 +19,7 @@ require 'entities/meteor'
 
 require 'entities/dust'
 require 'entities/explosion'
+require 'entities/fragment'
 
 play = {}
 
@@ -55,10 +56,10 @@ function play:enter()
 		end)
 
 	-- Sky filter
-	filter = {opacity = 255}
-	Timer.addPeriodic(2, function()
-		flux.to(filter, 2, {opacity = love.math.random(50,250)})
-		end)
+	-- filter = {opacity = 255}
+	-- Timer.addPeriodic(2, function()
+	-- 	flux.to(filter, 2, {opacity = love.math.random(50,250)})
+	-- 	end)
 
 	-- Meteor
 	Timer.addPeriodic(1, function()
@@ -94,7 +95,7 @@ function play:update(dt)
 		-- entities
 		-- p:update(dt)
 		if love.keyboard.isDown('d') then
-			spawnDust(M.getX(), M.getY(), love.math.random(math.pi*2), 20)
+			spawnDust(M.getX(), M.getY(), 0, 20)
 		end
 
 		if love.keyboard.isDown('m') then
@@ -114,9 +115,9 @@ end
 
 function play:draw()
 	-- background layer
-	love.graphics.setColor(255,255,255, filter.opacity)
+	-- love.graphics.setColor(255,255,255, filter.opacity)
 	-- love.graphics.draw(debugFilter)
-	Jutils.draw(debugFilter, gRes.w/2, gRes.h/2, 0, love.graphics.getWidth()/debugFilter:getWidth(), love.graphics.getHeight()/debugFilter:getHeight())
+	-- Jutils.draw(debugFilter, gRes.w/2, gRes.h/2, 0, love.graphics.getWidth()/debugFilter:getWidth(), love.graphics.getHeight()/debugFilter:getHeight())
 	Roadie:draw()
 
 	-- main gameplay layer
@@ -132,7 +133,7 @@ function play:draw()
 	love.graphics.setColor(c.white)
 	love.graphics.setFont(debugFont)
 	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 0)
-	love.graphics.print('Explosions: '..tostring(#Assistant.t2), 0, 20)
+	love.graphics.print('T2: '..tostring(#Assistant.t2), 0, 20)
 	-- love.graphics.print('Meteors in pool: '..tostring(#Pool.meteor), 0, 40)
 	-- love.graphics.print('Star in roadie b1 : '..tostring(#Roadie.b1), 0, 60)
 	-- love.graphics.print('Dust in pool : '..tostring(#Pool.dust), 0, 80)
@@ -140,19 +141,19 @@ function play:draw()
 	-- love.graphics.print('Light in play : '..tostring(#Roadie.b3), 0, 120)
 	-- love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 140)
 	-- love.graphics.print('Light in pool: '..tostring(#Pool.light), 0, 160)
-	-- love.graphics.print(tostring(love.graphics.getHeight()), 0, 180)
-	-- love.graphics.print(tostring(play.state), 0, 200)
+	love.graphics.print(M.getX(), 0, 180)
+	love.graphics.print(M.getY(), 0, 200)
 
 	-- rightside
-	love.graphics.print('ammo '..tostring(p.ammo), 700, 0)
+	love.graphics.print('ammo '..tostring(p.ammo), 400, 0)
 	-- love.graphics.print('armor '..tostring(p.isArmoured), 700, 20)
 	-- love.graphics.print('shield '..tostring(p.isShielded), 700, 40)
 	-- love.graphics.print('reloaded '..tostring(p:readyToFire()), 700, 60)
 	-- love.graphics.print('ammo check '..tostring(p:checkAmmo()), 700, 80)
 	-- love.graphics.print('velo x '..tostring(p.velo.x), 700, 100)
 	-- love.graphics.print('velo y '..tostring(p.velo.y), 700, 120)
-	-- love.graphics.print(tostring(p.x), 700, 140)
-	-- love.graphics.print(tostring(p.y), 700, 160)
+	love.graphics.print(M.getX(), 700, 140)
+	love.graphics.print(tostring(p.y), 700, 160)
 end
 
 function play:leave()
@@ -275,5 +276,17 @@ function play:keypressed(k)
 
 	if k == 'e' then
 		spawnExplosion(M.getX(), M.getY(), 48, love.math.random(4,8))
+	end	
+
+	if k == 'f' then
+		local nummer = love.math.random(2,5)
+		for i = 1, nummer do
+			-- spawnFragment(M.getX(), M.getY(), love.math.random(math.pi*2), true)
+			spawnFragment(360, 180, math.pi/4)
+		end
+	end
+
+	if k == 'b' then
+		spawnExplosion(M.getX(), M.getY(), 48, love.math.random(4,8), true)
 	end
 end

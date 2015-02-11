@@ -1,5 +1,27 @@
 Project Wonyun, the long lost sequel and prequel to rymdangra saga.
 
+
+Create basic object
+Create inheritance
+Resize player
+Resize bullets
+Resize enemy
+Movable smokes
+Create bitmap fonts
+
+
+
+
+
+Resize main menu
+Resize remaining menu
+
+
+
+
+
+
+
 TODO list
 
 E:generic enemy ship

@@ -1,5 +1,16 @@
 Keadani = Class {}
 
+function spawnKeadani(unitType, x, y, velo_x, velo_y)
+	-- local r = r or math.pi/2
+	local keadani = Pool.keadani[1]
+	local unitType = unitType
+
+	keadani:spawn(unitType, x, y, velo_x, velo_y)
+
+	table.insert(Director.alive, keadani)
+	table.remove(Pool.keadani, 1)
+end
+
 function Keadani:init()
 
 	self.baseid = 'keadani'

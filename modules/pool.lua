@@ -43,6 +43,12 @@ function Pool:init()
 		local explosion = Explosion()
 		table.insert(self.explosion, explosion)
 	end
+
+	self.fragment = {}
+	for i = 1, 50 do
+		local fragment = Fragment()
+		table.insert(self.fragment, fragment)
+	end
 	
 end
 
