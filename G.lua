@@ -57,6 +57,11 @@ V = {
 	f_minVelo = 200,
 	f_maxVelo = 400,
 
+	-- trench walls
+	t_velo1 = 100,
+	t_velo2 = 200,
+	t_velo3 = 400,
+
 }
 
 -- Game Settings and utilities
@@ -65,7 +70,7 @@ G = {
 	version = 'pre-alpha',
 
 	debugMode = false,
-	debugMode = true,
+	-- debugMode = true,
 	sensitivity = 70
 }
 

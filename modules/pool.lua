@@ -49,6 +49,12 @@ function Pool:init()
 		local fragment = Fragment()
 		table.insert(self.fragment, fragment)
 	end
+
+	self.trench = {}
+	for i = 1, 500 do
+		local trench = Trench()
+		table.insert(self.trench, trench)
+	end
 	
 end
 

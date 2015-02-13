@@ -15,7 +15,7 @@ function spawnExplosion(x, y, variance, nummer, isBig)
 	if isBig then
 		local nummer = love.math.random(2,5)
 		for i = 1, nummer do
-			spawnFragment(M.getX(), M.getY(), love.math.random(math.pi*2), true)
+			spawnFragment(x, y, love.math.random(math.pi*2), true)
 		end
 	end
 

@@ -69,3 +69,19 @@ function math.lerp(a, b, t)
 	if a < b then return a + (b - a) * t
 	else return b end
 end
+
+-- function LoopRepeat()
+
+-- 	local i = 3
+
+-- 	repeat 
+-- 		if love.timer.getTime() < dueTime then
+-- 			doAction()
+-- 			dueTime = 2 -- secs
+-- 			i = i - 1
+-- 		else
+-- 			dueTime = dueTime - dt
+-- 		end
+-- 	until i = 0
+
+-- end

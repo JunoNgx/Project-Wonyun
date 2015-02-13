@@ -7,6 +7,7 @@ require 'modules/pool'
 require 'modules/director'
 require 'modules/roadie'
 require 'modules/assistant'
+require 'modules/camera'
 
 -- Entities
 require 'entities/star'
@@ -20,12 +21,13 @@ require 'entities/meteor'
 require 'entities/dust'
 require 'entities/explosion'
 require 'entities/fragment'
+require 'entities/trench'
 
 play = {}
 
 function play:enter()
 
-	love.graphics.setBackgroundColor(90,70,70,20)
+	love.graphics.setBackgroundColor(40,40,40,20)
 
 	-- modules
 	Input:init()
@@ -33,6 +35,7 @@ function play:enter()
 	Director:init()
 	Roadie:init()
 	Assistant:init()
+	Camera:init()
 
 	Alarm:reset()
 	Timer.clear()
@@ -72,9 +75,30 @@ function play:enter()
 		end)
 
 	-- Spawn Light
-	-- Timer.addPeriodic(1, function()
-	-- 	spawnLight()
-	-- 	end)
+	Timer.addPeriodic(2.5, function()
+		spawnLight()
+		end)
+
+	-- Trench
+	Timer.addPeriodic(0.15, function()
+		spawnTrench('l', 3)
+		end)
+	Timer.addPeriodic(0.3, function()
+		spawnTrench('l', 2)
+		end)
+	Timer.addPeriodic(0.6, function()
+		spawnTrench('l', 1)
+		end)
+
+	Timer.addPeriodic(0.15, function()
+		spawnTrench('r', 3)
+		end)
+	Timer.addPeriodic(0.3, function()
+		spawnTrench('r', 2)
+		end)
+	Timer.addPeriodic(0.6, function()
+		spawnTrench('r', 1)
+		end)
 
 end
 
@@ -91,6 +115,9 @@ function play:update(dt)
 		Director:updateCollision(dt)
 		Roadie:update(dt)
 		Assistant:update(dt)
+
+		-- shaking
+		Camera:update(dt)
 
 		-- entities
 		-- p:update(dt)
@@ -114,26 +141,29 @@ function play:update(dt)
 end
 
 function play:draw()
-	-- background layer
-	-- love.graphics.setColor(255,255,255, filter.opacity)
-	-- love.graphics.draw(debugFilter)
-	-- Jutils.draw(debugFilter, gRes.w/2, gRes.h/2, 0, love.graphics.getWidth()/debugFilter:getWidth(), love.graphics.getHeight()/debugFilter:getHeight())
-	Roadie:draw()
+	love.graphics.push()
+	love.graphics.translate(Camera.x, Camera.y)
+		-- background layer
+		-- love.graphics.setColor(255,255,255, filter.opacity)
+		-- love.graphics.draw(debugFilter)
+		-- Jutils.draw(debugFilter, gRes.w/2, gRes.h/2, 0, love.graphics.getWidth()/debugFilter:getWidth(), love.graphics.getHeight()/debugFilter:getHeight())
+		Roadie:draw()
 
-	-- main gameplay layer
-	Director:drawEntities()
+		-- main gameplay layer
+		Director:drawEntities()
 
-	-- top decor layers
-	Assistant:draw()
+		-- top decor layers
+		Assistant:draw()
 
-	-- UI
-	Input:draw()
-	Director:drawUI()
+		-- UI
+		Input:draw()
+		-- Director:drawUI()
+	love.graphics.pop()
 
 	love.graphics.setColor(c.white)
 	love.graphics.setFont(debugFont)
-	love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 0)
-	love.graphics.print('T2: '..tostring(#Assistant.t2), 0, 20)
+	-- love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 0)
+	-- love.graphics.print('T2: '..tostring(#Assistant.t2), 0, 20)
 	-- love.graphics.print('Meteors in pool: '..tostring(#Pool.meteor), 0, 40)
 	-- love.graphics.print('Star in roadie b1 : '..tostring(#Roadie.b1), 0, 60)
 	-- love.graphics.print('Dust in pool : '..tostring(#Pool.dust), 0, 80)
@@ -141,19 +171,19 @@ function play:draw()
 	-- love.graphics.print('Light in play : '..tostring(#Roadie.b3), 0, 120)
 	-- love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 140)
 	-- love.graphics.print('Light in pool: '..tostring(#Pool.light), 0, 160)
-	love.graphics.print(M.getX(), 0, 180)
-	love.graphics.print(M.getY(), 0, 200)
+	-- love.graphics.print(M.getX(), 0, 180)
+	-- love.graphics.print(M.getY(), 0, 200)
 
 	-- rightside
-	love.graphics.print('ammo '..tostring(p.ammo), 400, 0)
+	-- love.graphics.print('ammo '..tostring(p.ammo), 400, 0)
 	-- love.graphics.print('armor '..tostring(p.isArmoured), 700, 20)
 	-- love.graphics.print('shield '..tostring(p.isShielded), 700, 40)
 	-- love.graphics.print('reloaded '..tostring(p:readyToFire()), 700, 60)
 	-- love.graphics.print('ammo check '..tostring(p:checkAmmo()), 700, 80)
 	-- love.graphics.print('velo x '..tostring(p.velo.x), 700, 100)
-	-- love.graphics.print('velo y '..tostring(p.velo.y), 700, 120)
-	love.graphics.print(M.getX(), 700, 140)
-	love.graphics.print(tostring(p.y), 700, 160)
+	-- love.graphics.print(love.graphics.getWidth(), 400, 120)
+	-- love.graphics.print(M.getX(), 700, 140)
+	-- love.graphics.print(tostring(p.y), 700, 160)
 end
 
 function play:leave()
@@ -281,12 +311,20 @@ function play:keypressed(k)
 	if k == 'f' then
 		local nummer = love.math.random(2,5)
 		for i = 1, nummer do
-			-- spawnFragment(M.getX(), M.getY(), love.math.random(math.pi*2), true)
-			spawnFragment(360, 180, math.pi/4)
+			spawnFragment(M.getX(), M.getY(), love.math.random(math.pi*2), true)
+			-- spawnFragment(360, 180, math.pi/4)
 		end
 	end
 
 	if k == 'b' then
 		spawnExplosion(M.getX(), M.getY(), 48, love.math.random(4,8), true)
+	end
+
+	if k == 'z' then
+		p:fireBurst()
+	end
+
+	if k == 's' then
+		Camera:shake(10, 1)
 	end
 end

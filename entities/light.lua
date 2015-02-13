@@ -5,7 +5,7 @@ function spawnLight()
 
 	light:spawn()
 
-	table.insert(Roadie.b3, light)
+	table.insert(Roadie.b0, light)
 	table.remove(Pool.light, 1)
 end
 

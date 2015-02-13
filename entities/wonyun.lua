@@ -9,10 +9,10 @@ function Wonyun:init(extraAmmo, armoured, shielded, barriered)
 
 	self.x 				= gRes.w * 0.5
 	self.y 				= gRes.h * 0.75
-	self.w 				= 32
-	self.h 				= 32
-	self.w2 			= 64
-	self.h2 			= 64
+	self.w 				= 16
+	self.h 				= 16
+	self.w2 			= 32
+	self.h2 			= 32
 
 	self.r 				= -math.pi/2
 	self.oldx 			= self.x
@@ -38,7 +38,7 @@ function Wonyun:init(extraAmmo, armoured, shielded, barriered)
 	self.gfx_armor = gfx_wonyun_armor
 
 	self.throttle_gfx = gfx_throttle1
-	self.throttle_dist = 40
+	self.throttle_dist = 32
 end
 
 function Wonyun:update(dt)
@@ -103,8 +103,8 @@ function Wonyun:draw()
 		scale_x = love.math.random(5,10)/100
 		scale_y = love.math.random(7,8)/100
 	else -- normal throttle
-		scale_x = love.math.random(15,30)/100
-		scale_y = love.math.random(10,20)/100
+		scale_x = love.math.random(12,24)/100
+		scale_y = love.math.random(8,16)/100
 	end
 
 	-- local radian = self.r + love.math.random(-math.pi, math.pi)
@@ -128,8 +128,8 @@ function Wonyun:draw()
 
 	-- Armor
 	if self.isArmoured then
-		love.graphics.setColor(255, 255, 255, 255)
-		Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
+		-- love.graphics.setColor(255, 255, 255, 255)
+		-- Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
 	end
 	-- Armor ends
 
@@ -187,6 +187,24 @@ function Wonyun:fire()
 			
 			self.reloadProcess = V.w_ReloadTime
 			self.ammo = self.ammo - 1
+		else
+			-- love.audio.play(sfx_pNoAmmo)
+		end
+	end
+end
+
+function Wonyun:fireBurst()
+	if self:readyToFire() then
+		if self:checkAmmo() then
+			-- spawnBullet(alliance, x, y, velo_x, velo_y)
+			spawnBullet(1, p.x, p.y - 16, 900, 0)
+			spawnBullet(1, p.x, p.y - 16, 0, 900)
+			spawnBullet(1, p.x, p.y - 16, -900, 0)
+			spawnBullet(1, p.x, p.y - 16, 0, -900)
+				
+			self.reloadProcess = V.w_ReloadTime
+			self.ammo = self.ammo - 1
+
 		else
 			-- love.audio.play(sfx_pNoAmmo)
 		end

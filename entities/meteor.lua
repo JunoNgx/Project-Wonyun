@@ -76,6 +76,7 @@ function Meteor:kill()
 	self:finishKill()
 	
 	spawnExplosion(self.x, self.y)
+	Camera:shake(7, 0.2)
 end
 
 function Meteor:finishKill()

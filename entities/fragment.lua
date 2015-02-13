@@ -51,7 +51,7 @@ function Fragment:update(dt)
 end
 
 function Fragment:draw()
-	love.graphics.setColor(255,255,255)
+	love.graphics.setColor(240,120,120)
 	Jutils.draw(self.gfx, self.x, self.y, self.r_display)
 end
 

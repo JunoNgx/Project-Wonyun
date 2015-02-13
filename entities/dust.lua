@@ -64,7 +64,7 @@ function Dust:spawn(x, y, r, variance, isRed)
 		local diff = love.math.random(-40,-10)
 		self.col = {240 + diff, 120 + diff, 120 + diff, 240}
 	else
-		local col = love.math.random(60,70)
+		local col = love.math.random(100,120)
 		self.col = {col,col,col, 240}
 	end
 

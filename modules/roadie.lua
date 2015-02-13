@@ -2,6 +2,7 @@
 Roadie = {}
 
 function Roadie:init()
+	self.b0 = {}
 	self.b1 = {}
 	self.b2 = {}
 	self.b3 = {}
@@ -10,10 +11,25 @@ function Roadie:init()
 end
 
 function Roadie:update(dt)
+	for i, object in ipairs(self.b0) do
+		if object.exists then
+			object:update(dt)
+		else
+			if object.typeid == 'light' then 
+				table.insert(Pool.light, object)
+			end
+			table.remove(self.b0, i)
+		end
+	end
+
+
 	for i, object in ipairs(self.b1) do
 		if object.exists then
 			object:update(dt)
 		else
+			if object.typeid == 'trench' then
+				table.insert(Pool.trench, object)
+			end
 			table.remove(self.b1, i)
 		end
 	end
@@ -22,6 +38,9 @@ function Roadie:update(dt)
 		if object.exists then
 			object:update(dt)
 		else
+			if object.typeid == 'trench' then
+				table.insert(Pool.trench, object)
+			end
 			table.remove(self.b2, i)
 		end
 	end
@@ -30,8 +49,8 @@ function Roadie:update(dt)
 		if object.exists then
 			object:update(dt)
 		else
-			if object.typeid == 'light' then 
-				table.insert(Pool.light, object)
+			if object.typeid == 'trench' then
+				table.insert(Pool.trench, object)
 			end
 			table.remove(self.b3, i)
 		end
@@ -46,6 +65,10 @@ function Roadie:update(dt)
 end
 
 function Roadie:draw()
+	for i, object in ipairs(self.b0) do
+		object:draw()
+	end
+
 	for i, object in ipairs(self.b1) do
 		object:draw()
 	end

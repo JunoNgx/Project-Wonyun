@@ -27,7 +27,9 @@ require 'states/pauseState'
 function love.load()
    
    -- love.window.setMode(0,0, {fullscreen=true})
-   -- love.window.setFullscreen(true)
+   -- if love.system.getOS() == 'Android' then
+   --    love.window.setFullscreen(true)
+   -- end
 
    loader = require 'libs/loader'
    loader.setBaseImageDir('assets')

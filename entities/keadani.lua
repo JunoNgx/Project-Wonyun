@@ -101,15 +101,20 @@ function Keadani:kill()
 	self.alive = false
 	
 	if self.typeid == 'riley' then
-		spawnExplosion(self.x, self.y, 24, love.math.random(2,3))
+		spawnExplosion(self.x, self.y, 24, love.math.random(2,3), true)
+		Camera:shake(5, 0.2)
 	elseif self.typeid == 'augustus' then
-		spawnExplosion(self.x, self.y, 24, love.math.random(2,3))
+		spawnExplosion(self.x, self.y, 24, love.math.random(2,3), true)
+		Camera:shake(8, 0.2)
 	elseif self.typeid == 'dulce' then
-		spawnExplosion(self.x, self.y)
+		spawnExplosion(self.x, self.y, 0, 1, true)
+		Camera:shake(5, 0.2)
 	elseif self.typeid == 'hammerhead' then
-		spawnExplosion(self.x, self.y, 60, love.math.random(3,6))
+		spawnExplosion(self.x, self.y, 60, love.math.random(3,6), true)
+		Camera:shake(10, 0.2)
 	elseif self.typeid == 'koltar' then
-		spawnExplosion(self.x, self.y, 48, love.math.random(4,7))
+		spawnExplosion(self.x, self.y, 48, love.math.random(4,7), true)
+		Camera:shake(10, 0.2)
 	end
 
 	self:finishKill()
