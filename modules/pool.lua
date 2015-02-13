@@ -51,7 +51,7 @@ function Pool:init()
 	end
 
 	self.trench = {}
-	for i = 1, 500 do
+	for i = 1, 200 do
 		local trench = Trench()
 		table.insert(self.trench, trench)
 	end

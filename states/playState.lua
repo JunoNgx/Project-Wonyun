@@ -27,7 +27,7 @@ play = {}
 
 function play:enter()
 
-	love.graphics.setBackgroundColor(40,40,40,20)
+	love.graphics.setBackgroundColor(40,50,40,20)
 
 	-- modules
 	Input:init()
@@ -59,10 +59,10 @@ function play:enter()
 		end)
 
 	-- Sky filter
-	-- filter = {opacity = 255}
-	-- Timer.addPeriodic(2, function()
-	-- 	flux.to(filter, 2, {opacity = love.math.random(50,250)})
-	-- 	end)
+	filter = {opacity = 255}
+	Timer.addPeriodic(2, function()
+		flux.to(filter, 2, {opacity = love.math.random(50,250)})
+		end)
 
 	-- Meteor
 	Timer.addPeriodic(1, function()
@@ -80,23 +80,29 @@ function play:enter()
 		end)
 
 	-- Trench
-	Timer.addPeriodic(0.15, function()
+	Timer.addPeriodic(0.3, function()
+		spawnTrench('l', 4)
+		end)
+	Timer.addPeriodic(0.5, function()
 		spawnTrench('l', 3)
 		end)
-	Timer.addPeriodic(0.3, function()
+	Timer.addPeriodic(0.7, function()
 		spawnTrench('l', 2)
 		end)
-	Timer.addPeriodic(0.6, function()
+	Timer.addPeriodic(0.9, function()
 		spawnTrench('l', 1)
 		end)
 
-	Timer.addPeriodic(0.15, function()
+	Timer.addPeriodic(0.3, function() -- 160/400 = 0.4 ~ 0.35
+		spawnTrench('r', 4)
+		end)
+	Timer.addPeriodic(0.5, function() -- 160/400 = 0.4 ~ 0.35
 		spawnTrench('r', 3)
 		end)
-	Timer.addPeriodic(0.3, function()
+	Timer.addPeriodic(0.7, function()
 		spawnTrench('r', 2)
 		end)
-	Timer.addPeriodic(0.6, function()
+	Timer.addPeriodic(0.9, function()
 		spawnTrench('r', 1)
 		end)
 
@@ -142,10 +148,10 @@ end
 
 function play:draw()
 	love.graphics.push()
-	love.graphics.translate(Camera.x, Camera.y)
+		Camera:point()
 		-- background layer
-		-- love.graphics.setColor(255,255,255, filter.opacity)
-		-- love.graphics.draw(debugFilter)
+		love.graphics.setColor(255,255,255, filter.opacity)
+		love.graphics.draw(debugFilter, -160, 0)
 		-- Jutils.draw(debugFilter, gRes.w/2, gRes.h/2, 0, love.graphics.getWidth()/debugFilter:getWidth(), love.graphics.getHeight()/debugFilter:getHeight())
 		Roadie:draw()
 
@@ -168,7 +174,7 @@ function play:draw()
 	-- love.graphics.print('Star in roadie b1 : '..tostring(#Roadie.b1), 0, 60)
 	-- love.graphics.print('Dust in pool : '..tostring(#Pool.dust), 0, 80)
 	-- love.graphics.print('Dust in play : '..tostring(#Assistant.t1), 0, 100)
-	-- love.graphics.print('Light in play : '..tostring(#Roadie.b3), 0, 120)
+	-- love.graphics.print('trench4 : '..tostring(#Roadie.t4), 0, 120)
 	-- love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 140)
 	-- love.graphics.print('Light in pool: '..tostring(#Pool.light), 0, 160)
 	-- love.graphics.print(M.getX(), 0, 180)
@@ -183,7 +189,7 @@ function play:draw()
 	-- love.graphics.print('velo x '..tostring(p.velo.x), 700, 100)
 	-- love.graphics.print(love.graphics.getWidth(), 400, 120)
 	-- love.graphics.print(M.getX(), 700, 140)
-	-- love.graphics.print(tostring(p.y), 700, 160)
+	-- love.graphics.print(Camera.x, 400, 160)
 end
 
 function play:leave()

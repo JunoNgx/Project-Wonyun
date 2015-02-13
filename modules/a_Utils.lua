@@ -10,7 +10,7 @@ function initStars()
 
 		star:reset()
 		star:spread()
-		table.insert(Roadie.b1, star)
+		table.insert(Roadie.star, star)
 	end
 end
 

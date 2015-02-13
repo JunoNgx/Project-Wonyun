@@ -58,9 +58,28 @@ V = {
 	f_maxVelo = 400,
 
 	-- trench walls
-	t_velo1 = 100,
-	t_velo2 = 200,
-	t_velo3 = 400,
+	t_velo1 = 200,
+	t_velo2 = 400,
+	t_velo3 = 800,
+	t_velo4 = 1000,
+
+	t_hParalRate1 = 0.8,
+	t_hParalRate2 = 0.6,
+	t_hParalRate3 = 0.4,
+	t_hParalRate4 = 0.2,
+
+	t_x1_2 = 160,
+	t_x1_1 = 120,
+
+	t_x2_2 = 120,
+	t_x2_1 = 80,
+
+	t_x3_2 = 80,
+	t_x3_1 = 40,
+
+	t_x4_2 = 40,
+	t_x4_1 = 20,
+
 
 }
 
