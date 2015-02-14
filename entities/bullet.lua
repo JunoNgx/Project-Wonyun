@@ -116,6 +116,13 @@ function Bullet:spawn(alliance, x, y, velo_x, velo_y)
 		self.gfx = gfx_bullet_e
 	end
 
+	-- adjusting self.r for the sake of friendly bullets
+	if alliance == 1 then
+		self.r = lume.angle(0,0, velo_x, velo_y)
+	else
+		self.r = 0
+	end
+
 	self.x 			= x
 	self.y 			= y
 	self.velo.x 	= velo_x or 0

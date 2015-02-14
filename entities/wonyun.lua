@@ -1,12 +1,13 @@
 Wonyun = Class {}
 
-function Wonyun:init(extraAmmo, armoured, shielded, barriered)
+function Wonyun:init(extraAmmo, armoured, shielded, barriered, weaponLevel, bulletCaptureEquipped)
 	self.flux = require 'libs/flux'
 
 	self.typeid = 'wonyun'
 	self.objType = 'vessel'
 	self.alliance = 'friendly'
 
+	-- Basic object properties
 	self.x 				= gRes.w * 0.5
 	self.y 				= gRes.h * 0.75
 	self.w 				= 16
@@ -17,25 +18,33 @@ function Wonyun:init(extraAmmo, armoured, shielded, barriered)
 	self.r 				= -math.pi/2
 	self.oldx 			= self.x
 	self.oldy 			= self.y
-	self.isArmoured 	= armoured or false
-	self.isShielded 	= shielded or false
-	self.isBarriered	= barriered or false
-	self.ammo 			= 10 + 10 * extraAmmo
-
 	self.velo = {
 		x = 0,
 		y = 0,
 	}
+
 	self.tweenDue = 0
 
 	self.lifetime 	= 0
-	self.reloadProcess 	= V.w_ReloadTime
+	self.alive 		= true
+	self.exists 	= true
 
-	self.alive = true
-	self.exists = true
+	-- Spawning parameters
+	self.isArmoured 	= armoured or false
+	self.isShielded 	= shielded or false
+	self.isBarriered	= barriered or false
+	self.ammo 			= 10 + 10 * extraAmmo
+	self.weaponLevel = weaponLevel
+	self.bulletCaptureEquipped = bulletCaptureEquipped or false
+
+	self.currentWeapon = 1
+
+	self.captureProcess = V.w_captureReloadTime
+	self.reloadProcess 	= V.w_ReloadTime1
 
 	self.gfx = gfx_wonyun
 	self.gfx_armor = gfx_wonyun_armor
+	self.gfx_barrier = gfx_wonyun_barrier
 
 	self.throttle_gfx = gfx_throttle1
 	self.throttle_dist = 32
@@ -48,6 +57,11 @@ function Wonyun:update(dt)
 		-- Ready to fire when reaches zero
 		if self.reloadProcess > 0 then 
 			self.reloadProcess  = self.reloadProcess - dt
+		end
+
+		-- Ready to capture bullet when reaches zero
+		if self.captureProcess > 0 then
+			self.captureProcess = self.captureProcess - dt
 		end
 
 		updateVelocity(self, dt)
@@ -122,14 +136,16 @@ function Wonyun:draw()
 	-- Barrier
 	if self.isBarriered then
 		love.graphics.setColor(150, 220, 200, 255)
-		love.graphics.circle('line', self.x, self.y, 40)
+		-- love.graphics.circle('line', self.x, self.y, 40)
+		Jutils.draw(self.gfx_barrier, self.x, self.y, self.r)
 	end
 	-- Barrier ends
 
 	-- Armor
 	if self.isArmoured then
-		-- love.graphics.setColor(255, 255, 255, 255)
-		-- Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
+		love.graphics.setColor(255, 255, 255, 255)
+		Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
+		Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
 	end
 	-- Armor ends
 
@@ -183,9 +199,17 @@ function Wonyun:fire()
 	if self:readyToFire() then
 		if self:checkAmmo() then
 			-- spawnBullet(alliance, x, y, velo_x, velo_y)
-			spawnBullet(1, p.x, p.y - 16)
+			if self.currentWeapon == 1 then
+				self:fireFront()
+				self.reloadProcess = V.w_ReloadTime1
+			elseif self.currentWeapon == 2 then
+				self:fireLateral()
+				self.reloadProcess = V.w_ReloadTime2
+			elseif self.currentWeapon == 3 then
+				self:fireDiagonal()
+				self.reloadProcess = V.w_ReloadTime3
+			end
 			
-			self.reloadProcess = V.w_ReloadTime
 			self.ammo = self.ammo - 1
 		else
 			-- love.audio.play(sfx_pNoAmmo)
@@ -193,23 +217,30 @@ function Wonyun:fire()
 	end
 end
 
-function Wonyun:fireBurst()
-	if self:readyToFire() then
-		if self:checkAmmo() then
-			-- spawnBullet(alliance, x, y, velo_x, velo_y)
-			spawnBullet(1, p.x, p.y - 16, 900, 0)
-			spawnBullet(1, p.x, p.y - 16, 0, 900)
-			spawnBullet(1, p.x, p.y - 16, -900, 0)
-			spawnBullet(1, p.x, p.y - 16, 0, -900)
-				
-			self.reloadProcess = V.w_ReloadTime
-			self.ammo = self.ammo - 1
+function Wonyun:fireFront()
+	spawnBullet(1, p.x, p.y - 16, 0, -900)
+end
 
-		else
-			-- love.audio.play(sfx_pNoAmmo)
-		end
+function Wonyun:fireLateral()
+	spawnBullet(1, p.x + 16, p.y, 900, 0)
+	spawnBullet(1, p.x - 16, p.y, -900, 0)
+end
+
+function Wonyun:fireDiagonal()
+	spawnBullet(1, p.x + 12, p.y - 12, 450, -450)
+	spawnBullet(1, p.x + 12, p.y + 12, 450, 450)
+	spawnBullet(1, p.x - 12, p.y + 12, -450, 450)
+	spawnBullet(1, p.x - 12, p.y - 12, -450, -450)
+end
+
+function Wonyun:switchWeapon()
+	if self.currentWeapon + 1 > self.weaponLevel then
+		self.currentWeapon = 1
+	else
+		self.currentWeapon = self.currentWeapon + 1
 	end
 end
+
 
 function Wonyun:checkAmmo()
 	return self.ammo > 0
@@ -221,6 +252,21 @@ end
 
 function Wonyun:checkVitals()
 	return self.alive
+end
+
+----------------------------
+-- Bullet Capture
+----------------------------
+
+function Wonyun:captureBullet()
+	if self:readyToCapture() then
+
+		self.captureProcess = V.w_captureReloadTime
+	end
+end
+
+function Wonyun:readyToCapture()
+	return self.captureProcess <= 0
 end
 
 -----------------------------

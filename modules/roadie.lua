@@ -4,10 +4,10 @@ Roadie = {}
 function Roadie:init()
 	self.light = {}
 	self.star = {}
-	self.t1 = {}
-	self.t2 = {}
-	self.t3 = {}
-	self.t4 = {}
+	self.trench1 = {}
+	self.trench2 = {}
+	self.trench3 = {}
+	self.trench4 = {}
 	initStars()
 
 end
@@ -33,47 +33,47 @@ function Roadie:update(dt)
 	end
 
 
-	for i, object in ipairs(self.t1) do
+	for i, object in ipairs(self.trench1) do
 		if object.exists then
 			object:update(dt)
 		else
 			if object.typeid == 'trench' then
 				table.insert(Pool.trench, object)
 			end
-			table.remove(self.t1, i)
+			table.remove(self.trench1, i)
 		end
 	end
 
-	for i, object in ipairs(self.t2) do
+	for i, object in ipairs(self.trench2) do
 		if object.exists then
 			object:update(dt)
 		else
 			if object.typeid == 'trench' then
 				table.insert(Pool.trench, object)
 			end
-			table.remove(self.t2, i)
+			table.remove(self.trench2, i)
 		end
 	end
 
-	for i, object in ipairs(self.t3) do
+	for i, object in ipairs(self.trench3) do
 		if object.exists then
 			object:update(dt)
 		else
 			if object.typeid == 'trench' then
 				table.insert(Pool.trench, object)
 			end
-			table.remove(self.t3, i)
+			table.remove(self.trench3, i)
 		end
 	end
 
-	for i, object in ipairs(self.t4) do
+	for i, object in ipairs(self.trench4) do
 		if object.exists then
 			object:update(dt)
 		else
 			if object.typeid == 'trench' then
 				table.insert(Pool.trench, object)
 			end
-			table.remove(self.t4, i)
+			table.remove(self.trench4, i)
 		end
 	end
 	-- for i = 1, #self.b1 do
@@ -94,19 +94,19 @@ function Roadie:draw()
 		object:draw()
 	end
 
-	for i, object in ipairs(self.t1) do
+	for i, object in ipairs(self.trench1) do
 		object:draw()
 	end
 
-	for i, object in ipairs(self.t2) do
+	for i, object in ipairs(self.trench2) do
 		object:draw()
 	end
 
-	for i, object in ipairs(self.t3) do
+	for i, object in ipairs(self.trench3) do
 		object:draw()
 	end	
 
-	for i, object in ipairs(self.t4) do
+	for i, object in ipairs(self.trench4) do
 		object:draw()
 	end
 	-- for i = 1, #self.b1 do

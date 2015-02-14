@@ -45,7 +45,7 @@ function play:enter()
 	Alarm:after(1, function() play.state = 'inPlay' end)
 
 	-- entities
-	p = Wonyun(50, true, true, true)
+	p = Wonyun(50, true, true, true, 3)
 	table.insert(Director.alive, p)
 
 	-- debug codes
@@ -332,5 +332,9 @@ function play:keypressed(k)
 
 	if k == 's' then
 		Camera:shake(10, 1)
+	end
+
+	if k == 'v' then
+		p:switchWeapon()
 	end
 end

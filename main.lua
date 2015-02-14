@@ -28,7 +28,7 @@ function love.load()
    
    -- love.window.setMode(0,0, {fullscreen=true})
    -- if love.system.getOS() == 'Android' then
-   --    love.window.setFullscreen(true)
+      -- love.window.setFullscreen(true)
    -- end
 
    loader = require 'libs/loader'

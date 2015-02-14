@@ -6,13 +6,14 @@ function spawnTrench(alignment, layer)
 	trench:spawn(alignment, layer)
 
 	if layer == 1 then
-		table.insert(Roadie.t1, trench)
+		table.insert(Roadie.trench1, trench)
 	elseif layer == 2 then
-		table.insert(Roadie.t2, trench)
+		table.insert(Roadie.trench2, trench)
 	elseif layer == 3 then
-		table.insert(Roadie.t3, trench)
+		table.insert(Roadie.trench3, trench)
 	elseif layer == 4 then
-		table.insert(Roadie.t4, trench)
+		table.insert(Assistant.trench4, trench)
+		-- table.insert(Roadie.trench4, trench)
 	end
 	table.remove(Pool.trench, 1)
 end

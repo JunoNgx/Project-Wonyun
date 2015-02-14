@@ -5,6 +5,7 @@ function Assistant:init()
 	self.t2 = {}
 	-- initDust()
 	-- initGust()
+	self.trench4 = {}
 end
 
 function Assistant:update(dt)
@@ -39,16 +40,34 @@ function Assistant:update(dt)
 			table.remove(self.t2, i)
 		end
 	end
+
+	for i, object in ipairs(self.trench4) do
+		if object.exists then
+			object:update(dt)
+		else
+			if object.typeid == 'trench' then
+				table.insert(Pool.trench, object)
+			end
+			table.remove(self.trench4, i)
+		end
+	end
+
 end
 
 function Assistant:draw()
 	-- for i = 1, #self.t1 do
 	-- 	self.t1[i]:draw()
 	-- end
+
 	for i, object in ipairs(self.t1) do
 		object:draw()
 	end
+
 	for i, object in ipairs(self.t2) do
+		object:draw()
+	end
+
+	for i, object in ipairs(self.trench4) do
 		object:draw()
 	end
 end
