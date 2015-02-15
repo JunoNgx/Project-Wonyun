@@ -239,6 +239,8 @@ function Wonyun:switchWeapon()
 	else
 		self.currentWeapon = self.currentWeapon + 1
 	end
+
+	Director.buttons.switchWeapon.switch()
 end
 
 

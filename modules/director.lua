@@ -5,6 +5,26 @@ Director = {
 function Director:init()
 	Director.alive = {}
 	Director.distanceTravelled = 0
+
+	Director.buttons = {
+		switchWeapon = {
+			x 			= 32,
+			y 			= gRes.h - 32,
+			l 			= 32,
+			gfx 		= gfx_ui_weapButton[1],
+			switch = function()
+				Director.buttons.switchWeapon.gfx = gfx_ui_weapButton[p.currentWeapon]
+			end,
+		},
+
+		pause = {
+			x 			= gRes.w - 32,
+			y 			= 32,
+			l 			= 32,
+			gfx 		= gfx_ui_pauseButton,
+		},
+
+	}
 end
 
 -- ======================= --
@@ -120,6 +140,29 @@ end
 
 function Director:drawUI()
 	love.graphics.setColor(255,255,255)
-	Jutils.print(humanizeCounter(math.floor(Director.distanceTravelled)),
-		0.5, 0.05, counterFont, true)
+	Jutils.draw(self.buttons.switchWeapon.gfx, self.buttons.switchWeapon.x, self.buttons.switchWeapon.y)
+	Jutils.draw(self.buttons.pause.gfx, self.buttons.pause.x, self.buttons.pause.y)
+	-- Jutils.print(humanizeCounter(math.floor(Director.distanceTravelled)),
+	-- 	0.5, 0.05, counterFont, true)
+end
+
+--------------------------------
+
+function hitSwitchButton(x, y)
+	return (
+		Director.buttons.switchWeapon.x - Director.buttons.switchWeapon.l/2 <= x
+		and x < Director.buttons.switchWeapon.x + Director.buttons.switchWeapon.l/2
+		and Director.buttons.switchWeapon.y - Director.buttons.switchWeapon.l/2 <= y
+		and y < Director.buttons.switchWeapon.y + Director.buttons.switchWeapon.l/2
+		)
+end
+
+
+function hitPauseButton(x, y)
+	return (
+		Director.buttons.pause.x - Director.buttons.pause.l/2 <= x
+		and x < Director.buttons.pause.x + Director.buttons.pause.l/2
+		and Director.buttons.pause.y - Director.buttons.pause.l/2 <= y
+		and y < Director.buttons.pause.y + Director.buttons.pause.l/2
+		)
 end

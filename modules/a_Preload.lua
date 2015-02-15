@@ -60,6 +60,14 @@ function preload()
 		love.graphics.newImage('assets/explosion_9.png'),
 	}
 
+	-- UI assets
+	gfx_ui_weapButton = {
+		love.graphics.newImage('assets/weaponButton_1.png'),
+		love.graphics.newImage('assets/weaponButton_2.png'),
+		love.graphics.newImage('assets/weaponButton_3.png'),
+	}
+	gfx_ui_pauseButton = love.graphics.newImage('assets/pauseButton.png')
+
 	-- debug objects
 	-- debugGalaxy			= love.graphics.newImage('assets/galaxy.png')
 	debugFilter			= love.graphics.newImage('assets/backgroundFilter.png')

@@ -161,10 +161,11 @@ function play:draw()
 		-- top decor layers
 		Assistant:draw()
 
-		-- UI
-		Input:draw()
-		-- Director:drawUI()
 	love.graphics.pop()
+
+	-- UI
+	Input:draw()
+	Director:drawUI()
 
 	love.graphics.setColor(c.white)
 	love.graphics.setFont(debugFont)
@@ -230,26 +231,32 @@ function play:touchpressed(id, x, y)
 	if play.state == 'inPlay' then
 		if love.system.getOS() == 'Android' then
 
+			if hitSwitchButton(gRes.w * x, gRes.h * y) then
+					p:switchWeapon()
+				elseif hitPauseButton(gRes.w * x, gRes.h * y) then
+					Gamestate.push(pause)
+				else
 			-- Move the ship with single touch
-			if id == 0 then
-				p.tweenDue = 0
-				Input.T.isDown = true
-				Input.T.recordDue = 0
+				if id == 0 then
+		
+						p.tweenDue = 0
+						Input.T.isDown = true
+						Input.T.recordDue = 0
 
-				-- Double click action
-				if love.timer.getTime() - Input.T.lastClick < 0.3 then
-					doubleClickAction() 
+						-- -- Double click action
+						-- if love.timer.getTime() - Input.T.lastClick < 0.3 then
+						-- 	doubleClickAction() 
+						-- end
+
+					-- -- Record last click for next double click
+					-- if id == 0 then Input.T.lastClick = love.timer.getTime() end
+				elseif id == 1 then
+
+					if p:checkVitals() then
+						p:fire()
+					end
+
 				end
-
-				-- Record last click for next double click
-				if id == 0 then Input.T.lastClick = love.timer.getTime() end
-
-			elseif id == 1 then
-
-				if p:checkVitals() then
-					p:fire()
-				end
-
 			end
 		end
 	end

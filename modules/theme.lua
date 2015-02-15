@@ -25,9 +25,11 @@ Themes = {
 }
 
 Tagline = {
-	'the wonyun must go home',
-	'we shouldn\'s have taken this mission in the first place',
-	'some things are not meant to be completed',
+	'the wonyun must go home', --1 
+	'we shouldn\'s have taken this mission in the first place', --2
+	'this trench is out only hope',
+	'let each of our fallen brethrens be our guide'
+	'are there things not meant to be done at all',
 	'will someone ever going to make it?',
 	'is it worth it?',
 	'why are we here in the first place?',

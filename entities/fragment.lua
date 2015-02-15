@@ -5,7 +5,7 @@ function spawnFragment(x, y, r)
 
 	fragment:spawn(x, y, r)
 
-	table.insert(Assistant.t2, fragment)
+	table.insert(Assistant.fragment, fragment)
 	table.remove(Pool.fragment, 1)
 end
 
@@ -51,7 +51,8 @@ function Fragment:update(dt)
 end
 
 function Fragment:draw()
-	love.graphics.setColor(240,120,120)
+	-- love.graphics.setColor(240,120,120)
+	love.graphics.setColor(70,70,70)
 	Jutils.draw(self.gfx, self.x, self.y, self.r_display)
 end
 

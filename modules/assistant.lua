@@ -1,6 +1,7 @@
 Assistant = {}
 
 function Assistant:init()
+	self.fragment = {}
 	self.t1 = {}
 	self.t2 = {}
 	-- initDust()
@@ -16,6 +17,17 @@ function Assistant:update(dt)
 	-- 		table.remove(self.t1, i)
 	-- 	end
 	-- end
+
+	for i, object in ipairs(self.fragment) do
+		if object.exists then
+			object:update(dt)
+		else
+			if object.typeid == 'fragment' then
+				table.insert(Pool.fragment, object)			
+			end
+			table.remove(self.fragment, i)
+		end
+	end
 
 	for i, object in ipairs(self.t1) do
 		if object.exists then
@@ -34,8 +46,8 @@ function Assistant:update(dt)
 		else
 			if object.typeid == 'explosion' then
 				table.insert(Pool.explosion, object)
-			elseif object.typeid == 'fragment' then
-				table.insert(Pool.fragment, object)
+			-- elseif object.typeid == 'fragment' then
+			-- 	table.insert(Pool.fragment, object)
 			end
 			table.remove(self.t2, i)
 		end
@@ -58,6 +70,10 @@ function Assistant:draw()
 	-- for i = 1, #self.t1 do
 	-- 	self.t1[i]:draw()
 	-- end
+
+	for i, object in ipairs(self.fragment) do
+		object:draw()
+	end
 
 	for i, object in ipairs(self.t1) do
 		object:draw()
