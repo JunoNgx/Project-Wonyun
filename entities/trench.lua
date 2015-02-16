@@ -95,15 +95,16 @@ function Trench:spawn(alignment, layer)
 		self.vertex[4] = -80
 
 
-		if layer == 1 then
-			self.vertex[5] = love.math.random(V.t_x1_1, V.t_x1_2)
-		elseif layer == 2 then
-			self.vertex[5] = love.math.random(V.t_x2_1, V.t_x2_2)
-		elseif layer == 3 then
-			self.vertex[5] = love.math.random(V.t_x3_1, V.t_x3_2)
-		elseif layer == 4 then
-			self.vertex[5] = love.math.random(V.t_x4_1, V.t_x4_2)
-		end
+		-- if layer == 1 then
+		-- 	self.vertex[5] = love.math.random(V.t_x1_1, V.t_x1_2)
+		-- elseif layer == 2 then
+		-- 	self.vertex[5] = love.math.random(V.t_x2_1, V.t_x2_2)
+		-- elseif layer == 3 then
+		-- 	self.vertex[5] = love.math.random(V.t_x3_1, V.t_x3_2)
+		-- elseif layer == 4 then
+		-- 	self.vertex[5] = love.math.random(V.t_x4_1, V.t_x4_2)
+		-- end
+		self.vertex[5] = self.vertex[3] - 90
 		self.vertex[6] = 80
 
 		self.vertex[7] = -400
@@ -135,15 +136,16 @@ function Trench:spawn(alignment, layer)
 		self.vertex[5] = 400
 		self.vertex[6] = 80
 
-		if layer == 1 then
-			self.vertex[7] = love.math.random(-V.t_x1_2, -V.t_x1_1)
-		elseif layer == 2 then
-			self.vertex[7] = love.math.random(-V.t_x2_2, -V.t_x2_1)
-		elseif layer == 3 then
-			self.vertex[7] = love.math.random(-V.t_x3_2, -V.t_x3_1)
-		elseif layer == 4 then
-			self.vertex[7] = love.math.random(-V.t_x4_2, -V.t_x4_1)
-		end
+		-- if layer == 1 then
+		-- 	self.vertex[7] = love.math.random(-V.t_x1_2, -V.t_x1_1)
+		-- elseif layer == 2 then
+		-- 	self.vertex[7] = love.math.random(-V.t_x2_2, -V.t_x2_1)
+		-- elseif layer == 3 then
+		-- 	self.vertex[7] = love.math.random(-V.t_x3_2, -V.t_x3_1)
+		-- elseif layer == 4 then
+		-- 	self.vertex[7] = love.math.random(-V.t_x4_2, -V.t_x4_1)
+		-- end
+		self.vertex[7] = self.vertex[1] + 90
 		self.vertex[8] = 80
 
 		self.alignment = 'r'
