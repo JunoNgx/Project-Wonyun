@@ -190,7 +190,7 @@ function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 		self.w 					= 160
 		self.h 					= 48
 		self.fireRate 			= V.k_defaultFireRate
-		self.hp 				= 3
+		self.hp 				= 2
 
 		self.gfx 				= gfx_koltar
 		self.throttle_gfx 		= gfx_throttle1

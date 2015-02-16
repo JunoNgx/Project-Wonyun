@@ -26,9 +26,11 @@ require 'entities/trench'
 play = {}
 
 function play:enter()
-
-	-- love.graphics.setBackgroundColor(40,40,50,20)
-	love.graphics.setBackgroundColor(240,240,240,20)
+	if not G.hallucinativeMode then
+		love.graphics.setBackgroundColor(40,40,50,20)
+	else
+		love.graphics.setBackgroundColor(240,240,240,20)
+	end
 
 	-- modules
 	Input:init()
@@ -46,7 +48,7 @@ function play:enter()
 	Alarm:after(1, function() play.state = 'inPlay' end)
 
 	-- entities
-	p = Wonyun(50, true, true, true, 3)
+	p = Wonyun(50, 3, 3, true)
 	table.insert(Director.alive, p)
 
 	-- debug codes

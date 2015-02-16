@@ -111,7 +111,9 @@ G = {
 
 	debugMode = false,
 	-- debugMode = true,
-	sensitivity = 70
+	sensitivity = 70,
+
+	hallucinativeMode = false,
 }
 
 -- Game design resolution

@@ -24,8 +24,11 @@ function Star:update(dt)
 end
 
 function Star:draw()
-	-- love.graphics.setColor(200,200,200,255)
-	love.graphics.setColor(40,40,40,255)
+	if not G.hallucinativeMode then
+		love.graphics.setColor(200,200,200,255)
+	else
+		love.graphics.setColor(40,40,40,255)
+	end
 	Jutils.draw(self.gfx, self.x, self.y, 0, self.scale, self.scale)
 
 	if G.debugMode then

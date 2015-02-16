@@ -1,6 +1,6 @@
 Wonyun = Class {}
 
-function Wonyun:init(extraAmmo, armoured, shielded, barriered, weaponLevel, bulletCaptureEquipped)
+function Wonyun:init(extraAmmo, hp, weaponLevel, bulletCaptureEquipped)
 	self.flux = require 'libs/flux'
 
 	self.typeid = 'wonyun'
@@ -30,9 +30,11 @@ function Wonyun:init(extraAmmo, armoured, shielded, barriered, weaponLevel, bull
 	self.exists 	= true
 
 	-- Spawning parameters
-	self.isArmoured 	= armoured or false
-	self.isShielded 	= shielded or false
-	self.isBarriered	= barriered or false
+	-- self.isArmoured 	= armoured or false
+	-- self.isShielded 	= shielded or false
+	-- self.isBarriered	= barriered or false
+
+	self.hp = hp
 	self.ammo 			= 10 + 10 * extraAmmo
 	self.weaponLevel = weaponLevel
 	self.bulletCaptureEquipped = bulletCaptureEquipped or false
@@ -99,6 +101,9 @@ function Wonyun:update(dt)
 		if self.x < 0 then self.x = 0 end
 		if self.y > gRes.h then self.y = gRes.h end
 		if self.y < 0 then self.y = 0 end
+
+		-- Die when hp depletes
+		if self.hp == 0 then self:kill() end
 	end
 end
 
@@ -133,21 +138,33 @@ function Wonyun:draw()
 		scale_x, scale_y)
 	-- Throttle ends
 
+	-- -- Barrier
+	-- if self.isBarriered then
+	-- 	love.graphics.setColor(150, 220, 200, 255)
+	-- 	-- love.graphics.circle('line', self.x, self.y, 40)
+	-- 	Jutils.draw(self.gfx_barrier, self.x, self.y, self.r)
+	-- end
+	-- -- Barrier ends
+
+	-- -- Armor
+	-- if self.isArmoured then
+	-- 	love.graphics.setColor(255, 255, 255, 255)
+	-- 	Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
+	-- 	Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
+	-- end
+	-- -- Armor ends
+
 	-- Barrier
-	if self.isBarriered then
-		love.graphics.setColor(150, 220, 200, 255)
-		-- love.graphics.circle('line', self.x, self.y, 40)
+	if self.hp > 2 then 
+		love.graphics.setColor(255, 255, 255, 255)
 		Jutils.draw(self.gfx_barrier, self.x, self.y, self.r)
 	end
-	-- Barrier ends
 
 	-- Armor
-	if self.isArmoured then
+	if self.hp > 1 then
 		love.graphics.setColor(255, 255, 255, 255)
 		Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
-		Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
 	end
-	-- Armor ends
 
 
 	if G.debugMode then
@@ -163,15 +180,16 @@ end
 ----------------------------
 
 function Wonyun:hit()
-	if self.isBarriered and self.isShielded and self.isArmoured then
-		self.isBarriered = false
-	elseif not self.isBarriered and self.isShielded and self.isArmoured then
-		self.isShielded = false
-	elseif not self.isBarriered and not self.isShielded and self.isArmoured then
-		self.isArmoured = false
-	elseif not self.isBarriered and not self.isShielded and not self.isArmoured then
-		self:kill()
-	end
+	-- if self.isBarriered and self.isShielded and self.isArmoured then
+	-- 	self.isBarriered = false
+	-- elseif not self.isBarriered and self.isShielded and self.isArmoured then
+	-- 	self.isShielded = false
+	-- elseif not self.isBarriered and not self.isShielded and self.isArmoured then
+	-- 	self.isArmoured = false
+	-- elseif not self.isBarriered and not self.isShielded and not self.isArmoured then
+	-- 	self:kill()
+	-- end
+	self.hp = self.hp - 1
 end
 
 function Wonyun:kill()

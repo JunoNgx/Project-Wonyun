@@ -51,17 +51,6 @@ function Trench:update(dt)
 end
 
 function Trench:draw()
-	-- Colors
-	-- if self.layer == 1 then
-	-- 	love.graphics.setColor(45,45,45)
-	-- elseif self.layer == 2 then
-	-- 	love.graphics.setColor(60,60,60)
-	-- elseif self.layer == 3 then
-	-- 	love.graphics.setColor(80,80,80)
-	-- elseif self.layer == 4 then
-	-- 	love.graphics.setColor(100,100,100)
-	-- end
-
 	love.graphics.setColor(self.col)
 	love.graphics.polygon('fill',
 		self.x + self.hParal_xMod + self.vertex[1], self.y + self.vertex[2],
@@ -171,20 +160,33 @@ function Trench:spawn(alignment, layer)
 		self.hParalRate = V.t_hParalRate4
 	end
 
-	-- Color experimenting
-	self.col = colorTrench[love.math.random(1,4)]
-	if layer == 1 then
-		-- for i = 1, 3 do self.col[i] = self.col[i] - 40 end
-		self.col = colorTrench[1]
-	elseif layer == 2 then
-		-- for i = 1, 3 do self.col[i] = self.col[i] - 30 end
-		self.col = colorTrench[2]
-	elseif layer == 3 then
-		-- for i = 1, 3 do self.col[i] = self.col[i] - 20 end
-		self.col = colorTrench[3]
-	elseif layer == 4 then
-		-- for i = 1, 3 do self.col[i] = self.col[i] - 10 end
-		self.col = colorTrench[4]
+	if G.hallucinativeMode then
+		-- Color experimenting
+		self.col = colorTrench[love.math.random(1,4)]
+		if layer == 1 then
+			-- for i = 1, 3 do self.col[i] = self.col[i] - 40 end
+			self.col = colorTrench[1]
+		elseif layer == 2 then
+			-- for i = 1, 3 do self.col[i] = self.col[i] - 30 end
+			self.col = colorTrench[2]
+		elseif layer == 3 then
+			-- for i = 1, 3 do self.col[i] = self.col[i] - 20 end
+			self.col = colorTrench[3]
+		elseif layer == 4 then
+			-- for i = 1, 3 do self.col[i] = self.col[i] - 10 end
+			self.col = colorTrench[4]
+		end
+	else
+		-- Regular shades of grey
+		if self.layer == 1 then
+			self.col = {45,45,45}
+		elseif self.layer == 2 then
+			self.col = {60,60,60}
+		elseif self.layer == 3 then
+			self.col = {80,80,80}
+		elseif self.layer == 4 then
+			self.col = {100,100,100}
+		end
 	end
 
 
