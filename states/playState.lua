@@ -27,7 +27,8 @@ play = {}
 
 function play:enter()
 
-	love.graphics.setBackgroundColor(40,50,40,20)
+	-- love.graphics.setBackgroundColor(40,40,50,20)
+	love.graphics.setBackgroundColor(240,240,240,20)
 
 	-- modules
 	Input:init()
@@ -179,7 +180,7 @@ function play:draw()
 	-- love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 140)
 	-- love.graphics.print('Light in pool: '..tostring(#Pool.light), 0, 160)
 	-- love.graphics.print(M.getX(), 0, 180)
-	-- love.graphics.print(M.getY(), 0, 200)
+	-- love.graphics.print(V.ui_DistanceBar_y_bottom, 0, 200)
 
 	-- rightside
 	-- love.graphics.print('ammo '..tostring(p.ammo), 400, 0)
@@ -318,20 +319,21 @@ function play:keypressed(k)
 	end
 
 	if k == 'e' then
-		spawnExplosion(M.getX(), M.getY(), 48, love.math.random(4,8))
+		spawnExplosion(M.getX(), M.getY(), 1, 3)
+		-- spawnExplosion(self.x, self.y, 1, 1)
 	end	
 
-	if k == 'f' then
-		local nummer = love.math.random(2,5)
-		for i = 1, nummer do
-			spawnFragment(M.getX(), M.getY(), love.math.random(math.pi*2), true)
-			-- spawnFragment(360, 180, math.pi/4)
-		end
-	end
+	-- if k == 'f' then
+	-- 	local nummer = love.math.random(2,5)
+	-- 	for i = 1, nummer do
+	-- 		spawnFragment(M.getX(), M.getY(), love.math.random(math.pi*2), true)
+	-- 		-- spawnFragment(360, 180, math.pi/4)
+	-- 	end
+	-- end
 
-	if k == 'b' then
-		spawnExplosion(M.getX(), M.getY(), 48, love.math.random(4,8), true)
-	end
+	-- if k == 'b' then
+	-- 	spawnExplosion(M.getX(), M.getY(), 48, love.math.random(4,8), true)
+	-- end
 
 	if k == 'z' then
 		p:fireBurst()
@@ -343,5 +345,12 @@ function play:keypressed(k)
 
 	if k == 'v' then
 		p:switchWeapon()
+	end
+
+	if k == 'o' then
+		-- Player's death explosion
+		-- spawnExplosion(M.getX(), M.getY(), 24, love.math.random(2,3), true, true)
+		-- spawnDust(M.getX(), M.getY(), 20, 20)
+		spawnDust(M.getX(), M.getY(), 0, 20, true)
 	end
 end

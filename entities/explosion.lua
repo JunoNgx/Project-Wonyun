@@ -1,25 +1,46 @@
 Explosion = Class {}
 
-function spawnExplosion(x, y, variance, nummer, isBig)
-	local isBig = isBig or false
-	local nummer = nummer or 1
+function spawnExplosion(x, y, colorCode, scaleSize)
+	-- local isBig = isBig or false
+	-- local isPlayer = isPlayer or false
+	-- local nummer = nummer or 1
 
-	for i = 1, nummer do
-		local explosion = Pool.explosion[i]
-		explosion:spawn(x, y, variance)
+	-- for i = 1, nummer do
+	-- 	local explosion = Pool.explosion[i]
+	-- 	explosion:spawn(x, y, colorCode, scaleSize)
 
-		table.insert(Assistant.t2, explosion)
-		table.remove(Pool.explosion, 1)
-	end
+	-- 	table.insert(Assistant.t2, explosion)
+	-- 	table.remove(Pool.explosion, 1)
+	-- end
 
-	if isBig then
+	local explosion = Pool.explosion[1]
+	explosion:spawn(x, y, colorCode, scaleSize)
+
+	-- If big explosion then spawn fragments as well
+	if scaleSize == 3 then
 		local nummer = love.math.random(2,5)
 		for i = 1, nummer do
-			spawnFragment(x, y, love.math.random(math.pi*2), true)
+			spawnFragment(x, y, love.math.random(math.pi*2), colorCode)
+			-- if colorCode == 3 then -- Player's death
+			-- 	spawnFragment(x, y, love.math.random(math.pi*2), true)
+			-- elseif colorCode == 2 then -- Enemy death
+			--     spawnFragment(x, y, love.math.random(math.pi*2))
+			-- end
 		end
 	end
 
-	-- camera:shake()
+	table.insert(Assistant.t2, explosion)
+	table.remove(Pool.explosion, 1)
+
+	-- Shake screen according to explosion size
+	if scaleSize == 1 then
+		-- Camera:shake(5, 0.2)
+	elseif scaleSize == 2 then
+		Camera:shake(4, 0.2)
+	elseif scaleSize == 3 then
+		Camera:shake(7, 0.2)
+	end
+
 end
 
 -- function spawnBigExplosion(x, y, variance, nummer)
@@ -50,6 +71,7 @@ function Explosion:init()
 	self.y = 0
 	self.scale = 0
 	-- self.r = love.math.random(0,4) * math.pi
+	self.col = 0
 	self.lifetime = 0
 
 	self.exists = false
@@ -74,7 +96,7 @@ function Explosion:update(dt)
 end
 
 function Explosion:draw()
-	love.graphics.setColor(240,120,120)
+	love.graphics.setColor(self.col)
 	Jutils.draw(self.gfx, self.x, self.y, self.r, self.scale, self.scale)
 
 	if G.debugMode then
@@ -88,13 +110,26 @@ function Explosion:kill()
 	self.exists = false
 end
 
-function Explosion:spawn(x, y, variance)
-	local variance = variance or 0
+function Explosion:spawn(x, y, colorCode, scaleSize)
+	self.x = x
+	self.y = y
 
-	self.x = x + love.math.random(-variance, variance)
-	self.y = y + love.math.random(-variance, variance)
+	if colorCode == 1 then -- Blue
+		self.col = {50 ,  80, 150, 255}
+	elseif colorCode == 2 then -- Red
+		self.col = {240, 120, 120, 255}
+	elseif colorCode == 3 then -- White
+		self.col = {220, 220, 220, 255}
+	end
 
-	self.scale = love.math.random(5,8)/10
+	if scaleSize == 1 then
+		self.scale = 0.2
+	elseif scaleSize == 2 then
+		self.scale = love.math.random(5,8)/10
+	elseif scaleSize == 3 then
+		self.scale = love.math.random(10,12)/10
+	end
+	
 	self.r = love.math.random(0,4) * math.pi
 	self.lifetime = 0
 

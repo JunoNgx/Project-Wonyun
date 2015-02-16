@@ -6,11 +6,12 @@ function Director:init()
 	Director.alive = {}
 	Director.distanceTravelled = 0
 
+	-- The two buttons at two corner
 	Director.buttons = {
 		switchWeapon = {
-			x 			= 32,
-			y 			= gRes.h - 32,
-			l 			= 32,
+			x 			= 24,
+			y 			= gRes.h - 24,
+			l 			= 48,
 			gfx 		= gfx_ui_weapButton[1],
 			switch = function()
 				Director.buttons.switchWeapon.gfx = gfx_ui_weapButton[p.currentWeapon]
@@ -18,12 +19,17 @@ function Director:init()
 		},
 
 		pause = {
-			x 			= gRes.w - 32,
-			y 			= 32,
-			l 			= 32,
+			x 			= gRes.w - 24,
+			y 			= 24,
+			l 			= 48,
 			gfx 		= gfx_ui_pauseButton,
 		},
+	}
 
+	-- Distance counter
+	self.pointer = {
+		x = 20,
+		y = V.ui_DistanceBar_y_bottom,
 	}
 end
 
@@ -32,7 +38,10 @@ end
 -- ======================= --
 
 function Director:update(dt)
-	Director.distanceTravelled = Director.distanceTravelled + dt * 420
+	self.distanceTravelled = self.distanceTravelled + dt * 600
+
+	-- local distanceBarLength = V.ui_DistanceBar_y_bottom - V.ui_DistanceBar_y_top
+	-- self.pointer.y = V.ui_DistanceBar_y_bottom - distanceBarLength * (self.distanceTravelled / V.distanceDestination)
 end
 
 
@@ -139,11 +148,40 @@ function Director:drawEntities()
 end
 
 function Director:drawUI()
+	-- buttons
 	love.graphics.setColor(255,255,255)
 	Jutils.draw(self.buttons.switchWeapon.gfx, self.buttons.switchWeapon.x, self.buttons.switchWeapon.y)
 	Jutils.draw(self.buttons.pause.gfx, self.buttons.pause.x, self.buttons.pause.y)
 	-- Jutils.print(humanizeCounter(math.floor(Director.distanceTravelled)),
 	-- 	0.5, 0.05, counterFont, true)
+
+	-- Distance bar
+	love.graphics.setColor(255,255,255)
+	-- love.graphics.setLineWidth(1)
+	-- love.graphics.line(12,24, 12,gRes.h - 64)
+	love.graphics.line(
+		V.ui_DistanceBar_x, V.ui_DistanceBar_y_top,
+		V.ui_DistanceBar_x, V.ui_DistanceBar_y_bottom)
+
+	-- Distance pointer
+	love.graphics.setColor(100, 150, 200)
+	love.graphics.polygon('fill',
+		self.pointer.x - 4, self.pointer.y,
+		self.pointer.x + 4, self.pointer.y - 4,
+		self.pointer.x + 4, self.pointer.y + 4
+		)
+	-- love.graphics.rectangle('fill', self.pointer.x, self.pointer.y, 20, 20)
+
+	-- Distance text
+	love.graphics.setColor(255, 255, 255)
+	love.graphics.setFont(counterFont)
+	love.graphics.print(humanizeCounter(math.floor(Director.distanceTravelled)),
+		self.pointer.x + 10, self.pointer.y - 4, 0, 1,1,
+		0,
+		0
+		-- counterFont:getWidth(humanizeCounter(math.floor(Director.distanceTravelled)))/2
+		)
+
 end
 
 --------------------------------

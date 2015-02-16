@@ -178,7 +178,7 @@ function Wonyun:kill()
 	self.alive = false
 	self:finishKill()
 
-	spawnExplosion(self.x, self.y)
+	spawnExplosion(self.x, self.y, 1, 3)
 end
 
 function Wonyun:finishKill()

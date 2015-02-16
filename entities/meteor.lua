@@ -45,7 +45,11 @@ function Meteor:update(dt)
 			if self.emitProcess < 0 then
 				local dist_x = self.w/2 * math.cos(self.r)
 				local dist_y = self.h/2 * math.sin(self.r)
-				spawnDust(self.x - dist_x, self.y - dist_y, self.r - math.pi, self.w/3)
+				spawnDust(self.x - dist_x,
+					self.y - dist_y,
+					self.r - math.pi,
+					self.w/3,
+					3)
 				self.emitProcess = V.m_emitRate
 			else
 				self.emitProcess = self.emitProcess - dt
@@ -75,7 +79,7 @@ function Meteor:kill()
 	self.alive = false
 	self:finishKill()
 	
-	spawnExplosion(self.x, self.y)
+	spawnExplosion(self.x, self.y, 3, 2)
 	Camera:shake(7, 0.2)
 end
 

@@ -66,22 +66,40 @@ V = {
 	t_velo3 = 800,
 	t_velo4 = 1000,
 
-	t_hParalRate1 = 0.8,
-	t_hParalRate2 = 0.6,
-	t_hParalRate3 = 0.4,
-	t_hParalRate4 = 0.1,
+	t_hParalRate1 = 1.0,
+	t_hParalRate2 = 0.75,
+	t_hParalRate3 = 0.5,
+	t_hParalRate4 = 0.25,
 
-	t_x1_2 = 160,
-	t_x1_1 = 120,
+	-- t_x1_2 = 160,
+	-- t_x1_1 = 120,
 
-	t_x2_2 = 120,
-	t_x2_1 = 80,
+	-- t_x2_2 = 120,
+	-- t_x2_1 = 80,
 
-	t_x3_2 = 80,
-	t_x3_1 = 40,
+	-- t_x3_2 = 80,
+	-- t_x3_1 = 40,
 
-	t_x4_2 = 40,
-	t_x4_1 = 0,
+	-- t_x4_2 = 40,
+	-- t_x4_1 = 0,
+
+	t_x1_2 = 200,
+	t_x1_1 = 160,
+
+	t_x2_2 = 180,
+	t_x2_1 = 120,
+
+	t_x3_2 = 140,
+	t_x3_1 = 80,
+
+	t_x4_2 = 100,
+	t_x4_1 = 40,
+
+	--UI
+
+	ui_DistanceBar_x = 12,
+	ui_DistanceBar_y_top = 24,
+	ui_DistanceBar_y_bottom = 296,
 
 
 }
@@ -113,3 +131,11 @@ else
 
 end
 
+
+
+colorTrench = {
+	{ 76, 149, 136},
+	{ 50, 152, 186},
+	{235, 207, 120},
+	{195,  77,  88},
+}

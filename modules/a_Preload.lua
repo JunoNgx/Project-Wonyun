@@ -17,7 +17,7 @@ function preload()
 	m_SmaFont:setFilter('nearest','nearest')
 
 	-- Play
-	counterFont = love.graphics.newFont('assets/consola.ttf', 30)
+	counterFont = love.graphics.newFont('assets/consola.ttf', 5)
 	counterFont:setFilter('nearest','nearest')
 
 

@@ -80,6 +80,14 @@ function Bullet:hit()
 end
 
 function Bullet:kill()
+	if self.alliance == 'friendly' then
+		spawnExplosion(self.x, self.y, 2, 1) -- redBullet
+	elseif self.alliance == 'hostile' then
+		spawnExplosion(self.x, self.y, 1, 1) -- blueBullet
+	elseif self.alliance == 'neutral' then
+		spawnExplosion(self.x, self.y, 3, 1) -- coldBullet
+	end
+
 	self.alive = false
 	self:finishKill()
 end

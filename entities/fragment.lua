@@ -1,9 +1,9 @@
 Fragment = Class {}
 
-function spawnFragment(x, y, r)
+function spawnFragment(x, y, r, dustColor)
 	local fragment = Pool.fragment[1]
 
-	fragment:spawn(x, y, r)
+	fragment:spawn(x, y, r, dustColor)
 
 	table.insert(Assistant.fragment, fragment)
 	table.remove(Pool.fragment, 1)
@@ -29,6 +29,7 @@ function Fragment:init()
 
 	self.r_display = 0
 	self.turnSpeed = love.math.random(V.f_minturnSpeed, V.f_maxturnSpeed)/10
+	self.dustColor = 0
 
 	self.gfx = gfx_fragment
 end
@@ -41,11 +42,12 @@ function Fragment:update(dt)
 
 		if self.lifetime > self.maxLifetime then self:kill() end
 
-		-- if self.emitProcess < 0 then
-			spawnDust(self.x, self.y, self.r - math.pi, 20, true)
-		-- 	self.emitProcess = V.f_emitRate
+		spawnDust(self.x, self.y, self.r - math.pi, 20, self.dustColor)
+
+		-- if self.isPlayer then
+		-- 	spawnDust(self.x, self.y, self.r - math.pi, 20, self.dustColor)
 		-- else
-		-- 	self.emitProcess = self.emitProcess - dt
+		-- 	spawnDust(self.x, self.y, self.r - math.pi, 20, 2)
 		-- end
 	end
 end
@@ -56,10 +58,14 @@ function Fragment:draw()
 	Jutils.draw(self.gfx, self.x, self.y, self.r_display)
 end
 
-function Fragment:spawn(x, y, r)
+function Fragment:spawn(x, y, r, dustColor)
+
 	self.x = x
 	self.y = y
 	self.r = r
+
+	self.dustColor = dustColor
+
 	local velo = love.math.random(V.f_minVelo, V.f_maxVelo)
 	self.velo.x = velo * math.cos(r)
 	self.velo.y = velo * math.sin(r)
@@ -69,6 +75,13 @@ function Fragment:spawn(x, y, r)
 
 	self.r_display = r
 	self.turnSpeed = love.math.random(20,50)/10
+
+	-- local isPlayer = isPlayer or false
+	-- if isPlayer then
+	-- 	self.isPlayer = true
+	-- else
+	-- 	self.isPlayer = false
+	-- end
 
 	self.exists = true
 end

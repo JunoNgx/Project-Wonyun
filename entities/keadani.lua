@@ -27,6 +27,9 @@ function Keadani:init()
 	self.r = math.pi/2
 	self.lifetime = 0
 	self.velo = {x = 0, y = 0}
+
+	self.hp = 0
+
 	self.alive 	= false
 	self.exists = false
 
@@ -54,6 +57,8 @@ function Keadani:update(dt)
 
 			if outOfBounds(self) then self:finishKill() end
 		end
+
+		if self.hp <= 0 then self:kill() end
 	end
 end
 
@@ -94,27 +99,28 @@ end
 --------------------------------
 
 function Keadani:hit()
-	self:kill()
+	self.hp = self.hp - 1
 end
 
 function Keadani:kill()
 	self.alive = false
 	
+	-- spawnExplosion(x, y, colorCode, scaleSize)
 	if self.typeid == 'riley' then
-		spawnExplosion(self.x, self.y, 24, love.math.random(2,3), true)
-		Camera:shake(5, 0.2)
+		spawnExplosion(self.x, self.y, 2, 2)
+		-- Camera:shake(5, 0.2)
 	elseif self.typeid == 'augustus' then
-		spawnExplosion(self.x, self.y, 24, love.math.random(2,3), true)
-		Camera:shake(8, 0.2)
+		spawnExplosion(self.x, self.y, 2, 3)
+		-- Camera:shake(8, 0.2)
 	elseif self.typeid == 'dulce' then
-		spawnExplosion(self.x, self.y, 0, 1, true)
-		Camera:shake(5, 0.2)
+		spawnExplosion(self.x, self.y, 2, 2)
+		-- Camera:shake(5, 0.2)
 	elseif self.typeid == 'hammerhead' then
-		spawnExplosion(self.x, self.y, 60, love.math.random(3,6), true)
-		Camera:shake(10, 0.2)
+		spawnExplosion(self.x, self.y, 2, 3)
+		-- Camera:shake(10, 0.2)
 	elseif self.typeid == 'koltar' then
-		spawnExplosion(self.x, self.y, 48, love.math.random(4,7), true)
-		Camera:shake(10, 0.2)
+		spawnExplosion(self.x, self.y, 2, 3)
+		-- Camera:shake(10, 0.2)
 	end
 
 	self:finishKill()
@@ -144,6 +150,7 @@ function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 		self.w 					= 140
 		self.h 					= 64
 		self.fireRate 			= V.k_rileyFireRate
+		self.hp 				= 1
 
 		self.gfx 				= gfx_riley
 		self.throttle_gfx 		= gfx_throttle1
@@ -153,6 +160,7 @@ function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 		self.w 					= 72
 		self.h 					= 72
 		self.fireRate 			= V.k_defaultFireRate
+		self.hp 				= 2
 
 		self.gfx 				= gfx_augustus
 		self.throttle_gfx 		= gfx_throttle1
@@ -162,6 +170,7 @@ function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 		self.w 					= 100
 		self.h 					= 48
 		self.fireRate 			= V.k_defaultFireRate
+		self.hp 				= 1
 
 		self.gfx 				= gfx_dulce
 		self.throttle_gfx 		= gfx_throttle1
@@ -171,6 +180,7 @@ function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 		self.w 					= 96
 		self.h 					= 144
 		self.fireRate 			= V.k_defaultFireRate
+		self.hp 				= 2
 
 		self.gfx 				= gfx_hammerhead
 		self.throttle_gfx 		= gfx_throttle1
@@ -180,6 +190,7 @@ function Keadani:spawn(unitType, x, y, velo_x, velo_y)
 		self.w 					= 160
 		self.h 					= 48
 		self.fireRate 			= V.k_defaultFireRate
+		self.hp 				= 3
 
 		self.gfx 				= gfx_koltar
 		self.throttle_gfx 		= gfx_throttle1

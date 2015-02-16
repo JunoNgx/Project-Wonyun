@@ -24,7 +24,8 @@ function Star:update(dt)
 end
 
 function Star:draw()
-	love.graphics.setColor(255,255,255,170)
+	-- love.graphics.setColor(200,200,200,255)
+	love.graphics.setColor(40,40,40,255)
 	Jutils.draw(self.gfx, self.x, self.y, 0, self.scale, self.scale)
 
 	if G.debugMode then
