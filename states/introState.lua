@@ -62,3 +62,7 @@ end
 function intro:keyreleased()
     Gamestate.switch(menu)
 end
+
+function intro:gamepadreleased()
+    Gamestate.switch(menu)
+end

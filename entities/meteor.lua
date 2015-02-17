@@ -71,7 +71,7 @@ function Meteor:draw()
 	end
 end
 
-function Meteor:hit()
+function Meteor:hit(damage)
 	self:kill()
 end
 

@@ -8,32 +8,88 @@ Input = {
 		oy = 0,
 		lastClick = love.timer.getTime(),
 	},
-	-- R = {
-	-- 	index = nil,
-	-- 	isDown = false,
-	-- 	ox = nil,
-	-- 	oy = nil,
-	-- 	lastClick = love.timer.getTime(),
-	-- }
+
+	K = {
+		Up = false,
+		Dn = false,
+		Lt = false,
+		Rt = false,
+	},
+
+	P = {
+		dx = 0,
+		dy = 0,
+	},
+
+	mode = nil
 }
 
 function Input:init()
-	-- -- Input:GamepadAssign()
-	-- if love.system.getOS() == 'Windows' then Input.mode = 'keyboard' end
-	-- -- if love.system.getOS() == 'Windows' then Input.mode = 'gamepad' end
-	-- if love.system.getOS() == 'Android' then Input.mode = 'touch' end
+	-- Input:GamepadAssign()
+	if love.system.getOS() == 'Windows' then Input.mode = 'keyboard' end
+	-- if love.system.getOS() == 'Windows' then Input.mode = 'gamepad' end
+	if love.system.getOS() == 'Android' then Input.mode = 'touch' end
 end
 
 function Input:update(dt)
-	if Input.T.isDown then
-		Input.T.recordDue = Input.T.recordDue - dt
 
-		if Input.T.recordDue <= 0 then
-			Input.T.rx = Input.T.getX()
-			Input.T.ry = Input.T.getY()
+	if Input.mode == 'gamepad' and Input.gamepad == nil then
+		Input.mode = 'keyboard'
+	end
 
-			Input.T.recordDue = V.inputRecordRate
+	if Input.mode == 'touch' then
+		if Input.T.isDown then
+			Input.T.recordDue = Input.T.recordDue - dt
+
+			if Input.T.recordDue <= 0 then
+				Input.T.rx = Input.T.getX()
+				Input.T.ry = Input.T.getY()
+
+				Input.T.recordDue = V.inputRecordRate
+			end
 		end
+
+	-- ====================================== --
+
+	elseif Input.mode == 'keyboard' then
+		Input.K.Up = love.keyboard.isDown('up')
+		Input.K.Dn = love.keyboard.isDown('down')
+		Input.K.Lt = love.keyboard.isDown('left')
+		Input.K.Rt = love.keyboard.isDown('right')
+
+	-- ====================================== --
+
+	elseif Input.mode == 'gamepad' then
+		-- Movement utilising both Dpad and thumbstick
+		-- Thumbstick allows adjustment of speed
+		lt_thumb_x, lt_thumb_y, rt_thumb_x, rt_thumb_y, lt_trigger, rt_trigger = Input.gamepad:getAxes()
+
+		local dpad = Input.gamepad:getHat(1)
+
+		if dpad == 'l' then
+			Input.P.dx = -1
+		elseif dpad == 'r' then
+			Input.P.dx =  1
+		elseif lt_thumb_x <= -0.3 then
+			Input.P.dx = lt_thumb_x
+		elseif lt_thumb_x >= 0.3 then
+			Input.P.dx = lt_thumb_x
+		else
+		    Input.P.dx = 0
+		end
+
+		if dpad == 'u' then
+			Input.P.dy = -1
+		elseif dpad == 'd' then
+			Input.P.dy =  1
+		elseif lt_thumb_y <= -0.3 then
+			Input.P.dy = lt_thumb_y
+		elseif lt_thumb_y >= 0.3 then
+			Input.P.dy = lt_thumb_y
+		else
+			Input.P.dy = 0
+		end
+
 	end
 end
 
@@ -60,4 +116,10 @@ function Input.T.getY()
 	elseif love.system.getOS() == 'Windows' then
 		return M.getY()
 	end
+end
+
+function Input:GamepadAssign()
+	if love.joystick.getJoysticks() ~= nil then
+        Input.gamepad = love.joystick.getJoysticks()[1]
+   	end
 end

@@ -15,7 +15,7 @@ function Wonyun:init(extraAmmo, hp, weaponLevel, bulletCaptureEquipped)
 	self.w2 			= 32
 	self.h2 			= 32
 
-	self.r 				= -math.pi/2
+	self.r 				= math.pi * 3/2
 	self.oldx 			= self.x
 	self.oldy 			= self.y
 	self.velo = {
@@ -23,7 +23,8 @@ function Wonyun:init(extraAmmo, hp, weaponLevel, bulletCaptureEquipped)
 		y = 0,
 	}
 
-	self.tweenDue = 0
+	-- self.tweenDue = 0
+	self.rotateDir = 0 -- -1, left, 0, not rotating, 1 right
 
 	self.lifetime 	= 0
 	self.alive 		= true
@@ -68,33 +69,77 @@ function Wonyun:update(dt)
 
 		updateVelocity(self, dt)
 
-		self.flux.update(dt)
-		if Input.T.isDown then
+		-- self.flux.update(dt)
+		-- if Input.T.isDown then
 
-			local Tspd_x = Input.T.getX() - Input.T.rx
-			local Tspd_y = Input.T.getY() - Input.T.ry
+		-- 	local Tspd_x = Input.T.getX() - Input.T.rx
+		-- 	local Tspd_y = Input.T.getY() - Input.T.ry
 
-				self.flux.to(self.velo, V.inputTweenTime, {
-					x = Tspd_x * G.sensitivity,
-					y = Tspd_y * G.sensitivity
-					})
+		-- 		self.flux.to(self.velo, V.inputTweenTime, {
+		-- 			x = Tspd_x * G.sensitivity,
+		-- 			y = Tspd_y * G.sensitivity
+		-- 			})
 
-		else
-			self.flux.to(self.velo, V.inputTweenTime, {x = 0, y = 0}):ease('linear')
+		-- else
+		-- 	self.flux.to(self.velo, V.inputTweenTime, {x = 0, y = 0}):ease('linear')
+		-- end
+
+		-- -- Turns when moved horizontally
+		-- local turningSpeed = 4
+
+		-- local maxVelo = 600
+		-- local rate = self.velo.x / maxVelo
+		-- local des_r = -math.pi/2 + math.pi/4 * rate
+
+		-- if des_r < -math.pi * 3/4 then des_r = -math.pi * 3/4 end
+		-- if des_r > -math.pi * 1/4 then des_r = -math.pi * 1/4 end
+
+		-- if self.r < des_r then self.r = self.r + dt * turningSpeed end
+		-- if self.r > des_r then self.r = self.r - dt * turningSpeed end
+
+		if Input.mode == 'keyboard' then
+			if Input.K.Up then
+				self.velo.y = -V.w_dpadVelo
+			elseif Input.K.Dn then
+				self.velo.y = V.w_dpadVelo
+			else
+				self.velo.y = 0
+			end
+
+			if Input.K.Lt then
+				self.velo.x = -V.w_dpadVelo
+			elseif Input.K.Rt then
+				self.velo.x = V.w_dpadVelo
+			else
+				self.velo.x = 0
+			end
+
+		elseif Input.mode == 'gamepad' then
+			self.velo.x = Input.P.dx * V.w_dpadVelo
+			self.velo.y = Input.P.dy * V.w_dpadVelo
 		end
 
-		-- Turns when moved horizontally
-		local turningSpeed = 4
+		-- Rotation when move horizontally
+		if self.velo.x < 0 then
+			self.rotateDir = -1
+		elseif self.velo.x == 0 then
+			self.rotateDir = 0
+		elseif self.velo.x > 0 then
+			self.rotateDir = 1
+		end
 
-		local maxVelo = 600
-		local rate = self.velo.x / maxVelo
-		local des_r = -math.pi/2 + math.pi/4 * rate
-
-		if des_r < -math.pi * 3/4 then des_r = -math.pi * 3/4 end
-		if des_r > -math.pi * 1/4 then des_r = -math.pi * 1/4 end
-
-		if self.r < des_r then self.r = self.r + dt * turningSpeed end
-		if self.r > des_r then self.r = self.r - dt * turningSpeed end
+		if self.rotateDir == -1 then
+			if self.r > math.pi * 5/4 then self.r = self.r - dt * V.w_rotateSpd end
+		elseif self.rotateDir == 0 then
+			-- math.pi * 3/2 == 4.71238898038
+			if self.r < 4.65 then
+				self.r = self.r + dt * V.w_rotateSpd
+			elseif self.r > 4.75 then
+				self.r = self.r - dt * V.w_rotateSpd
+			end
+		elseif self.rotateDir == 1 then
+			if self.r < math.pi * 7/4 then self.r = self.r + dt * V.w_rotateSpd end
+		end
 
 		-- Keep in gameplay ground
 		if self.x > gRes.w then self.x = gRes.w end
@@ -103,7 +148,7 @@ function Wonyun:update(dt)
 		if self.y < 0 then self.y = 0 end
 
 		-- Die when hp depletes
-		if self.hp == 0 then self:kill() end
+		if self.hp <= 0 then self:kill() end
 	end
 end
 
@@ -179,7 +224,7 @@ end
 
 ----------------------------
 
-function Wonyun:hit()
+function Wonyun:hit(damage)
 	-- if self.isBarriered and self.isShielded and self.isArmoured then
 	-- 	self.isBarriered = false
 	-- elseif not self.isBarriered and self.isShielded and self.isArmoured then
@@ -189,7 +234,7 @@ function Wonyun:hit()
 	-- elseif not self.isBarriered and not self.isShielded and not self.isArmoured then
 	-- 	self:kill()
 	-- end
-	self.hp = self.hp - 1
+	self.hp = self.hp - damage
 end
 
 function Wonyun:kill()
@@ -296,6 +341,6 @@ function Wonyun:AmendOldPos()
 	self.oldy = self.y
 end
 
-function Wonyun:brake()
-	self.flux.to(self.velo, V.inputTweenTime, {x = 0, y = 0}):ease('linear')
-end
+-- function Wonyun:brake()
+-- 	self.flux.to(self.velo, V.inputTweenTime, {x = 0, y = 0}):ease('linear')
+-- end

@@ -40,8 +40,8 @@ end
 function Director:update(dt)
 	self.distanceTravelled = self.distanceTravelled + dt * 600
 
-	-- local distanceBarLength = V.ui_DistanceBar_y_bottom - V.ui_DistanceBar_y_top
-	-- self.pointer.y = V.ui_DistanceBar_y_bottom - distanceBarLength * (self.distanceTravelled / V.distanceDestination)
+	local distanceBarLength = V.ui_DistanceBar_y_bottom - V.ui_DistanceBar_y_top
+	self.pointer.y = V.ui_DistanceBar_y_bottom - distanceBarLength * (self.distanceTravelled / V.distanceDestination)
 end
 
 
@@ -77,53 +77,69 @@ function Director:updateCollision(dt)
 		-- Player hit by other things
 		if entity.typeid == 'wonyun' then
 			for i, hitEntity in ipairs(Director.alive) do
-				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
+				if entity ~= hitEntity and hitEntity.alive and IsColliding(entity, hitEntity) then
 					if hitEntity.alliance ~= 'friendly' then
 
-						entity:hit()
-						hitEntity:hit()
+						if hitEntity.objType == 'vessel' then
+							-- If hit a non-friendly vessel then instantly destroy the other vessel
+							entity:hit(1)
+							hitEntity:hit(3)
+						elseif hitEntity.objType == 'bullet' then
+						    entity:hit(1)
+						    hitEntity:hit(1)
+						end
 					end
 				end
 			end
 		end
 
 		-- Friendly bullets hit others
-		if entity.typeid == 'bullet_f' then
+		if entity.objType == 'bullet' then
 			for i, hitEntity in ipairs(Director.alive) do
 				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
-					if hitEntity.objType == 'vessel' and hitEntity.alliance ~= 'friendly' then
+					if hitEntity.objType == 'vessel' and entity.alliance ~= hitEntity.alliance then
 
-						entity:hit()
-						hitEntity:hit()
+						entity:hit(1)
+						hitEntity:hit(1)
 					end
 				end
 			end
 		end
 
-		-- Enemy vessel hit by anything non-hostile
-		if entity.baseid == 'keadani' then
+		-- Meteors hitting others
+		if entity.objType == 'vessel' and entity.alliance == 'neutral' then
 			for i, hitEntity in ipairs(Director.alive) do
 				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
-					if hitEntity.alliance ~= 'hostile' then
-
-						entity:hit()
-						hitEntity:hit()
-					end
+						entity:hit(2)
+						hitEntity:hit(2)
 				end
 			end
 		end
+
+		-- Enemy vessels hit by anything non-hostile
+		-- if entity.baseid == 'keadani' then
+		-- 	for i, hitEntity in ipairs(Director.alive) do
+		-- 		if entity ~= hitEntity and IsColliding(entity, hitEntity) then
+		-- 			if hitEntity.alliance ~= 'hostile' then
+
+		-- 				entity:hit(1)
+		-- 				hitEntity:hit(1)
+		-- 			end
+		-- 		end
+		-- 	end
+		-- end
 
 		-- Neutral vessels hit by everything not itself
-		if entity.alliance == 'neutral' and entity.objType == 'vessel' then
-			for i, hitEntity in ipairs(Director.alive) do
-				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
+		-- if entity.alliance == 'neutral' and entity.objType == 'vessel' then
+		-- 	for i, hitEntity in ipairs(Director.alive) do
+		-- 		if entity ~= hitEntity and IsColliding(entity, hitEntity) then
 
-					entity:hit()
-					hitEntity:hit()
+		-- 			entity:hit(1)
+		-- 			hitEntity:hit(1)
 					
-				end
-			end
-		end
+		-- 		end
+		-- 	end
+		-- end
 
 
 		-- if entity.typeid == 'player' then

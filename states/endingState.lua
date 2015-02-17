@@ -28,3 +28,16 @@ function ending:mousepressed(x, y, b)
 		end
 	end
 end
+
+
+function menu:gamepadreleased(j, b)
+	if b == 'start' then
+    	Gamestate.switch(intro)
+    end
+end
+
+function menu:keyreleased(k)
+	if k == 'return' then
+		Gamestate.switch(intro)
+	end
+end

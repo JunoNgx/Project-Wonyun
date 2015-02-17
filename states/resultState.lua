@@ -92,8 +92,20 @@ function result:mousepressed(x, y, b)
 	end
 end
 
-function result:keypressed(k)
-	if k == 'z' then
+-- function result:keypressed(k)
+-- 	if k == 'z' then
+-- 		Gamestate.switch(intro)
+-- 	end
+-- end
+
+function menu:gamepadreleased(j, b)
+	if b == 'start' then
+    	Gamestate.switch(intro)
+    end
+end
+
+function menu:keyreleased(k)
+	if k == 'return' then
 		Gamestate.switch(intro)
 	end
 end

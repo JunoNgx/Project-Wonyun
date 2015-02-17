@@ -17,6 +17,8 @@ V = {
 	w_ReloadTime2 = 1.5,
 	w_ReloadTime3 = 3,
 	w_captureReloadTime = 10,
+	w_dpadVelo = 700,
+	w_rotateSpd = 5,
 
 	-- Keadani
 	k_defaultVeloY = 100,

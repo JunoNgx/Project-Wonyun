@@ -14,3 +14,9 @@ function pause:keypressed(k)
 		Gamestate.pop()
 	end
 end
+
+function pause:gamepadpressed(j, b)
+	if b == 'start' then
+		Gamestate.pop()
+	end
+end

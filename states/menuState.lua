@@ -58,3 +58,15 @@ function menu:mousepressed(x, y, b)
     	Gamestate.switch(play)
 	end
 end
+
+function menu:gamepadreleased(j, b)
+	if b == 'start' then
+    	Gamestate.switch(menu)
+    end
+end
+
+function menu:keyreleased(k)
+	if k == 'return' then
+		Gamestate.switch(menu)
+	end
+end

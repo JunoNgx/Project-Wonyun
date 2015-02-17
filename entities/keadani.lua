@@ -98,8 +98,8 @@ end
 
 --------------------------------
 
-function Keadani:hit()
-	self.hp = self.hp - 1
+function Keadani:hit(damage)
+	self.hp = self.hp - damage
 end
 
 function Keadani:kill()

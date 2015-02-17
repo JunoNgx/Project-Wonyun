@@ -87,30 +87,30 @@ end
 
 --------
 
--- function love.mousepressed(x, y, button, isTouch)
---    if isTouch then
---       Input.mode = 'touch'
---    end
--- end
+function love.mousepressed(x, y, button, isTouch)
+   if isTouch then
+      Input.mode = 'touch'
+   end
+end
 
--- function love.keypressed(k)
---    Input.mode = 'keyboard'
--- end
+function love.keypressed(k)
+   Input.mode = 'keyboard'
+end
 
--- function love.touchpressed(id, x, y)
---    Input.mode = 'touch'
--- end
+function love.touchpressed(id, x, y)
+   Input.mode = 'touch'
+end
 
--- function love.gamepadpressed(id, x, y)
---    Input.mode = 'gamepad'
--- end
+function love.gamepadpressed(id, x, y)
+   Input.mode = 'gamepad'
+end
 
--- function love.joystickadded()
---    Input:GamepadAssign()
---    Input.mode = 'gamepad'
--- end
+function love.joystickadded()
+   Input:GamepadAssign()
+   Input.mode = 'gamepad'
+end
 
--- function love.joystickremoved()
---    Input.mode = 'keyboard'
---    Input:GamepadAssign()
--- end
+function love.joystickremoved()
+   Input.mode = 'keyboard'
+   Input:GamepadAssign()
+end

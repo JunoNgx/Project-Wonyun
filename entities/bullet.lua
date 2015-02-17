@@ -75,7 +75,7 @@ end
 
 ------------------------------------
 
-function Bullet:hit()
+function Bullet:hit(damage)
 	self:kill()
 end
 

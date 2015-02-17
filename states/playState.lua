@@ -109,6 +109,8 @@ function play:enter()
 		spawnTrench('r', 1)
 		end)
 
+	-- p.velo.y = -300
+
 end
 
 function play:update(dt)
@@ -172,10 +174,10 @@ function play:draw()
 
 	love.graphics.setColor(c.white)
 	love.graphics.setFont(debugFont)
-	-- love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 0)
-	-- love.graphics.print('T2: '..tostring(#Assistant.t2), 0, 20)
-	-- love.graphics.print('Meteors in pool: '..tostring(#Pool.meteor), 0, 40)
-	-- love.graphics.print('Star in roadie b1 : '..tostring(#Roadie.b1), 0, 60)
+	love.graphics.print(Input.mode, 0, 0)
+	love.graphics.print(tostring(p.hp), 0, 20)
+	-- love.graphics.print(tostring(p.velo.y), 0, 40)
+	-- love.graphics.print(tostring(Input.mode.dx), 0, 60)
 	-- love.graphics.print('Dust in pool : '..tostring(#Pool.dust), 0, 80)
 	-- love.graphics.print('Dust in play : '..tostring(#Assistant.t1), 0, 100)
 	-- love.graphics.print('trench4 : '..tostring(#Roadie.t4), 0, 120)
@@ -230,88 +232,119 @@ end
 ------ Mobile Touch Control ------
 ----------------------------------
 
-function play:touchpressed(id, x, y)
-	if play.state == 'inPlay' then
-		if love.system.getOS() == 'Android' then
+-- function play:touchpressed(id, x, y)
+-- 	if play.state == 'inPlay' then
+-- 		if love.system.getOS() == 'Android' then
 
-			if hitSwitchButton(gRes.w * x, gRes.h * y) then
-					p:switchWeapon()
-				elseif hitPauseButton(gRes.w * x, gRes.h * y) then
-					Gamestate.push(pause)
-				else
-			-- Move the ship with single touch
-				if id == 0 then
+-- 			if hitSwitchButton(gRes.w * x, gRes.h * y) then
+-- 					p:switchWeapon()
+-- 				elseif hitPauseButton(gRes.w * x, gRes.h * y) then
+-- 					Gamestate.push(pause)
+-- 				else
+-- 			-- Move the ship with single touch
+-- 				if id == 0 then
 		
-						p.tweenDue = 0
-						Input.T.isDown = true
-						Input.T.recordDue = 0
+-- 						p.tweenDue = 0
+-- 						Input.T.isDown = true
+-- 						Input.T.recordDue = 0
 
-						-- -- Double click action
-						-- if love.timer.getTime() - Input.T.lastClick < 0.3 then
-						-- 	doubleClickAction() 
-						-- end
+-- 						-- -- Double click action
+-- 						-- if love.timer.getTime() - Input.T.lastClick < 0.3 then
+-- 						-- 	doubleClickAction() 
+-- 						-- end
 
-					-- -- Record last click for next double click
-					-- if id == 0 then Input.T.lastClick = love.timer.getTime() end
-				elseif id == 1 then
+-- 					-- -- Record last click for next double click
+-- 					-- if id == 0 then Input.T.lastClick = love.timer.getTime() end
+-- 				elseif id == 1 then
 
-					if p:checkVitals() then
-						p:fire()
-					end
+-- 					if p:checkVitals() then
+-- 						p:fire()
+-- 					end
 
-				end
-			end
-		end
-	end
-end
+-- 				end
+-- 			end
+-- 		end
+-- 	end
+-- end
 
-function play:touchreleased(id, x, y)
-	if play.state == 'inPlay' then
-		if love.system.getOS() == 'Android' and id == 0 then
-			Input.T.isDown = false
-		end
-	end
-end
+-- function play:touchreleased(id, x, y)
+-- 	if play.state == 'inPlay' then
+-- 		if love.system.getOS() == 'Android' and id == 0 then
+-- 			Input.T.isDown = false
+-- 		end
+-- 	end
+-- end
 
 
 ----------------------------------
 ----- PC Mouse Debug Control -----
 ----------------------------------
 
-function play:mousepressed(x, y, b, isTouch)
-	if play.state == 'inPlay' then
-		if love.system.getOS() == 'Windows' then
-			if b == 'l' then
-				Input.T.isDown = true
-				Input.T.recordDue = 0
+-- function play:mousepressed(x, y, b, isTouch)
+-- 	if play.state == 'inPlay' then
+-- 		if love.system.getOS() == 'Windows' then
+-- 			if b == 'l' then
+-- 				Input.T.isDown = true
+-- 				Input.T.recordDue = 0
 
-				if love.timer.getTime() - Input.T.lastClick < 0.3 then
-					doubleClickAction()
-				end
+-- 				if love.timer.getTime() - Input.T.lastClick < 0.3 then
+-- 					doubleClickAction()
+-- 				end
 
-				if id == 0 then Input.T.lastClick = love.timer.getTime() end
+-- 				if id == 0 then Input.T.lastClick = love.timer.getTime() end
 
-			elseif b == 'r' then
+-- 			elseif b == 'r' then
 
-				if p:checkVitals() then
-					p:fire()
-				end
+-- 				if p:checkVitals() then
+-- 					p:fire()
+-- 				end
 
-			end
+-- 			end
+-- 		end
+-- 	end
+-- end
+
+-- function play:mousereleased(x, y, b)
+-- 	if play.state == 'inPlay' then
+-- 		if love.system.getOS() == 'Windows' and b == 'l' then
+-- 			Input.T.isDown = false
+-- 		end
+
+-- 	end
+-- end
+function play:gamepadpressed(j, b)
+	if p.alive then
+		if b == 'a' or b == 'x' or b == 'rightshoulder' then
+			p:fire()
+		elseif b == 'b' then
+			p:switchWeapon()
+		elseif b == 'y' or b == 'leftshoulder' then
+			p:captureBullet()
 		end
 	end
-end
 
-function play:mousereleased(x, y, b)
-	if play.state == 'inPlay' then
-		if love.system.getOS() == 'Windows' and b == 'l' then
-			Input.T.isDown = false
+	if b == 'start' then
+		if play.state == 'inPlay' then
+			play:pause()
+		elseif play.state == 'paused' then
+			play:resume()
 		end
-
 	end
+
 end
+
 
 function play:keypressed(k)
+	if p.alive then
+		if k == 'c' then
+			p:fire()
+		elseif k == 'x' then
+			p:switchWeapon()
+		elseif k == 'v' then
+			p:captureBullet()
+		end
+	end
+
 	if k == 'p' then
 		if play.state == 'inPlay' then
 			play:pause()
@@ -320,39 +353,4 @@ function play:keypressed(k)
 		end
 	end
 
-	if k == 'e' then
-		spawnExplosion(M.getX(), M.getY(), 1, 3)
-		-- spawnExplosion(self.x, self.y, 1, 1)
-	end	
-
-	-- if k == 'f' then
-	-- 	local nummer = love.math.random(2,5)
-	-- 	for i = 1, nummer do
-	-- 		spawnFragment(M.getX(), M.getY(), love.math.random(math.pi*2), true)
-	-- 		-- spawnFragment(360, 180, math.pi/4)
-	-- 	end
-	-- end
-
-	-- if k == 'b' then
-	-- 	spawnExplosion(M.getX(), M.getY(), 48, love.math.random(4,8), true)
-	-- end
-
-	if k == 'z' then
-		p:fireBurst()
-	end
-
-	if k == 's' then
-		Camera:shake(10, 1)
-	end
-
-	if k == 'v' then
-		p:switchWeapon()
-	end
-
-	if k == 'o' then
-		-- Player's death explosion
-		-- spawnExplosion(M.getX(), M.getY(), 24, love.math.random(2,3), true, true)
-		-- spawnDust(M.getX(), M.getY(), 20, 20)
-		spawnDust(M.getX(), M.getY(), 0, 20, true)
-	end
 end
