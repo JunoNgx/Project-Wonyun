@@ -9,9 +9,9 @@ function Director:init()
 	-- The two buttons at two corner
 	Director.buttons = {
 		switchWeapon = {
-			x 			= 24,
-			y 			= gRes.h - 24,
-			l 			= 48,
+			x 			= 64,
+			y 			= gRes.h - 64,
+			l 			= 128,
 			gfx 		= gfx_ui_weapButton[1],
 			switch = function()
 				Director.buttons.switchWeapon.gfx = gfx_ui_weapButton[p.currentWeapon]
@@ -19,16 +19,16 @@ function Director:init()
 		},
 
 		pause = {
-			x 			= gRes.w - 24,
-			y 			= 24,
-			l 			= 48,
+			x 			= gRes.w - 48,
+			y 			= 48,
+			l 			= 96,
 			gfx 		= gfx_ui_pauseButton,
 		},
 	}
 
 	-- Distance counter
 	self.pointer = {
-		x = 20,
+		x = V.ui_DistanceBar_x + 20,
 		y = V.ui_DistanceBar_y_bottom,
 	}
 end
@@ -64,6 +64,10 @@ function Director:updateEntities(dt)
 				table.insert(Pool.bullet, entity)
 			end
 
+			if entity.baseid == 'drone' then
+				table.insert(Pool.drone, entity)
+			end
+
 			-- Removal codes ends here --
 			table.remove(Director.alive, i)
 		end
@@ -84,9 +88,17 @@ function Director:updateCollision(dt)
 							-- If hit a non-friendly vessel then instantly destroy the other vessel
 							entity:hit(1)
 							hitEntity:hit(3)
+
 						elseif hitEntity.objType == 'bullet' then
+							-- hit by a bullet
 						    entity:hit(1)
 						    hitEntity:hit(1)
+
+						elseif hitEntity.objType == 'pickup' then
+							if hitEntity.pickedUp == false then
+								-- Collide with a supply drone
+								hitEntity:acquired()
+							end
 						end
 					end
 				end
@@ -110,8 +122,10 @@ function Director:updateCollision(dt)
 		if entity.objType == 'vessel' and entity.alliance == 'neutral' then
 			for i, hitEntity in ipairs(Director.alive) do
 				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
+					if hitEntity.objType == 'vessel' then
 						entity:hit(2)
 						hitEntity:hit(2)
+					end
 				end
 			end
 		end
@@ -167,6 +181,13 @@ function Director:drawUI()
 	-- buttons
 	love.graphics.setColor(255,255,255)
 	Jutils.draw(self.buttons.switchWeapon.gfx, self.buttons.switchWeapon.x, self.buttons.switchWeapon.y)
+	if G.debugMode then
+		love.graphics.setLineWidth(1)
+		love.graphics.rectangle('line',
+			Director.buttons.switchWeapon.x - Director.buttons.switchWeapon.l/2,
+			Director.buttons.switchWeapon.y - Director.buttons.switchWeapon.l/2,
+			Director.buttons.switchWeapon.l, Director.buttons.switchWeapon.l)
+	end
 	Jutils.draw(self.buttons.pause.gfx, self.buttons.pause.x, self.buttons.pause.y)
 	-- Jutils.print(humanizeCounter(math.floor(Director.distanceTravelled)),
 	-- 	0.5, 0.05, counterFont, true)
@@ -182,9 +203,9 @@ function Director:drawUI()
 	-- Distance pointer
 	love.graphics.setColor(100, 150, 200)
 	love.graphics.polygon('fill',
-		self.pointer.x - 4, self.pointer.y,
-		self.pointer.x + 4, self.pointer.y - 4,
-		self.pointer.x + 4, self.pointer.y + 4
+		self.pointer.x - 10, self.pointer.y,
+		self.pointer.x + 10, self.pointer.y - 10,
+		self.pointer.x + 10, self.pointer.y + 10
 		)
 	-- love.graphics.rectangle('fill', self.pointer.x, self.pointer.y, 20, 20)
 
@@ -192,7 +213,7 @@ function Director:drawUI()
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.setFont(counterFont)
 	love.graphics.print(humanizeCounter(math.floor(Director.distanceTravelled)),
-		self.pointer.x + 10, self.pointer.y - 4, 0, 1,1,
+		self.pointer.x + 20, self.pointer.y - 10, 0, 1,1,
 		0,
 		0
 		-- counterFont:getWidth(humanizeCounter(math.floor(Director.distanceTravelled)))/2

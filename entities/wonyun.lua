@@ -69,20 +69,28 @@ function Wonyun:update(dt)
 
 		updateVelocity(self, dt)
 
-		-- self.flux.update(dt)
-		-- if Input.T.isDown then
 
-		-- 	local Tspd_x = Input.T.getX() - Input.T.rx
-		-- 	local Tspd_y = Input.T.getY() - Input.T.ry
+		if Input.mode == 'touch' then
 
-		-- 		self.flux.to(self.velo, V.inputTweenTime, {
-		-- 			x = Tspd_x * G.sensitivity,
-		-- 			y = Tspd_y * G.sensitivity
-		-- 			})
+			self.flux.update(dt)
+			if Input.T.isDown then
 
-		-- else
-		-- 	self.flux.to(self.velo, V.inputTweenTime, {x = 0, y = 0}):ease('linear')
-		-- end
+				local Tspd_x = Input.T.x - Input.T.rx
+				local Tspd_y = Input.T.y - Input.T.ry
+
+					self.flux.to(self.velo, V.inputTweenTime, {
+						x = Tspd_x * G.sensitivity,
+						y = Tspd_y * G.sensitivity
+						})
+
+			else
+				self.flux.to(self.velo, V.inputTweenTime, {x = 0, y = 0}):ease('linear')
+
+				if -2 < self.velo.x or self.velo.x < 2 then self.velo.x = 0 end
+				if -2 < self.velo.y or self.velo.y < 2 then self.velo.y = 0 end
+			end
+
+
 
 		-- -- Turns when moved horizontally
 		-- local turningSpeed = 4
@@ -97,7 +105,7 @@ function Wonyun:update(dt)
 		-- if self.r < des_r then self.r = self.r + dt * turningSpeed end
 		-- if self.r > des_r then self.r = self.r - dt * turningSpeed end
 
-		if Input.mode == 'keyboard' then
+		elseif Input.mode == 'keyboard' then
 			if Input.K.Up then
 				self.velo.y = -V.w_dpadVelo
 			elseif Input.K.Dn then
@@ -120,12 +128,24 @@ function Wonyun:update(dt)
 		end
 
 		-- Rotation when move horizontally
-		if self.velo.x < 0 then
-			self.rotateDir = -1
-		elseif self.velo.x == 0 then
-			self.rotateDir = 0
-		elseif self.velo.x > 0 then
-			self.rotateDir = 1
+		local rotateThreshold = 100
+
+		if Input.mode == 'touch' then
+			if self.velo.x < -rotateThreshold then
+				self.rotateDir = -1
+			elseif -rotateThreshold < self.velo.x and self.velo.x < rotateThreshold then
+				self.rotateDir = 0
+			elseif self.velo.x > rotateThreshold then
+				self.rotateDir = 1
+			end
+		else
+			if self.velo.x < 0 then
+				self.rotateDir = -1
+			elseif self.velo.x == 0 then
+				self.rotateDir = 0
+			elseif self.velo.x > 0 then
+				self.rotateDir = 1
+			end
 		end
 
 		if self.rotateDir == -1 then
@@ -281,19 +301,19 @@ function Wonyun:fire()
 end
 
 function Wonyun:fireFront()
-	spawnBullet(1, p.x, p.y - 16, 0, -900)
+	spawnBullet(1, p.x, p.y - 16, 0, -V.w_bulletVelo)
 end
 
 function Wonyun:fireLateral()
-	spawnBullet(1, p.x + 16, p.y, 900, 0)
-	spawnBullet(1, p.x - 16, p.y, -900, 0)
+	spawnBullet(1, p.x + 16, p.y, V.w_bulletVelo, 0)
+	spawnBullet(1, p.x - 16, p.y, -V.w_bulletVelo, 0)
 end
 
 function Wonyun:fireDiagonal()
-	spawnBullet(1, p.x + 12, p.y - 12, 450, -450)
-	spawnBullet(1, p.x + 12, p.y + 12, 450, 450)
-	spawnBullet(1, p.x - 12, p.y + 12, -450, 450)
-	spawnBullet(1, p.x - 12, p.y - 12, -450, -450)
+	spawnBullet(1, p.x + 12, p.y - 12, V.w_bulletVelo/2, -V.w_bulletVelo/2)
+	spawnBullet(1, p.x + 12, p.y + 12, V.w_bulletVelo/2, V.w_bulletVelo/2)
+	spawnBullet(1, p.x - 12, p.y + 12, -V.w_bulletVelo/2, V.w_bulletVelo/2)
+	spawnBullet(1, p.x - 12, p.y - 12, -V.w_bulletVelo/2, -V.w_bulletVelo/2)
 end
 
 function Wonyun:switchWeapon()

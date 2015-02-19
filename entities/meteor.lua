@@ -48,7 +48,7 @@ function Meteor:update(dt)
 				spawnDust(self.x - dist_x,
 					self.y - dist_y,
 					self.r - math.pi,
-					self.w/3,
+					self.w/1.5,
 					3)
 				self.emitProcess = V.m_emitRate
 			else

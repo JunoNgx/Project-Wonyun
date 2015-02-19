@@ -2,11 +2,12 @@ Input = {
 	T = {
 		index = nil,
 		isDown = false,
-		-- ox = nil,
-		-- oy = nil,
+		x = 0,
+		y = 0,
 		ox = 0,
 		oy = 0,
-		lastClick = love.timer.getTime(),
+		-- lastClick = love.timer.getTime(),
+		recordDue = 0,
 	},
 
 	K = {
@@ -42,8 +43,8 @@ function Input:update(dt)
 			Input.T.recordDue = Input.T.recordDue - dt
 
 			if Input.T.recordDue <= 0 then
-				Input.T.rx = Input.T.getX()
-				Input.T.ry = Input.T.getY()
+				Input.T.rx = Input.T.x
+				Input.T.ry = Input.T.y
 
 				Input.T.recordDue = V.inputRecordRate
 			end
@@ -97,29 +98,36 @@ function Input:draw()
 	if Input.T.isDown and G.debugMode then
 		love.graphics.setColor(255,123,231, 255)
 		love.graphics.circle('line', Input.T.rx, Input.T.ry, 15)
+
+		love.graphics.setColor(120,120,255, 255)
+		love.graphics.circle('line', Input.T.x, Input.T.y, 15)
 	end
 end
 
-function Input.T.getX()
-	if love.system.getOS() == 'Android' then
-		local id, x, y = love.touch.getTouch(1)
-		return x * gRes.w
-	elseif love.system.getOS() == 'Windows' then
-		return M.getX()
-	end
-end
+-- function Input.T.getX()
+-- 	local id, x, y = love.touch.getTouch(1)
+-- 	return x * gRes.w
+-- end
 
-function Input.T.getY()
-	if love.system.getOS() == 'Android' then
-		local id, x, y = love.touch.getTouch(1)
-		return y * gRes.h
-	elseif love.system.getOS() == 'Windows' then
-		return M.getY()
-	end
-end
+-- function Input.T.getY()
+-- 	if love.system.getOS() == 'Android' then
+-- 	local id, x, y = love.touch.getTouch(1)
+-- 	return y * gRes.h
+-- 	elseif love.system.getOS() == 'Windows' then
+-- 		return M.getY()
+-- 	end
+-- end
 
 function Input:GamepadAssign()
 	if love.joystick.getJoysticks() ~= nil then
         Input.gamepad = love.joystick.getJoysticks()[1]
    	end
+end
+
+function Input.T:reset(x, y)
+	self.x = x * gRes.w
+	self.y = y * gRes.h
+	self.rx = x * gRes.w
+	self.ry = y * gRes.h
+	self.recordDue = 0
 end

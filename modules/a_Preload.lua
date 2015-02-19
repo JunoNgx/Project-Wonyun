@@ -17,7 +17,7 @@ function preload()
 	m_SmaFont:setFilter('nearest','nearest')
 
 	-- Play
-	counterFont = love.graphics.newFont('assets/consola.ttf', 5)
+	counterFont = love.graphics.newFont('assets/consola.ttf', 15)
 	counterFont:setFilter('nearest','nearest')
 
 
@@ -38,6 +38,13 @@ function preload()
 
 	gfx_bullet_f		= love.graphics.newImage('assets/bullet_f.png')
 	gfx_bullet_e		= love.graphics.newImage('assets/bullet_e.png')
+
+	gfx_drone_fuselage	= love.graphics.newImage('assets/drone_fuselage.png')
+	gfx_drone_symbol 	= {
+		love.graphics.newImage('assets/drone_1.png'),
+		love.graphics.newImage('assets/drone_2.png'),
+		love.graphics.newImage('assets/drone_3.png'),
+	}
 
 	gfx_throttle1		= love.graphics.newImage('assets/throttle1.png')
 	gfx_throttle2		= love.graphics.newImage('assets/throttle2.png')

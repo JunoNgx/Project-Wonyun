@@ -73,7 +73,7 @@ local all_callbacks = {
 	'threaderror', 'update', 'visible', 'gamepadaxis', 'gamepadpressed',
 	'gamepadreleased', 'joystickadded', 'joystickaxis', 'joystickhat',
 	'joystickpressed', 'joystickreleased', 'joystickremoved',
-	'touchpressed', 'touchreleased'
+	'touchpressed', 'touchreleased', 'touchmoved'
 }
 
 function GS.registerEvents(callbacks)

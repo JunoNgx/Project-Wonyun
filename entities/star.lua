@@ -39,7 +39,7 @@ function Star:draw()
 end
 
 function Star:reset()
-	local randomizer = love.math.random(1,7)/10
+	local randomizer = love.math.random(4,12)/10
 
 	self.x = love.math.random(V.margin_rtlt, gRes.w + V.margin_rtlt)
 	self.y = -100

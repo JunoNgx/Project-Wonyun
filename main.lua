@@ -77,13 +77,13 @@ end
 -- Mobile mouse module
 M = {}
 
-function M.getX()
-   return love.mouse.getX() / screenScale.x
-end
+-- function M.getX()
+--    return love.mouse.getX() / screenScale.x
+-- end
 
-function M.getY()
-   return love.mouse.getY() / screenScale.y
-end
+-- function M.getY()
+--    return love.mouse.getY() / screenScale.y
+-- end
 
 --------
 

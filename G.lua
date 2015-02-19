@@ -19,6 +19,7 @@ V = {
 	w_captureReloadTime = 10,
 	w_dpadVelo = 700,
 	w_rotateSpd = 5,
+	w_bulletVelo = 1500,
 
 	-- Keadani
 	k_defaultVeloY = 100,
@@ -40,7 +41,7 @@ V = {
 	s_veloY = 80,
 
 	-- Dust
-	d_velo = 50,
+	d_velo = 100,
 	d_fadingSpeed = 1.5,
 	d_fadingSpeedMin = 1.2,
 	d_fadingSpeedMax = 1.7,
@@ -54,19 +55,23 @@ V = {
 	-- e_frameRate = 0.5,
 
 	--fragments
-	f_minmaxLifetime = 2,
+	f_minmaxLifetime = 3,
 	f_maxmaxLifetime = 9,
 	f_emitRate = 0.01,
 	f_minturnSpeed = 5,
 	f_maxturnSpeed = 500,
-	f_minVelo = 200,
-	f_maxVelo = 400,
+	f_minVelo = 400,
+	f_maxVelo = 800,
 
 	-- trench walls
-	t_velo1 = 200,
-	t_velo2 = 400,
-	t_velo3 = 800,
-	t_velo4 = 1000,
+	t_length = 800,
+	t_height = 150,
+	t_innerPointMod = 200,
+
+	t_velo1 = 400,
+	t_velo2 = 800,
+	t_velo3 = 1600,
+	t_velo4 = 2000,
 
 	t_hParalRate1 = 1.0,
 	t_hParalRate2 = 0.75,
@@ -85,23 +90,26 @@ V = {
 	-- t_x4_2 = 40,
 	-- t_x4_1 = 0,
 
-	t_x1_2 = 200,
-	t_x1_1 = 160,
+	t_x1_2 = 400,
+	t_x1_1 = 300,
 
-	t_x2_2 = 180,
-	t_x2_1 = 120,
+	t_x2_2 = 300,
+	t_x2_1 = 100,
 
-	t_x3_2 = 140,
-	t_x3_1 = 80,
+	t_x3_2 = 200,
+	t_x3_1 = 0,
 
-	t_x4_2 = 100,
-	t_x4_1 = 40,
+	t_x4_2 = 300,
+	t_x4_1 = 0,
+
+	-- Drones
+	drone_velo = 200,
 
 	--UI
 
-	ui_DistanceBar_x = 12,
-	ui_DistanceBar_y_top = 24,
-	ui_DistanceBar_y_bottom = 296,
+	ui_DistanceBar_x = 34,
+	ui_DistanceBar_y_top = 32,
+	ui_DistanceBar_y_bottom = 576,
 
 
 }
@@ -113,7 +121,7 @@ G = {
 
 	debugMode = false,
 	-- debugMode = true,
-	sensitivity = 70,
+	sensitivity = 100,
 
 	hallucinativeMode = false,
 }
@@ -122,12 +130,12 @@ G = {
 
 if love.system.getOS() ~= 'Android' then
 	gRes = {
-		w = 640,
-		h = 360
+		w = 1280,
+		h = 720
 	}
 else
     gRes = {
-    	w = 640
+    	w = 1280
     }
     local ratioLandscape = love.graphics.getWidth()/love.graphics.getHeight()
     local ratioPortrait = love.graphics.getHeight()/love.graphics.getWidth()

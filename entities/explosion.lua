@@ -36,9 +36,9 @@ function spawnExplosion(x, y, colorCode, scaleSize)
 	if scaleSize == 1 then
 		-- Camera:shake(5, 0.2)
 	elseif scaleSize == 2 then
-		Camera:shake(4, 0.2)
-	elseif scaleSize == 3 then
 		Camera:shake(7, 0.2)
+	elseif scaleSize == 3 then
+		Camera:shake(15, 0.2)
 	end
 
 end
@@ -123,11 +123,11 @@ function Explosion:spawn(x, y, colorCode, scaleSize)
 	end
 
 	if scaleSize == 1 then
-		self.scale = 0.2
+		self.scale = 0.4
 	elseif scaleSize == 2 then
-		self.scale = love.math.random(5,8)/10
+		self.scale = love.math.random(10,15)/10
 	elseif scaleSize == 3 then
-		self.scale = love.math.random(10,12)/10
+		self.scale = love.math.random(14,17)/10
 	end
 	
 	self.r = love.math.random(0,4) * math.pi

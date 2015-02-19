@@ -17,6 +17,7 @@ require 'entities/wonyun'
 require 'entities/keadani'
 require 'entities/bullet'
 require 'entities/meteor'
+require 'entities/drone'
 
 require 'entities/dust'
 require 'entities/explosion'
@@ -109,6 +110,20 @@ function play:enter()
 		spawnTrench('r', 1)
 		end)
 
+	-- Drone
+	Timer.addPeriodic(1, function()
+		spawnDrone(
+			love.math.random(gRes.w),
+			-- 600,
+			0,
+			love.math.random(8,23)/10,
+			love.math.random(1,3))
+			-- 1)
+		end)
+
+	-- _dr = Drone()
+	-- _dr:spawn( 600, 0, math.pi/2, )
+
 	-- p.velo.y = -300
 
 end
@@ -152,11 +167,21 @@ function play:update(dt)
 end
 
 function play:draw()
+	-- background layer
+	love.graphics.setColor(255,255,255, filter.opacity)
+
+	if screenScale.x > 1 then
+		love.graphics.draw(debugFilter, 0, 0, 0, 
+		screenScale.x, screenScale.y 
+		)
+	else
+		love.graphics.draw(debugFilter, 0, 0, 0, 
+		1/screenScale.x, 1/screenScale.y 
+		)
+	end
+
 	love.graphics.push()
 		Camera:point()
-		-- background layer
-		love.graphics.setColor(255,255,255, filter.opacity)
-		love.graphics.draw(debugFilter, -160, 0)
 		-- Jutils.draw(debugFilter, gRes.w/2, gRes.h/2, 0, love.graphics.getWidth()/debugFilter:getWidth(), love.graphics.getHeight()/debugFilter:getHeight())
 		Roadie:draw()
 
@@ -175,16 +200,16 @@ function play:draw()
 	love.graphics.setColor(c.white)
 	love.graphics.setFont(debugFont)
 	love.graphics.print(Input.mode, 0, 0)
-	love.graphics.print(tostring(p.hp), 0, 20)
+	-- love.graphics.print(tostring(p.velo.x), 0, 20)
 	-- love.graphics.print(tostring(p.velo.y), 0, 40)
 	-- love.graphics.print(tostring(Input.mode.dx), 0, 60)
-	-- love.graphics.print('Dust in pool : '..tostring(#Pool.dust), 0, 80)
+	love.graphics.print('Drones '..tostring(#Pool.drone), 0, 80)
 	-- love.graphics.print('Dust in play : '..tostring(#Assistant.t1), 0, 100)
 	-- love.graphics.print('trench4 : '..tostring(#Roadie.t4), 0, 120)
-	-- love.graphics.print('Entities in play: '..tostring(#Director.alive), 0, 140)
-	-- love.graphics.print('Light in pool: '..tostring(#Pool.light), 0, 160)
-	-- love.graphics.print(M.getX(), 0, 180)
-	-- love.graphics.print(V.ui_DistanceBar_y_bottom, 0, 200)
+	-- love.graphics.print(tostring(Input.T.isDown), 0, 140)
+	-- love.graphics.print(tostring(Input.T.x), 0, 160)
+	-- love.graphics.print(tostring(Input.T.y), 0, 180)
+	-- love.graphics.print(tostring(Input.T.rx), 0, 200)
 
 	-- rightside
 	-- love.graphics.print('ammo '..tostring(p.ammo), 400, 0)
@@ -225,6 +250,98 @@ end
 function doubleClickAction()
 	-- love.graphics.setBackgroundColor(255,255,255)
 end
+
+
+----------------------------
+----- Control schemes ------
+----------------------------
+
+function play:touchpressed(id, x, y)
+	-- Interface functions
+	if hitSwitchButton(gRes.w * x, gRes.h * y) then
+		p:switchWeapon()
+	elseif hitPauseButton(gRes.w * x, gRes.h * y) then
+		Gamestate.push(pause)
+	else
+		-- Move the ship with single touch
+		if id == 0 then
+			Input.T.isDown = true
+			Input.T:reset(x,y)
+
+		-- Fire current weapon
+		elseif id == 1 then
+			if p:checkVitals() then p:fire() end
+		end
+	end
+end
+
+function play:touchmoved(id, x, y)
+	if id == 0 then
+		Input.T.x = x * gRes.w
+		Input.T.y = y * gRes.h
+	end
+end
+
+function play:touchreleased(id, x, y)
+	if id == 0 then
+		Input.T.isDown = false
+	end
+end
+
+function play:gamepadpressed(j, b)
+	if p:checkVitals() then
+		if b == 'a' or b == 'x' or b == 'rightshoulder' then
+			p:fire()
+		elseif b == 'b' then
+			p:switchWeapon()
+		elseif b == 'y' or b == 'leftshoulder' then
+			p:captureBullet()
+		end
+	end
+
+	if b == 'start' then
+		if play.state == 'inPlay' then
+			play:pause()
+		elseif play.state == 'paused' then
+			play:resume()
+		end
+	end
+
+end
+
+
+function play:keypressed(k)
+	if p:checkVitals() then
+		if k == 'c' then
+			p:fire()
+		elseif k == 'x' then
+			p:switchWeapon()
+		elseif k == 'v' then
+			p:captureBullet()
+		end
+	end
+
+	if k == 'p' then
+		if play.state == 'inPlay' then
+			play:pause()
+		elseif play.state == 'paused' then
+			play:resume()
+		end
+	end
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -312,45 +429,3 @@ end
 
 -- 	end
 -- end
-function play:gamepadpressed(j, b)
-	if p.alive then
-		if b == 'a' or b == 'x' or b == 'rightshoulder' then
-			p:fire()
-		elseif b == 'b' then
-			p:switchWeapon()
-		elseif b == 'y' or b == 'leftshoulder' then
-			p:captureBullet()
-		end
-	end
-
-	if b == 'start' then
-		if play.state == 'inPlay' then
-			play:pause()
-		elseif play.state == 'paused' then
-			play:resume()
-		end
-	end
-
-end
-
-
-function play:keypressed(k)
-	if p.alive then
-		if k == 'c' then
-			p:fire()
-		elseif k == 'x' then
-			p:switchWeapon()
-		elseif k == 'v' then
-			p:captureBullet()
-		end
-	end
-
-	if k == 'p' then
-		if play.state == 'inPlay' then
-			play:pause()
-		elseif play.state == 'paused' then
-			play:resume()
-		end
-	end
-
-end

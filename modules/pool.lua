@@ -55,6 +55,12 @@ function Pool:init()
 		local trench = Trench()
 		table.insert(self.trench, trench)
 	end
+
+	self.drone = {}
+	for i = 1, 400 do
+		local drone = Drone()
+		table.insert(self.drone, drone)
+	end
 	
 end
 

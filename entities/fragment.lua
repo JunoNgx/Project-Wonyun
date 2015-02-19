@@ -42,7 +42,7 @@ function Fragment:update(dt)
 
 		if self.lifetime > self.maxLifetime then self:kill() end
 
-		spawnDust(self.x, self.y, self.r - math.pi, 20, self.dustColor)
+		spawnDust(self.x, self.y, self.r - math.pi, 40, self.dustColor)
 
 		-- if self.isPlayer then
 		-- 	spawnDust(self.x, self.y, self.r - math.pi, 20, self.dustColor)

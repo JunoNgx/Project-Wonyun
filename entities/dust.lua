@@ -48,7 +48,7 @@ function Dust:draw()
 end
 
 function Dust:spawn(x, y, r, variance, colorCode)
-	self.scale = love.math.random(7, 10) / 10
+	self.scale = love.math.random(14, 20) / 10
 
 	self.x = x + love.math.random(-variance, variance)
 	self.y = y + love.math.random(-variance, variance)
