@@ -28,7 +28,13 @@ Tagline = {
 	'the wonyun must go home', --1 
 	'we shouldn\'s have taken this mission in the first place', --2
 	'this trench is out only hope',
-	'let each of our fallen brethrens be our guide'
+	'let\'s not make our death be in vain, shall we?',
+	'those drones are our brethrens\' hopes'
+
+
+	
+	'let each of our fallen brethrens be our guide',
+
 	'are there things not meant to be done at all',
 	'will someone ever going to make it?',
 	'is it worth it?',

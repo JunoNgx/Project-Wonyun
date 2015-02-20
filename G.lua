@@ -33,8 +33,9 @@ V = {
 
 	-- Bullets
 	bf_veloY = -1000,
+	be_defaultVelo = 400,
 	be_veloY = 300,
-	b_captureVelo = 1000,
+	be_captureVelo = 1000,
 
 	-- Stars
 	s_maxNum = 30,

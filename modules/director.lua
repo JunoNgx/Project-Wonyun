@@ -77,58 +77,125 @@ end
 
 function Director:updateCollision(dt)
 	for i, entity in ipairs(Director.alive) do
+		for i, hitEntity in ipairs(Director.alive) do
+			if entity ~= hitEntity and hitEntity.alive and IsColliding(entity, hitEntity) then
 
-		-- Player hit by other things
-		if entity.typeid == 'wonyun' then
-			for i, hitEntity in ipairs(Director.alive) do
-				if entity ~= hitEntity and hitEntity.alive and IsColliding(entity, hitEntity) then
-					if hitEntity.alliance ~= 'friendly' then
+				-- wonyun vs keadani, physical collision
+				if entity.typeid == 'wonyun' and hitEntity.typeid == 'keadani' then
 
-						if hitEntity.objType == 'vessel' then
-							-- If hit a non-friendly vessel then instantly destroy the other vessel
-							entity:hit(1)
-							hitEntity:hit(3)
+					entity:hit(1)
+					hitEntity:hit(3)
 
-						elseif hitEntity.objType == 'bullet' then
-							-- hit by a bullet
-						    entity:hit(1)
-						    hitEntity:hit(1)
-
-						elseif hitEntity.objType == 'pickup' then
-							if hitEntity.pickedUp == false then
-								-- Collide with a supply drone
-								hitEntity:acquired()
-							end
-						end
-					end
 				end
+
+				-- wonyun vs meteor
+				if entity.typeid == 'wonyun' and hitEntity.typeid == 'meteor' then
+
+					entity:hit(1)
+					hitEntity:hit(1)
+
+				end
+
+				-- wonyun vs hostile bullets
+				if entity.typeid == 'wonyun' and hitEntity.typeid == 'bullet_e' then
+
+					entity:hit(1)
+					hitEntity:hit(1)
+
+				end
+
+				-- wonyun vs pickup
+				if entity.typeid == 'wonyun' and hitEntity.typeid == 'drone' then
+
+					hitEntity:acquired()
+
+				end
+
+
+----------------------
+
+
+				-- keadani vs meteor
+				if entity.typeid == 'keadani' and hitEntity.typeid == 'meteor' then
+
+					entity:hit(1)
+					hitEntity:hit(1)
+
+				end
+
+				-- keadani vs bullet_f
+				if entity.typeid == 'keadani' and hitEntity.typeid == 'bullet_f' then
+
+					entity:hit(1)
+					hitEntity:hit(1)
+
+				end
+
+-----------------------
+
+				-- meteor vs bullet_e and bullet_f
+				if entity.typeid == 'meteor' and (hitEntity.typeid == 'bullet_f' or hitEntity.typeid == 'bullet_e') then
+
+					entity:hit(1)
+					hitEntity:hit(1)
+
+				end
+
 			end
 		end
+	end
 
-		-- Friendly bullets hit others
-		if entity.objType == 'bullet' then
-			for i, hitEntity in ipairs(Director.alive) do
-				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
-					if hitEntity.objType == 'vessel' and entity.alliance ~= hitEntity.alliance then
+		-- -- Player hit by other things
+		-- if entity.typeid == 'wonyun' then
+		-- 	for i, hitEntity in ipairs(Director.alive) do
+		-- 		if entity ~= hitEntity and hitEntity.alive and IsColliding(entity, hitEntity) then
+		-- 			if hitEntity.alliance ~= 'friendly' then
 
-						entity:hit(1)
-						hitEntity:hit(1)
-					end
-				end
-			end
-		end
+		-- 				if hitEntity.objType == 'vessel' then
+		-- 					-- If hit a non-friendly vessel then instantly destroy the other vessel
+		-- 					entity:hit(1)
+		-- 					hitEntity:hit(3)
 
-		-- Meteors hitting others
-		if entity.objType == 'vessel' and entity.alliance == 'neutral' then
-			for i, hitEntity in ipairs(Director.alive) do
-				if entity ~= hitEntity and IsColliding(entity, hitEntity) then
-					if hitEntity.objType == 'vessel' then
-						entity:hit(2)
-						hitEntity:hit(2)
-					end
-				end
-			end
-		end
+		-- 				elseif hitEntity.objType == 'bullet' then
+		-- 					-- hit by a bullet
+		-- 				    entity:hit(1)
+		-- 				    hitEntity:hit(1)
+
+		-- 				elseif hitEntity.objType == 'pickup' then
+		-- 					if hitEntity.pickedUp == false then
+		-- 						-- Collide with a supply drone
+		-- 						hitEntity:acquired()
+		-- 					end
+		-- 				end
+		-- 			end
+		-- 		end
+		-- 	end
+		-- end
+
+		-- -- Friendly bullets hit others
+		-- if entity.objType == 'bullet' then
+		-- 	for i, hitEntity in ipairs(Director.alive) do
+		-- 		if entity ~= hitEntity and IsColliding(entity, hitEntity) then
+		-- 			if hitEntity.objType == 'vessel' and entity.alliance ~= hitEntity.alliance then
+
+		-- 				entity:hit(1)
+		-- 				hitEntity:hit(1)
+		-- 			end
+		-- 		end
+		-- 	end
+		-- end
+
+		-- -- Meteors hitting others
+		-- if entity.objType == 'vessel' and entity.alliance == 'neutral' then
+		-- 	for i, hitEntity in ipairs(Director.alive) do
+		-- 		if entity ~= hitEntity and IsColliding(entity, hitEntity) then
+		-- 			if hitEntity.objType == 'vessel' then
+		-- 				entity:hit(2)
+		-- 				hitEntity:hit(2)
+		-- 			end
+		-- 		end
+		-- 	end
+		-- end
 
 		-- Enemy vessels hit by anything non-hostile
 		-- if entity.baseid == 'keadani' then
@@ -168,7 +235,7 @@ function Director:updateCollision(dt)
 		-- 	end
 		-- end
 
-	end
+	-- end
 end
 
 function Director:drawEntities()

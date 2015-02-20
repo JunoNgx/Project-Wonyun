@@ -58,8 +58,9 @@ function play:enter()
 	Timer.addPeriodic(1, function()
 		local x = love.math.random(gRes.w)
 		local y = 0
+		local r = love.math.random(8,23)/10
 
-		spawnKeadani(love.math.random(1,5), x, y)
+		spawnKeadani(love.math.random(1,5), x, y, r)
 		end)
 
 	-- Sky filter
@@ -111,7 +112,7 @@ function play:enter()
 		end)
 
 	-- Drone
-	Timer.addPeriodic(1, function()
+	Timer.addPeriodic(5, function()
 		spawnDrone(
 			love.math.random(gRes.w),
 			-- 600,
