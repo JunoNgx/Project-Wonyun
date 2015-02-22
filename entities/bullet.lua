@@ -54,7 +54,7 @@ end
 function Bullet:draw()
 	-- if self.exists then
 	if self.alliance == 'friendly' then
-		love.graphics.setColor(255,0,0,255)
+		love.graphics.setColor(255,255,255,255)
 		Jutils.draw(self.gfx, self.x, self.y, self.r)
 	elseif self.alliance == 'hostile' then
 		-- love.graphics.setColor(140,200,220,255)
@@ -84,7 +84,7 @@ end
 
 function Bullet:kill()
 	if self.alliance == 'friendly' then
-		spawnExplosion(self.x, self.y, 2, 1) -- redBullet
+		spawnExplosion(self.x, self.y, 3, 1) -- redBullet
 	elseif self.alliance == 'hostile' then
 		spawnExplosion(self.x, self.y, 1, 1) -- blueBullet
 	elseif self.alliance == 'neutral' then

@@ -39,10 +39,12 @@ function Wonyun:init(extraAmmo, hp, weaponLevel, bulletCaptureEquipped)
 	self.captureProcess 		= V.w_captureReloadTime
 	self.reloadProcess 			= V.w_ReloadTime1
 
-	-- self.parts = {
-	-- 	self.gfx
-
-	-- }
+	self.parts = {
+		rhombus_r = 1,
+		rhombus_a = 0,
+		bulletDir_a = 1,
+		bulletDir_gfx = gfx_parts_arrow,
+	}
 
 	self.gfx 			= gfx_wonyun
 	self.gfx_armor 		= gfx_wonyun_armor
@@ -153,12 +155,37 @@ function Wonyun:update(dt)
 
 		-- Die when hp depletes
 		if self.hp <= 0 then self:kill() end
+
+		-- Parts thingies
+		if self.parts.bulletDir_a > 7 then
+			self.parts.bulletDir_a = self.parts.bulletDir_a - V.w_parts_bullet_fadeSpd * dt
+		else
+			self.parts.bulletDir_a = 0
+		end
+
 	end
 end
 
 function Wonyun:draw()
 	love.graphics.setColor(c.white)
 	Jutils.draw(self.gfx, self.x, self.y, self.r)
+
+	-- Arrows indicating firing direction upon switching weapon
+	local arrowDist = 128
+	love.graphics.setColor(255, 255, 255, self.parts.bulletDir_a)
+	if self.currentWeapon == 1 then
+		Jutils.draw(self.parts.bulletDir_gfx, self.x, self.y - arrowDist, -math.pi/2)
+	elseif self.currentWeapon == 2 then
+		Jutils.draw(self.parts.bulletDir_gfx, self.x + arrowDist, self.y, 0)
+		Jutils.draw(self.parts.bulletDir_gfx, self.x - arrowDist, self.y, math.pi)
+	elseif self.currentWeapon == 3 then
+		local arrowDistMod = arrowDist * math.cos(math.pi/4)
+		Jutils.draw(self.parts.bulletDir_gfx, self.x + arrowDistMod, self.y - arrowDistMod, -math.pi/4)
+		Jutils.draw(self.parts.bulletDir_gfx, self.x + arrowDistMod, self.y + arrowDistMod, math.pi/4)
+		Jutils.draw(self.parts.bulletDir_gfx, self.x - arrowDistMod, self.y + arrowDistMod, math.pi * 0.75)
+		Jutils.draw(self.parts.bulletDir_gfx, self.x - arrowDistMod, self.y - arrowDistMod, -math.pi * 0.75)
+	end
+
 
 	-- Throttle
 	local scale_x
@@ -277,6 +304,7 @@ function Wonyun:switchWeapon()
 		self.currentWeapon = self.currentWeapon + 1
 	end
 
+	self.parts.bulletDir_a = 255
 	Director.buttons.switchWeapon.switch()
 end
 

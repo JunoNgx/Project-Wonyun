@@ -1,5 +1,14 @@
 -- Gameplay tuning variables
 
+Progress = {
+	attemps = 1,
+	offenseLevel = 1,
+	defenseLevel = 1,
+	capureUnlocked = 0,
+
+}
+
+
 V = {
 	margin_rtlt = 200,
 	margin_top = 500,
@@ -22,6 +31,7 @@ V = {
 	w_captureReloadTime = 0.2,
 	w_captureRange = 250,
 	-- w_captureVelo = 1000,
+	w_parts_bullet_fadeSpd = 500,
 
 	-- Keadani
 	k_defaultVeloY = 100,
@@ -34,10 +44,10 @@ V = {
 	m_emitRate = 0.01,
 
 	-- Bullets
-	bf_veloY = -1000,
+	-- bf_veloY = -1000,
 
 	be_defaultVelo = 400,
-	be_veloY = 300,
+	-- be_veloY = 300,
 
 	b_captureVelo = 1000,
 
@@ -125,7 +135,7 @@ G = {
 	version = 'pre-alpha',
 
 	debugMode = false,
-	-- debugMode = true,
+	debugMode = true,
 	sensitivity = 100,
 
 	hallucinativeMode = false,

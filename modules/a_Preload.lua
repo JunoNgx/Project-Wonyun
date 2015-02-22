@@ -27,6 +27,7 @@ function preload()
 	gfx_wonyun 			= love.graphics.newImage('assets/wonyun.png')
 	gfx_wonyun_armor 	= love.graphics.newImage('assets/wonyun_armor.png')
 	gfx_wonyun_barrier 	= love.graphics.newImage('assets/wonyun_barrier.png')
+	gfx_parts_arrow 	= love.graphics.newImage('assets/wonyun_parts_arrow.png')
 
 	gfx_riley 			= love.graphics.newImage('assets/riley.png')
 	gfx_augustus 		= love.graphics.newImage('assets/augustus.png')

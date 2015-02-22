@@ -316,11 +316,11 @@ end
 
 function play:keypressed(k)
 	if p:checkVitals() then
-		if k == 'c' then
+		if k == 'c' or k == ' ' then
 			p:fire()
-		elseif k == 'x' then
+		elseif k == 'x' or k == 'lalt' then
 			p:switchWeapon()
-		elseif k == 'v' then
+		elseif k == 'v' or k == 'lctrl' then
 			p:captureBullet()
 		end
 	end
