@@ -9,8 +9,8 @@ function Director:init()
 	-- The two buttons at two corner
 	Director.buttons = {
 		switchWeapon = {
-			x 			= 64,
-			y 			= gRes.h - 64,
+			x 			= 48,
+			y 			= 48,
 			l 			= 128,
 			gfx 		= gfx_ui_weapButton[1],
 			switch = function()
@@ -111,6 +111,13 @@ function Director:updateCollision(dt)
 
 				end
 
+				-- wonyun vs captured bullet
+				if entity.typeid == 'wonyun' and hitEntity.typeid == 'bullet_c' then
+
+					entity:gainAmmo(1)
+					hitEntity:hit(1)
+
+				end
 
 ----------------------
 
@@ -123,8 +130,8 @@ function Director:updateCollision(dt)
 
 				end
 
-				-- keadani vs bullet_f
-				if entity.typeid == 'keadani' and hitEntity.typeid == 'bullet_f' then
+				-- keadani vs bullet_f or bullet_c
+				if entity.typeid == 'keadani' and (hitEntity.typeid == 'bullet_f' or hitEntity.typeid == 'bullet_c') then
 
 					entity:hit(1)
 					hitEntity:hit(1)
@@ -133,8 +140,9 @@ function Director:updateCollision(dt)
 
 -----------------------
 
-				-- meteor vs bullet_e and bullet_f
-				if entity.typeid == 'meteor' and (hitEntity.typeid == 'bullet_f' or hitEntity.typeid == 'bullet_e') then
+				-- meteor vs bullet_e and bullet_f and bullet_c
+				if entity.typeid == 'meteor' and
+					(hitEntity.typeid == 'bullet_f' or hitEntity.typeid == 'bullet_e' or hitEntity.typeid == 'bullet_c') then
 
 					entity:hit(1)
 					hitEntity:hit(1)
@@ -293,9 +301,9 @@ end
 function hitSwitchButton(x, y)
 	return (
 		Director.buttons.switchWeapon.x - Director.buttons.switchWeapon.l/2 <= x
-		and x < Director.buttons.switchWeapon.x + Director.buttons.switchWeapon.l/2
+		and x <= Director.buttons.switchWeapon.x + Director.buttons.switchWeapon.l/2
 		and Director.buttons.switchWeapon.y - Director.buttons.switchWeapon.l/2 <= y
-		and y < Director.buttons.switchWeapon.y + Director.buttons.switchWeapon.l/2
+		and y <= Director.buttons.switchWeapon.y + Director.buttons.switchWeapon.l/2
 		)
 end
 
@@ -303,8 +311,26 @@ end
 function hitPauseButton(x, y)
 	return (
 		Director.buttons.pause.x - Director.buttons.pause.l/2 <= x
-		and x < Director.buttons.pause.x + Director.buttons.pause.l/2
+		and x <= Director.buttons.pause.x + Director.buttons.pause.l/2
 		and Director.buttons.pause.y - Director.buttons.pause.l/2 <= y
-		and y < Director.buttons.pause.y + Director.buttons.pause.l/2
+		and y <= Director.buttons.pause.y + Director.buttons.pause.l/2
 		)
+end
+
+function hitObject(x, y, obj)
+	return (
+		obj.x - obj.w/2 <= x
+		and x <= obj.x + obj.w/2
+		and obj.y - obj.h/2 <= y
+		and y <= obj.y + obj.h/2
+		)
+end
+
+function wonyunBulletCapture(wonyun)
+	for i, entity in ipairs(Director.alive) do
+		if entity.typeid == 'bullet_e' and lume.distance(wonyun.x, wonyun.y, entity.x, entity.y) <= V.w_captureRange then
+			entity:captured()
+			entity:moveTo(wonyun)
+		end
+	end
 end

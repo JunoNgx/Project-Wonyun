@@ -16,10 +16,12 @@ V = {
 	w_ReloadTime1 = 0.2,
 	w_ReloadTime2 = 1.5,
 	w_ReloadTime3 = 3,
-	w_captureReloadTime = 10,
 	w_dpadVelo = 700,
 	w_rotateSpd = 5,
 	w_bulletVelo = 1500,
+	w_captureReloadTime = 0.2,
+	w_captureRange = 250,
+	-- w_captureVelo = 1000,
 
 	-- Keadani
 	k_defaultVeloY = 100,
@@ -33,9 +35,11 @@ V = {
 
 	-- Bullets
 	bf_veloY = -1000,
+
 	be_defaultVelo = 400,
 	be_veloY = 300,
-	be_captureVelo = 1000,
+
+	b_captureVelo = 1000,
 
 	-- Stars
 	s_maxNum = 30,
@@ -109,8 +113,8 @@ V = {
 	--UI
 
 	ui_DistanceBar_x = 34,
-	ui_DistanceBar_y_top = 32,
-	ui_DistanceBar_y_bottom = 576,
+	ui_DistanceBar_y_top = 120,
+	ui_DistanceBar_y_bottom = 680,
 
 
 }

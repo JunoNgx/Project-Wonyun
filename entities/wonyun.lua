@@ -23,34 +23,33 @@ function Wonyun:init(extraAmmo, hp, weaponLevel, bulletCaptureEquipped)
 		y = 0,
 	}
 
-	-- self.tweenDue = 0
-	self.rotateDir = 0 -- -1, left, 0, not rotating, 1 right
+	self.rotateDir 				= 0 -- When moving horizontally -1, left, 0, not rotating, 1 right
 
-	self.lifetime 	= 0
-	self.alive 		= true
-	self.exists 	= true
+	self.lifetime 				= 0
+	self.alive 					= true
+	self.exists 				= true
 
-	-- Spawning parameters
-	-- self.isArmoured 	= armoured or false
-	-- self.isShielded 	= shielded or false
-	-- self.isBarriered	= barriered or false
+	self.hp 					= hp
+	self.ammo 					= 10 + 10 * extraAmmo
+	self.weaponLevel 			= weaponLevel
+	self.bulletCaptureEquipped 	= bulletCaptureEquipped or false
 
-	self.hp = hp
-	self.ammo 			= 10 + 10 * extraAmmo
-	self.weaponLevel = weaponLevel
-	self.bulletCaptureEquipped = bulletCaptureEquipped or false
+	self.currentWeapon 			= 1
 
-	self.currentWeapon = 1
+	self.captureProcess 		= V.w_captureReloadTime
+	self.reloadProcess 			= V.w_ReloadTime1
 
-	self.captureProcess = V.w_captureReloadTime
-	self.reloadProcess 	= V.w_ReloadTime1
+	-- self.parts = {
+	-- 	self.gfx
 
-	self.gfx = gfx_wonyun
-	self.gfx_armor = gfx_wonyun_armor
-	self.gfx_barrier = gfx_wonyun_barrier
+	-- }
 
-	self.throttle_gfx = gfx_throttle1
-	self.throttle_dist = 32
+	self.gfx 			= gfx_wonyun
+	self.gfx_armor 		= gfx_wonyun_armor
+	self.gfx_barrier 	= gfx_wonyun_barrier
+
+	self.throttle_gfx 	= gfx_throttle1
+	self.throttle_dist	= 32
 end
 
 function Wonyun:update(dt)
@@ -89,21 +88,6 @@ function Wonyun:update(dt)
 				if -2 < self.velo.x or self.velo.x < 2 then self.velo.x = 0 end
 				if -2 < self.velo.y or self.velo.y < 2 then self.velo.y = 0 end
 			end
-
-
-
-		-- -- Turns when moved horizontally
-		-- local turningSpeed = 4
-
-		-- local maxVelo = 600
-		-- local rate = self.velo.x / maxVelo
-		-- local des_r = -math.pi/2 + math.pi/4 * rate
-
-		-- if des_r < -math.pi * 3/4 then des_r = -math.pi * 3/4 end
-		-- if des_r > -math.pi * 1/4 then des_r = -math.pi * 1/4 end
-
-		-- if self.r < des_r then self.r = self.r + dt * turningSpeed end
-		-- if self.r > des_r then self.r = self.r - dt * turningSpeed end
 
 		elseif Input.mode == 'keyboard' then
 			if Input.K.Up then
@@ -203,22 +187,6 @@ function Wonyun:draw()
 		scale_x, scale_y)
 	-- Throttle ends
 
-	-- -- Barrier
-	-- if self.isBarriered then
-	-- 	love.graphics.setColor(150, 220, 200, 255)
-	-- 	-- love.graphics.circle('line', self.x, self.y, 40)
-	-- 	Jutils.draw(self.gfx_barrier, self.x, self.y, self.r)
-	-- end
-	-- -- Barrier ends
-
-	-- -- Armor
-	-- if self.isArmoured then
-	-- 	love.graphics.setColor(255, 255, 255, 255)
-	-- 	Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
-	-- 	Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
-	-- end
-	-- -- Armor ends
-
 	-- Barrier
 	if self.hp > 2 then 
 		love.graphics.setColor(255, 255, 255, 255)
@@ -245,15 +213,6 @@ end
 ----------------------------
 
 function Wonyun:hit(damage)
-	-- if self.isBarriered and self.isShielded and self.isArmoured then
-	-- 	self.isBarriered = false
-	-- elseif not self.isBarriered and self.isShielded and self.isArmoured then
-	-- 	self.isShielded = false
-	-- elseif not self.isBarriered and not self.isShielded and self.isArmoured then
-	-- 	self.isArmoured = false
-	-- elseif not self.isBarriered and not self.isShielded and not self.isArmoured then
-	-- 	self:kill()
-	-- end
 	self.hp = self.hp - damage
 end
 
@@ -267,11 +226,6 @@ end
 function Wonyun:finishKill()
 	self.alive = false
 	self.exists = false
-
-	-- Debug code
-	-- Alarm:after(2, function()
-	-- 	Gamestate.switch(result)
-	-- end)
 end
 
 ----------------------------
@@ -326,17 +280,8 @@ function Wonyun:switchWeapon()
 	Director.buttons.switchWeapon.switch()
 end
 
-
-function Wonyun:checkAmmo()
-	return self.ammo > 0
-end
-
 function Wonyun:readyToFire()
 	return self.reloadProcess <= 0
-end
-
-function Wonyun:checkVitals()
-	return self.alive
 end
 
 ----------------------------
@@ -345,7 +290,7 @@ end
 
 function Wonyun:captureBullet()
 	if self:readyToCapture() then
-
+		wonyunBulletCapture(self)
 		self.captureProcess = V.w_captureReloadTime
 	end
 end
@@ -359,6 +304,18 @@ end
 function Wonyun:AmendOldPos()
 	self.oldx = self.x
 	self.oldy = self.y
+end
+
+function Wonyun:checkAmmo()
+	return self.ammo > 0
+end
+
+function Wonyun:checkVitals()
+	return self.alive
+end
+
+function Wonyun:gainAmmo(amount)
+	self.ammo = self.ammo + amount
 end
 
 -- function Wonyun:brake()

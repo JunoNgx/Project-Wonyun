@@ -63,6 +63,9 @@ function Bullet:draw()
 	elseif self.alliance == 'neutral' then
 		love.graphics.setColor(250,240,120,255)
 		Jutils.draw(self.gfx, self.x, self.y)
+	elseif self.alliance == 'captured' then
+		love.graphics.setColor(250, 240, 90,255)
+		Jutils.draw(self.gfx, self.x, self.y)
 	end
 
 	if G.debugMode then
@@ -146,11 +149,12 @@ end
 
 function Bullet:captured()
 	self.alliance 	= 'captured'
+	self.typeid		= 'bullet_c'
 	self.velo 		= {x = 0, y = 0}
 end
 
-function Bullet:moveTo(des_x, des_y)
-	local r = lume.angle(self.x, self.y, des_x, des_y)
+function Bullet:moveTo(desObj)
+	local r = lume.angle(self.x, self.y, desObj.x, desObj.y)
 
 	self.velo.x = V.b_captureVelo * math.cos(r)
 	self.velo.y = V.b_captureVelo * math.sin(r)

@@ -270,8 +270,12 @@ function play:touchpressed(id, x, y)
 			Input.T:reset(x,y)
 
 		-- Fire current weapon
-		elseif id == 1 then
-			if p:checkVitals() then p:fire() end
+		elseif id == 1 and p:checkVitals() then
+			if hitObject(gRes.w * x, gRes.h * y, p) then
+				p:captureBullet()
+			else
+				p:fire()
+			end
 		end
 	end
 end
@@ -309,7 +313,6 @@ function play:gamepadpressed(j, b)
 	end
 
 end
-
 
 function play:keypressed(k)
 	if p:checkVitals() then
