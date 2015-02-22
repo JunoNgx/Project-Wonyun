@@ -13,10 +13,10 @@ end
 
 function Keadani:init()
 
-	self.typeid = 'keadani'
+	self.baseid = 'keadani'
 	self.objType = 'vessel'
 
-	-- self.typeid =
+	self.typeid = 'keadani'
 	self.unitType = 'undefinedEnemy'
 	self.alliance = 'hostile'
 	self.fireRate = V.k_defaultFireRate
@@ -107,22 +107,16 @@ end
 function Keadani:kill()
 	self.alive = false
 	
-	-- spawnExplosion(x, y, colorCode, scaleSize)
 	if self.unitType == 'riley' then
 		spawnExplosion(self.x, self.y, 2, 2)
-		-- Camera:shake(5, 0.2)
 	elseif self.unitType == 'augustus' then
 		spawnExplosion(self.x, self.y, 2, 3)
-		-- Camera:shake(8, 0.2)
 	elseif self.unitType == 'dulce' then
 		spawnExplosion(self.x, self.y, 2, 2)
-		-- Camera:shake(5, 0.2)
 	elseif self.unitType == 'hammerhead' then
 		spawnExplosion(self.x, self.y, 2, 3)
-		-- Camera:shake(10, 0.2)
 	elseif self.unitType == 'koltar' then
 		spawnExplosion(self.x, self.y, 2, 3)
-		-- Camera:shake(10, 0.2)
 	end
 
 	self:finishKill()

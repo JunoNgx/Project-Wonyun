@@ -135,7 +135,7 @@ G = {
 	version = 'pre-alpha',
 
 	debugMode = false,
-	debugMode = true,
+	-- debugMode = true,
 	sensitivity = 100,
 
 	hallucinativeMode = false,

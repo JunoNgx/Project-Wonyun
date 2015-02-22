@@ -225,6 +225,10 @@ function hitPauseButton(x, y)
 		)
 end
 
+function hitPlayer(x, y)
+	return lume.distance(p.x + Camera.x, p.y + Camera.y, x, y) <= gRes.w * 0.075
+end
+
 function hitObject(x, y, obj)
 	return (
 		obj.x - obj.w/2 <= x

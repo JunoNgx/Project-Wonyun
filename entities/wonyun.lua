@@ -234,6 +234,9 @@ function Wonyun:draw()
 
 		love.graphics.setColor(0, 0, 255, 255)
 		love.graphics.rectangle('line', self.x - self.w2/2, self.y - self.h2/2, self.w2, self.h2)
+
+		love.graphics.setColor(250, 240, 90,255)
+		love.graphics.circle('line', self.x, self.y, gRes.w * 0.075)
 	end
 end
 

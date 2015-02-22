@@ -127,6 +127,8 @@ function play:enter()
 
 	-- p.velo.y = -300
 
+	-- d1_x, d1_y = 0, 0
+
 end
 
 function play:update(dt)
@@ -200,11 +202,11 @@ function play:draw()
 
 	love.graphics.setColor(c.white)
 	love.graphics.setFont(debugFont)
-	love.graphics.print(Input.mode, 0, 0)
+	love.graphics.print(love.timer.getFPS(), 0, 0)
 	-- love.graphics.print(tostring(p.velo.x), 0, 20)
 	-- love.graphics.print(tostring(p.velo.y), 0, 40)
 	-- love.graphics.print(tostring(Input.mode.dx), 0, 60)
-	love.graphics.print('Drones '..tostring(#Pool.drone), 0, 80)
+	love.graphics.print('Keadani '..tostring(#Pool.keadani), 0, 80)
 	-- love.graphics.print('Dust in play : '..tostring(#Assistant.t1), 0, 100)
 	-- love.graphics.print('trench4 : '..tostring(#Roadie.t4), 0, 120)
 	-- love.graphics.print(tostring(Input.T.isDown), 0, 140)
@@ -213,7 +215,7 @@ function play:draw()
 	-- love.graphics.print(tostring(Input.T.rx), 0, 200)
 
 	-- rightside
-	-- love.graphics.print('ammo '..tostring(p.ammo), 400, 0)
+	love.graphics.print('In play '..tostring(#Director.alive), 400, 0)
 	-- love.graphics.print('armor '..tostring(p.isArmoured), 700, 20)
 	-- love.graphics.print('shield '..tostring(p.isShielded), 700, 40)
 	-- love.graphics.print('reloaded '..tostring(p:readyToFire()), 700, 60)
@@ -221,7 +223,11 @@ function play:draw()
 	-- love.graphics.print('velo x '..tostring(p.velo.x), 700, 100)
 	-- love.graphics.print(love.graphics.getWidth(), 400, 120)
 	-- love.graphics.print(M.getX(), 700, 140)
-	-- love.graphics.print(Camera.x, 400, 160)
+	-- love.graphics.print(tostring(lume.distance(p.x, p.y, d1_x, d1_y)), 400, 160)s
+
+	-- love.graphics.circle('line', d1_x, d1_y, 25)
+	-- love.graphics.setColor(255,0,0)
+	-- love.graphics.circle('line', p.x + Camera.x, p.y + Camera.y, 25)
 end
 
 function play:leave()
@@ -271,11 +277,16 @@ function play:touchpressed(id, x, y)
 
 		-- Fire current weapon
 		elseif id == 1 and p:checkVitals() then
-			if hitObject(gRes.w * x, gRes.h * y, p) then
+			-- local tid, tx, ty = love.touch.getTouch(2)
+
+			if hitPlayer(gRes.w * x, gRes.h * y) then
 				p:captureBullet()
 			else
 				p:fire()
 			end
+
+			-- d1_x = gRes.w * tx
+			-- d1_y = gRes.h * ty
 		end
 	end
 end

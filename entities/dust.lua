@@ -20,7 +20,7 @@ function Dust:init()
 	self.y = 0
 	self.r = 0
 	self.scale = 1
-	self.velo = {x = 0, y = 0}
+	-- self.velo = {x = 0, y = 0}
 
 	self.exists = false
 	self.fadeSpd = 0
@@ -31,7 +31,7 @@ end
 
 function Dust:update(dt)
 	if self.exists then
-		updateVelocity(self, dt)
+		-- updateVelocity(self, dt)
 
 		if self.scale > 0.1 then
 			-- self.scale = self.scale - V.d_fadingSpeed * dt
@@ -54,8 +54,8 @@ function Dust:spawn(x, y, r, variance, colorCode)
 	self.y = y + love.math.random(-variance, variance)
 	self.r = r
 
-	self.velo.x = V.d_velo * math.cos(r)
-	self.velo.y = V.d_velo * math.sin(r)
+	-- self.velo.x = V.d_velo * math.cos(r)
+	-- self.velo.y = V.d_velo * math.sin(r)
 
 	-- Change color if smoke is from a hostile explosion
 	if colorCode == 1 then -- Arsenic Blue
