@@ -40,8 +40,9 @@ function Wonyun:init(extraAmmo, hp, weaponLevel, bulletCaptureEquipped)
 	self.reloadProcess 			= V.w_ReloadTime1
 
 	self.parts = {
-		rhombus_r = 1,
-		rhombus_a = 0,
+		rhombus_r = 64,
+		rhombus_a = 255,
+		rhombus_mode = 'ready',
 		bulletDir_a = 1,
 		bulletDir_gfx = gfx_parts_arrow,
 	}
@@ -80,8 +81,8 @@ function Wonyun:update(dt)
 				local Tspd_y = Input.T.y - Input.T.ry
 
 					self.flux.to(self.velo, V.inputTweenTime, {
-						x = Tspd_x * G.sensitivity,
-						y = Tspd_y * G.sensitivity
+						x = Tspd_x * Settings.sensitivity,
+						y = Tspd_y * Settings.sensitivity
 						})
 
 			else
@@ -163,6 +164,29 @@ function Wonyun:update(dt)
 			self.parts.bulletDir_a = 0
 		end
 
+		if self.parts.rhombus_mode == 'ready' then
+			if self.parts.rhombus_a > 7 then
+				self.parts.rhombus_a = self.parts.rhombus_a - V.w_parts_rSpd_ready * dt
+				self.parts.rhombus_r = self.parts.rhombus_r + V.w_parts_rSpd_ready * dt
+			else
+				self.parts.rhombus_a = 0
+			end
+		elseif self.parts.rhombus_mode == 'fire' then
+			if self.parts.rhombus_a > 7 then
+				self.parts.rhombus_a = self.parts.rhombus_a - V.w_parts_rSpd_fire * dt
+				self.parts.rhombus_r = self.parts.rhombus_r - V.w_parts_rSpd_fire * dt
+			else
+				self.parts.rhombus_a = 0
+			end
+		end
+
+		-- Flash the rhombus when ready to fire
+		if self.parts.rhombus_mode == 'fire' and self:readyToCapture() then
+			self.parts.rhombus_r = 16
+			self.parts.rhombus_a = 255
+			self.parts.rhombus_mode = 'ready'
+		end
+
 	end
 end
 
@@ -186,7 +210,16 @@ function Wonyun:draw()
 		Jutils.draw(self.parts.bulletDir_gfx, self.x - arrowDistMod, self.y - arrowDistMod, -math.pi * 0.75)
 	end
 
-
+	-- Quadrilateral indicating bullet capture
+	love.graphics.setColor(0, 255, 255, self.parts.rhombus_a)
+	love.graphics.setLineWidth(5)
+	love.graphics.polygon('line',
+		self.x + self.parts.rhombus_r, self.y,
+		self.x, self.y + self.parts.rhombus_r,
+		self.x - self.parts.rhombus_r, self.y,
+		self.x, self.y - self.parts.rhombus_r
+		)
+		
 	-- Throttle
 	local scale_x
 	local scale_y
@@ -323,6 +356,11 @@ function Wonyun:captureBullet()
 	if self:readyToCapture() then
 		wonyunBulletCapture(self)
 		self.captureProcess = V.w_captureReloadTime
+
+		-- Visual thingies
+		self.parts.rhombus_r = 256
+		self.parts.rhombus_a = 255
+		self.parts.rhombus_mode = 'fire'
 	end
 end
 

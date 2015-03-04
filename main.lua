@@ -42,7 +42,7 @@ function love.load()
       y = love.graphics.getHeight()/gRes.h
    }
 
-   love.graphics.setDefaultFilter( 'nearest', 'nearest')
+   -- love.graphics.setDefaultFilter( 'nearest', 'nearest')
 
    preload()
    Input:init()

@@ -1,13 +1,59 @@
--- Gameplay tuning variables
+-- Game Settings and utilities
+
+G = {
+	version = 'pre-alpha',
+	debugMode = false,
+	-- debugMode = true,
+	hallucinativeMode = false,
+}
 
 Progress = {
 	attemps = 1,
 	offenseLevel = 1,
 	defenseLevel = 1,
 	capureUnlocked = 0,
+	totalDistance = 0,
 
 }
 
+function LoadProgress()
+	if not love.filesystem.exists("ProgressFile") then
+		love.filesystem.newFile("ProgressFile")
+			-- love.filesystem.write("ProgFile", Progress)
+
+	else
+
+	end
+end
+
+function SaveProgress()
+	-- Progress = love.filesystem.read("ProgFile")
+end
+
+
+
+Settings = {
+	music = true,
+	sound = true,
+	sensitivity = 100,
+}
+
+function LoadSettings()
+	if not love.filesystem.exists("SettingsFile") then
+		love.filesystem.newFile("SettingsFile")
+
+
+	else
+
+	end
+end
+
+function SaveSettings()
+
+end
+
+
+-- Gameplay tuning variables
 
 V = {
 	margin_rtlt = 200,
@@ -28,10 +74,12 @@ V = {
 	w_dpadVelo = 700,
 	w_rotateSpd = 5,
 	w_bulletVelo = 1500,
-	w_captureReloadTime = 0.2,
+	w_captureReloadTime = 2,
 	w_captureRange = 250,
 	-- w_captureVelo = 1000,
 	w_parts_bullet_fadeSpd = 500,
+	w_parts_rSpd_ready = 500,
+	w_parts_rSpd_fire = 800,
 
 	-- Keadani
 	k_defaultVeloY = 100,
@@ -129,17 +177,6 @@ V = {
 
 }
 
--- Game Settings and utilities
-
-G = {
-	version = 'pre-alpha',
-
-	debugMode = false,
-	-- debugMode = true,
-	sensitivity = 100,
-
-	hallucinativeMode = false,
-}
 
 -- Game design resolution
 

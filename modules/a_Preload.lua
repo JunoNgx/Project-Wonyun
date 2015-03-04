@@ -1,6 +1,6 @@
 function preload()
 	-- Shared
-	debugFont =	love.graphics.newFont('assets/SourceCodePro-Medium.ttf',10)
+	debugFont =	love.graphics.newFont('assets/SourceCodePro-Medium.ttf', 10)
 	debugFont:setFilter('nearest','nearest')
 
 	-- Menu
@@ -17,7 +17,7 @@ function preload()
 	m_SmaFont:setFilter('nearest','nearest')
 
 	-- Play
-	counterFont = love.graphics.newFont('assets/consola.ttf', 15)
+	counterFont = love.graphics.newFont('assets/SFSquareHead.ttf', 20)
 	counterFont:setFilter('nearest','nearest')
 
 
@@ -51,7 +51,11 @@ function preload()
 	gfx_throttle2		= love.graphics.newImage('assets/throttle2.png')
 
 	-- decor objects
-	gfx_star 			= love.graphics.newImage('assets/star.png')
+	gfx_star 			= {
+		love.graphics.newImage('assets/star.png'),
+		love.graphics.newImage('assets/star2.png'),
+	}
+
 	gfx_dust			= love.graphics.newImage('assets/dust.png')
 	gfx_light			= love.graphics.newImage('assets/light.png')
 	gfx_fragment		= love.graphics.newImage('assets/fragment.png')

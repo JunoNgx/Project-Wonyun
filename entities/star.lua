@@ -14,7 +14,7 @@ function Star:init()
 	-- self.alive = false
 	self.exists = false
 
-	self.gfx = gfx_star
+	-- self.gfx = gfx_star
 end
 
 function Star:update(dt)
@@ -25,9 +25,9 @@ end
 
 function Star:draw()
 	if not G.hallucinativeMode then
-		love.graphics.setColor(200,200,200,255)
+		love.graphics.setColor(250, 72, 4, 255)
 	else
-		love.graphics.setColor(40,40,40,255)
+		love.graphics.setColor(24, 170, 120, 255)
 	end
 	Jutils.draw(self.gfx, self.x, self.y, 0, self.scale, self.scale)
 
@@ -49,6 +49,7 @@ function Star:reset()
 
 	-- self.alive = true
 	self.exists = true
+	self.gfx = gfx_star[love.math.random(1,2)]
 end
 
 function Star:spread()

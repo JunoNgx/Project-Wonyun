@@ -179,6 +179,7 @@ function Director:drawUI()
 	love.graphics.setColor(255,255,255)
 	-- love.graphics.setLineWidth(1)
 	-- love.graphics.line(12,24, 12,gRes.h - 64)
+	love.graphics.setLineWidth(1)
 	love.graphics.line(
 		V.ui_DistanceBar_x, V.ui_DistanceBar_y_top,
 		V.ui_DistanceBar_x, V.ui_DistanceBar_y_bottom)
@@ -196,10 +197,10 @@ function Director:drawUI()
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.setFont(counterFont)
 	love.graphics.print(humanizeCounter(math.floor(Director.distanceTravelled)),
-		self.pointer.x + 20, self.pointer.y - 10, 0, 1,1,
+		self.pointer.x + 20, self.pointer.y, 0, 1,1,
 		0,
-		0
-		-- counterFont:getWidth(humanizeCounter(math.floor(Director.distanceTravelled)))/2
+		-- 0
+		counterFont:getHeight(humanizeCounter(math.floor(Director.distanceTravelled)))/2
 		)
 
 end
