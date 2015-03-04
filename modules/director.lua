@@ -82,41 +82,31 @@ function Director:updateCollision(dt)
 
 				-- wonyun vs keadani, physical collision
 				if entity.typeid == 'wonyun' and hitEntity.typeid == 'keadani' then
-
 					entity:hit(1)
 					hitEntity:hit(3)
-
 				end
 
 				-- wonyun vs meteor
 				if entity.typeid == 'wonyun' and hitEntity.typeid == 'meteor' then
-
 					entity:hit(1)
 					hitEntity:hit(1)
-
 				end
 
 				-- wonyun vs hostile bullets
 				if entity.typeid == 'wonyun' and hitEntity.typeid == 'bullet_e' then
-
 					entity:hit(1)
 					hitEntity:hit(1)
-
 				end
 
 				-- wonyun vs pickup
 				if entity.typeid == 'wonyun' and hitEntity.typeid == 'drone' then
-
 					hitEntity:acquired()
-
 				end
 
 				-- wonyun vs captured bullet
 				if entity.typeid == 'wonyun' and hitEntity.typeid == 'bullet_c' then
-
 					entity:gainAmmo(1)
 					hitEntity:hit(1)
-
 				end
 
 ----------------------
@@ -124,18 +114,14 @@ function Director:updateCollision(dt)
 
 				-- keadani vs meteor
 				if entity.typeid == 'keadani' and hitEntity.typeid == 'meteor' then
-
 					entity:hit(1)
 					hitEntity:hit(1)
-
 				end
 
 				-- keadani vs bullet_f or bullet_c
 				if entity.typeid == 'keadani' and (hitEntity.typeid == 'bullet_f' or hitEntity.typeid == 'bullet_c') then
-
 					entity:hit(1)
 					hitEntity:hit(1)
-
 				end
 
 -----------------------
@@ -143,10 +129,8 @@ function Director:updateCollision(dt)
 				-- meteor vs bullet_e and bullet_f and bullet_c
 				if entity.typeid == 'meteor' and
 					(hitEntity.typeid == 'bullet_f' or hitEntity.typeid == 'bullet_e' or hitEntity.typeid == 'bullet_c') then
-
 					entity:hit(1)
 					hitEntity:hit(1)
-
 				end
 
 			end

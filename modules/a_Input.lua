@@ -27,9 +27,11 @@ Input = {
 
 function Input:init()
 	-- Input:GamepadAssign()
-	if love.system.getOS() == 'Windows' then Input.mode = 'keyboard' end
-	-- if love.system.getOS() == 'Windows' then Input.mode = 'gamepad' end
-	if love.system.getOS() == 'Android' then Input.mode = 'touch' end
+	if love.system.getOS() == 'Windows' then
+		Input.mode = 'keyboard' 
+	elseif love.system.getOS() == 'Android' then
+		Input.mode = 'touch'
+	end
 end
 
 function Input:update(dt)

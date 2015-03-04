@@ -32,6 +32,7 @@ function Star:draw()
 	Jutils.draw(self.gfx, self.x, self.y, 0, self.scale, self.scale)
 
 	if G.debugMode then
+		love.graphics.setLineWidth(1)
 		love.graphics.setColor(255,255,255,170)
 		love.graphics.print(self.velo.y, self.x + 16, self.y)
 		love.graphics.print(self.scale, self.x + 16, self.y + 16)

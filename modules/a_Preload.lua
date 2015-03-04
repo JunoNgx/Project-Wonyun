@@ -1,24 +1,24 @@
 function preload()
 	-- Shared
 	debugFont =	love.graphics.newFont('assets/SourceCodePro-Medium.ttf', 10)
-	debugFont:setFilter('nearest','nearest')
+	-- debugFont:setFilter('nearest','nearest')
 
 	-- Menu
 	TitleFont = love.graphics.newFont('assets/futura-bold-regular.ttf', 120)
-	TitleFont:setFilter('nearest','nearest')
+	-- TitleFont:setFilter('nearest','nearest')
 	SubtitleFont = love.graphics.newFont('assets/futura-normal-regular.ttf', 30)
-	SubtitleFont:setFilter('nearest','nearest')
+	-- SubtitleFont:setFilter('nearest','nearest')
 	PlayButtonFont = love.graphics.newFont('assets/futura-normal-regular.ttf', 70)
-	PlayButtonFont:setFilter('nearest','nearest')
+	-- PlayButtonFont:setFilter('nearest','nearest')
 
 	m_LarFont = love.graphics.newFont('assets/futura-normal-regular.ttf', 50)
-	m_LarFont:setFilter('nearest','nearest')
+	-- m_LarFont:setFilter('nearest','nearest')
 	m_SmaFont = love.graphics.newFont('assets/futura-normal-regular.ttf', 30)
-	m_SmaFont:setFilter('nearest','nearest')
+	-- m_SmaFont:setFilter('nearest','nearest')
 
 	-- Play
 	counterFont = love.graphics.newFont('assets/SFSquareHead.ttf', 20)
-	counterFont:setFilter('nearest','nearest')
+	-- counterFont:setFilter('nearest','nearest')
 
 
 

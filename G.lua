@@ -3,12 +3,13 @@
 G = {
 	version = 'pre-alpha',
 	debugMode = false,
-	-- debugMode = true,
+	debugMode = true,
 	hallucinativeMode = false,
+	sensitivity = 100
 }
 
 Progress = {
-	attemps = 1,
+	attempts = 1,
 	offenseLevel = 1,
 	defenseLevel = 1,
 	capureUnlocked = 0,
@@ -33,23 +34,21 @@ end
 
 
 Settings = {
-	music = true,
-	sound = true,
-	sensitivity = 100,
+	sfx = 'on',
+	music = 'on',
+	sensitivity = 'medium',
 }
 
 function LoadSettings()
-	if not love.filesystem.exists("SettingsFile") then
-		love.filesystem.newFile("SettingsFile")
-
-
+	if not love.filesystem.exists("Settings") then
+		love.filesystem.newFile("Settings")
 	else
-
-	end
+		Settings = Tserial.unpack(love.filesystem.read('Settings'))
+	end	
 end
 
 function SaveSettings()
-
+	love.filesystem.write('Settings', Tserial.pack(Settings))
 end
 
 

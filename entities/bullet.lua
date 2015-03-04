@@ -69,6 +69,7 @@ function Bullet:draw()
 	end
 
 	if G.debugMode then
+		love.graphics.setLineWidth(1)
 		love.graphics.setColor(255,0,0,255)
 		love.graphics.rectangle('line', self.x - self.w/2, self.y - self.h/2, self.w, self.h)
 		love.graphics.print(self.alliance, self.x + 16, self.y)

@@ -74,23 +74,27 @@ function result:draw()
 end
 
 function result:touchpressed(id, x, y)
+	if self.lifetime > 1 then
 	-- if id == 0 then
 	-- 	Gamestate.switch(menu)
 	-- else
-	if id == 1 then
-		Gamestate.switch(play)
-	end
-end
-
-function result:mousepressed(x, y, b)
-	if love.system.getOS() == 'Windows' then
-		if b == 'l' then
-	    	Gamestate.switch(intro)
-		elseif b == 'r' then
+		if id == 0 then
 			Gamestate.switch(play)
+		elseif id == 1 then
+			Gamestate.switch(intro)
 		end
 	end
 end
+
+-- function result:mousepressed(x, y, b)
+-- 	if love.system.getOS() == 'Windows' then
+-- 		if b == 'l' then
+-- 	    	Gamestate.switch(intro)
+-- 		elseif b == 'r' then
+-- 			Gamestate.switch(play)
+-- 		end
+-- 	end
+-- end
 
 -- function result:keypressed(k)
 -- 	if k == 'z' then
@@ -98,14 +102,22 @@ end
 -- 	end
 -- end
 
-function menu:gamepadreleased(j, b)
-	if b == 'start' then
-    	Gamestate.switch(intro)
-    end
+function result:gamepadreleased(j, b)
+	if self.lifetime > 1 then
+		if b == 'start' then
+	    	Gamestate.switch(play)
+	    elseif b == 'b' then
+	    	Gamestate.switch(intro)
+	    end
+	end
 end
 
-function menu:keyreleased(k)
-	if k == 'return' then
-		Gamestate.switch(intro)
+function result:keyreleased(k)
+	if self.lifetime > 1 then
+		if k == 'return' then
+			Gamestate.switch(play)
+		elseif k == 'b' then
+			Gamestate.switch(intro)
+		end
 	end
 end

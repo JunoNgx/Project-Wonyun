@@ -16,7 +16,7 @@ function Jutils.draw(image, x, y, radian, scale_x, scale_y)
 		image:getWidth()/2, image:getHeight()/2)
 end
 
-function Jutils.print(string, x, y, font, relativePrint, r, scale_x, scale_y, shearing_x, shearing_y, limit, alignment)
+function Jutils.print(string, x, y, font, relativePrint, alignment, r, scale_x, scale_y, shearing_x, shearing_y, limit)
 
 	local x = x or 0
 	local y = y or 0

@@ -81,8 +81,8 @@ function Wonyun:update(dt)
 				local Tspd_y = Input.T.y - Input.T.ry
 
 					self.flux.to(self.velo, V.inputTweenTime, {
-						x = Tspd_x * Settings.sensitivity,
-						y = Tspd_y * Settings.sensitivity
+						x = Tspd_x * G.sensitivity,
+						y = Tspd_y * G.sensitivity
 						})
 
 			else
@@ -261,6 +261,7 @@ function Wonyun:draw()
 
 
 	if G.debugMode then
+		love.graphics.setLineWidth(1)
 		love.graphics.setColor(255, 0, 0, 255)
 		love.graphics.point(self.x, self.y)
 		love.graphics.rectangle('line', self.x - self.w/2, self.y - self.h/2, self.w, self.h)
