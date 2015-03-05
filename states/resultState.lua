@@ -24,11 +24,33 @@ function result:enter()
 		c = 0.8,
 	}
 
-	result.lifetime = 0
+	self.lifetime = 0
+
+	self.key = {
+		back = '',
+		again = '',
+	}
 end
 
 function result:update(dt)
-	result.lifetime = result.lifetime + dt
+	self.lifetime = self.lifetime + dt
+
+	if Input.mode == 'keyboard' then
+		self.key = {
+			back = '[backspace]',
+			again = '[return]',
+		}
+	elseif Input.mode == 'gamepad' then
+		self.key = {
+			back = '[back]',
+			again = '[start]',
+		}
+	elseif Input.mode == 'touch' then
+		self.key = {
+			back = '',
+			again = '',
+		}
+	end
 end
 
 function result:draw()
@@ -58,11 +80,13 @@ function result:draw()
 
 	Jutils.print('(for the sake of score only)', column.b, row.e, m_SmaFont, true)
 
-	-- Try again
+	-- Buttons
 	love.graphics.setColor(c.white)
-	Jutils.print('tap with two fingers to', column.b, row.g, m_SmaFont, true)
-	Jutils.print('MAKE THE RUN', column.b, row.h, PlayButtonFont, true)
-	Jutils.print('again', column.b, row.i, m_SmaFont, true)
+	Jutils.print(self.key.back, 0.3, 0.7, m_SmaFont, true)
+	Jutils.print('back', 0.3, 0.75, m_SmaFont, true)
+
+	Jutils.print(self.key.again, 0.7, 0.7, m_SmaFont, true)
+	Jutils.print('try again', 0.7, 0.75, m_SmaFont, true)
 
 	-- Debug
 	love.graphics.setFont(loader.Font(12))
@@ -73,18 +97,62 @@ function result:draw()
 
 end
 
+
+
 function result:touchpressed(id, x, y)
 	if self.lifetime > 1 then
-	-- if id == 0 then
-	-- 	Gamestate.switch(menu)
-	-- else
-		if id == 0 then
+		if (x > 0.2 and x < 0.4 and y > 0.7 and y < 0.8) then
 			Gamestate.switch(play)
-		elseif id == 1 then
+		elseif (x > 0.6 and x < 0.8 and y > 0.7 and y < 0.8) then
 			Gamestate.switch(intro)
 		end
 	end
 end
+
+function result:gamepadreleased(j, b)
+	if self.lifetime > 1 then
+		if b == 'start' then
+	    	Gamestate.switch(play)
+	    elseif b == 'back' then
+	    	Gamestate.switch(intro)
+	    end
+	end
+end
+
+function result:keyreleased(k)
+	if self.lifetime > 1 then
+		if k == 'return' then
+			Gamestate.switch(play)
+		elseif k == 'backspace' then
+	    	Gamestate.switch(intro)
+		end
+	end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- function result:touchpressed(id, x, y)
+-- 	if self.lifetime > 1 then
+-- 	-- if id == 0 then
+-- 	-- 	Gamestate.switch(menu)
+-- 	-- else
+-- 		if id == 0 then
+-- 			Gamestate.switch(play)
+-- 		elseif id == 1 then
+-- 			Gamestate.switch(intro)
+-- 		end
+-- 	end
+-- end
 
 -- function result:mousepressed(x, y, b)
 -- 	if love.system.getOS() == 'Windows' then
@@ -102,22 +170,22 @@ end
 -- 	end
 -- end
 
-function result:gamepadreleased(j, b)
-	if self.lifetime > 1 then
-		if b == 'start' then
-	    	Gamestate.switch(play)
-	    elseif b == 'b' then
-	    	Gamestate.switch(intro)
-	    end
-	end
-end
+-- function result:gamepadreleased(j, b)
+-- 	if self.lifetime > 1 then
+-- 		if b == 'start' then
+-- 	    	Gamestate.switch(play)
+-- 	    elseif b == 'b' then
+-- 	    	Gamestate.switch(intro)
+-- 	    end
+-- 	end
+-- end
 
-function result:keyreleased(k)
-	if self.lifetime > 1 then
-		if k == 'return' then
-			Gamestate.switch(play)
-		elseif k == 'b' then
-			Gamestate.switch(intro)
-		end
-	end
-end
+-- function result:keyreleased(k)
+-- 	if self.lifetime > 1 then
+-- 		if k == 'return' then
+-- 			Gamestate.switch(play)
+-- 		elseif k == 'b' then
+-- 			Gamestate.switch(intro)
+-- 		end
+-- 	end
+-- end

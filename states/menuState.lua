@@ -21,6 +21,7 @@ function menu:enter()
 		sfx = '',
 		music = '',
 		sensitivity = '',
+		clear = '',
 	}
 
 	LoadSettings()
@@ -36,6 +37,7 @@ function menu:update(dt)
 			sfx = '[S]',
 			music = '[M]',
 			sensitivity = '[V]',
+			clear = '[delete]',
 		}
 	elseif Input.mode == 'gamepad' then
 		self.key = {
@@ -43,6 +45,7 @@ function menu:update(dt)
 			sfx = '[Y]',
 			music = '[B]',
 			sensitivity = '[A]',
+			clear = '[back]',
 		}
 	elseif Input.mode == 'touch' then
 		self.key = {
@@ -50,6 +53,7 @@ function menu:update(dt)
 			sfx = '',
 			music = '',
 			sensitivity = '',
+			clear = '',
 		}
 	end
 end
@@ -124,6 +128,10 @@ function menu:draw()
 	Jutils.print(self.key.music, 0.5, 0.70, m_SmaFont, true)
 	Jutils.print('music: '..Settings.music, 0.5, 0.75, m_SmaFont, true)
 
+	-- Clear data
+	Jutils.print(self.key.clear, 0.9, 0.1, m_SmaFont, true)
+	Jutils.print('clear progress', 0.9, 0.15, m_SmaFont, true)
+
 	if love.system.getOS() == 'Android' then
 		Jutils.print(self.key.sensitivity, 0.5, 0.80, m_SmaFont, true)
 		Jutils.print('sensitivity: '..Settings.sensitivity, 0.5, 0.85, m_SmaFont, true)
@@ -160,6 +168,8 @@ function menu:touchpressed(id, x, y)
 		menu:switchMusic()	
 	elseif (x > 0.3 and x < 0.7 and y > 0.8 and y < 0.9) then
 		menu:switchSensitivity()
+	elseif (x > 0.8 and x < 1.0 and y > 0.1 and y < 0.2) then
+		Gamestate.push(clear)
 	end
 end
 
@@ -176,6 +186,8 @@ function menu:gamepadreleased(j, b)
     	menu:switchSFX()
     elseif b == 'b' then
     	menu:switchMusic()
+    elseif b == 'back' then
+    	Gamestate.push(clear)
     end
 end
 
@@ -186,6 +198,8 @@ function menu:keyreleased(k)
     	menu:switchSFX()
     elseif k == 'm' then
     	menu:switchMusic()
+    elseif k == 'delete' then
+    	Gamestate.push(clear)
 	end
 end
 
