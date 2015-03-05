@@ -72,6 +72,16 @@ function preload()
 		love.graphics.newImage('assets/explosion_9.png'),
 	}
 
+	gfx_carcass		= {
+		love.graphics.newImage('assets/carcass1.png'),
+		love.graphics.newImage('assets/carcass2.png'),
+		love.graphics.newImage('assets/carcass3.png'),
+		love.graphics.newImage('assets/carcass4.png'),
+		love.graphics.newImage('assets/carcass5.png'),
+		love.graphics.newImage('assets/carcass6.png'),
+		love.graphics.newImage('assets/carcass7.png'),
+	}
+
 	-- UI assets
 	gfx_ui_weapButton = {
 		love.graphics.newImage('assets/weaponButton_1.png'),

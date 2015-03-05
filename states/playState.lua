@@ -23,6 +23,7 @@ require 'entities/dust'
 require 'entities/explosion'
 require 'entities/fragment'
 require 'entities/trench'
+require 'entities/carcass'
 
 play = {}
 
@@ -62,7 +63,8 @@ function play:enter()
 		local y = 0
 		local r = love.math.random(8,23)/10
 
-		spawnKeadani(love.math.random(1,5), x, y, r)
+		-- spawnKeadani(love.math.random(1,5), x, y, r)
+		spawnKeadani(3, x, y, r)
 		end)
 
 	-- Sky filter
@@ -90,28 +92,28 @@ function play:enter()
 	Timer.addPeriodic(0.3, function()
 		spawnTrench('l', 4)
 		end)
-	-- Timer.addPeriodic(0.5, function()
-	-- 	spawnTrench('l', 3)
-	-- 	end)
-	-- Timer.addPeriodic(0.7, function()
-	-- 	spawnTrench('l', 2)
-	-- 	end)
-	-- Timer.addPeriodic(0.9, function()
-	-- 	spawnTrench('l', 1)
-	-- 	end)
+	Timer.addPeriodic(0.5, function()
+		spawnTrench('l', 3)
+		end)
+	Timer.addPeriodic(0.7, function()
+		spawnTrench('l', 2)
+		end)
+	Timer.addPeriodic(0.9, function()
+		spawnTrench('l', 1)
+		end)
 
 	Timer.addPeriodic(0.3, function() -- 160/400 = 0.4 ~ 0.35
 		spawnTrench('r', 4)
 		end)
-	-- Timer.addPeriodic(0.5, function() -- 160/400 = 0.4 ~ 0.35
-	-- 	spawnTrench('r', 3)
-	-- 	end)
-	-- Timer.addPeriodic(0.7, function()
-	-- 	spawnTrench('r', 2)
-	-- 	end)
-	-- Timer.addPeriodic(0.9, function()
-	-- 	spawnTrench('r', 1)
-	-- 	end)
+	Timer.addPeriodic(0.5, function() -- 160/400 = 0.4 ~ 0.35
+		spawnTrench('r', 3)
+		end)
+	Timer.addPeriodic(0.7, function()
+		spawnTrench('r', 2)
+		end)
+	Timer.addPeriodic(0.9, function()
+		spawnTrench('r', 1)
+		end)
 
 	-- Drone
 	Timer.addPeriodic(5, function()

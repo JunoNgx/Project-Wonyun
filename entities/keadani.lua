@@ -1,11 +1,11 @@
 Keadani = Class {}
 
-function spawnKeadani(unitType, x, y, r)
+function spawnKeadani(unitType, x, y, r, velo)
 	local r = r or math.pi/2
 	local keadani = Pool.keadani[1]
 	local unitType = unitType
 
-	keadani:spawn(unitType, x, y, r)
+	keadani:spawn(unitType, x, y, r, velo)
 
 	table.insert(Director.alive, keadani)
 	table.remove(Pool.keadani, 1)
@@ -147,7 +147,9 @@ function Keadani:fire()
 		spawnBullet(2, self.x + muzzleDist * math.cos(self.r), self.y + muzzleDist * math.sin(self.r),
 			velo_x, velo_y)
 
+	elseif self.unitType == 'dulce' then
 
+		spawnBullet(2, self.x, self.y, 0, 100)
 
 	elseif self.unitType == 'augustus' then
 
@@ -162,26 +164,26 @@ function Keadani:fire()
 				velo_x, velo_y)
 		end
 
-	elseif self.unitType == 'dulce' then
-
-
-
 	elseif self.unitType == 'hammerhead' then
 
-		spawnBullet(2, self.x + 16, self.y + 16, V.be_defaultVelo, self.velo.y)
-		spawnBullet(2, self.x - 16, self.y + 16, -V.be_defaultVelo, self.velo.y)
-		spawnBullet(2, self.x - 16, self.y - 16, -V.be_defaultVelo, self.velo.y)
-		spawnBullet(2, self.x + 16, self.y - 16, V.be_defaultVelo, self.velo.y)
+		local hammerVelo = 200
+
+		spawnBullet(2, self.x + 16, self.y + 16, hammerVelo, self.velo.y)
+		spawnBullet(2, self.x - 16, self.y + 16, -hammerVelo, self.velo.y)
+		spawnBullet(2, self.x - 16, self.y - 16, -hammerVelo, self.velo.y)
+		spawnBullet(2, self.x + 16, self.y - 16, hammerVelo, self.velo.y)
 
 	elseif self.unitType == 'koltar' then
+
+		local koltarVelo = 300
 
 		local muzzleDist = 24
 		if not self.oddShot then
 
-			spawnBullet(2, self.x + muzzleDist, self.y, V.be_defaultVelo, 0) -- right
-			spawnBullet(2, self.x, self.y + muzzleDist, 0, V.be_defaultVelo) -- bottom
-			spawnBullet(2, self.x - muzzleDist, self.y, -V.be_defaultVelo, 0) -- left
-			spawnBullet(2, self.x, self.y - muzzleDist, 0, -V.be_defaultVelo) -- top
+			spawnBullet(2, self.x + muzzleDist, self.y, koltarVelo, 0) -- right
+			spawnBullet(2, self.x, self.y + muzzleDist, 0, koltarVelo) -- bottom
+			spawnBullet(2, self.x - muzzleDist, self.y, -koltarVelo, 0) -- left
+			spawnBullet(2, self.x, self.y - muzzleDist, 0, -koltarVelo) -- top
 
 			self.oddShot = true
 		else
@@ -226,7 +228,9 @@ function Keadani:fire()
 	
 end
 
-function Keadani:spawn(unitType, x, y, r)
+function Keadani:spawn(unitType, x, y, r, velo)
+
+	local velocity = velo or V.k_defaultVelo
 
 	if unitType == 1 then -- riley
 		self.unitType			= 'riley'
@@ -238,32 +242,34 @@ function Keadani:spawn(unitType, x, y, r)
 		self.gfx 				= gfx_riley
 		self.throttle_gfx 		= gfx_throttle1
 		self.throttle_dist		= 24
-	elseif unitType == 2 then -- augustus/frigate
-		self.unitType			= 'augustus'
-		self.w 					= 72
-		self.h 					= 72
-		self.fireRate 			= V.k_defaultFireRate
-		self.hp 				= 3
-
-		self.gfx 				= gfx_augustus
-		self.throttle_gfx 		= gfx_throttle1
-		self.throttle_dist		= 46
-	elseif unitType == 3 then -- dulce/drone, homing fire
+	elseif unitType == 2 then -- dulce/drone, homing fire 
 		self.unitType			= 'dulce'
 		self.w 					= 100
 		self.h 					= 48
-		self.fireRate 			= V.k_defaultFireRate
+		self.fireRate 			= V.k_dulceFireRate
 		self.hp 				= 1
 
+		velocity 				= V.k_dulceVelo
+
 		self.gfx 				= gfx_dulce
+		self.throttle_gfx 		= gfx_throttle1
+		self.throttle_dist		= 46
+	elseif unitType == 3 then -- augustus/frigate
+		self.unitType			= 'augustus'
+		self.w 					= 72
+		self.h 					= 72
+		self.fireRate 			= V.k_augustusFireRate
+		self.hp 				= 2
+
+		self.gfx 				= gfx_augustus
 		self.throttle_gfx 		= gfx_throttle1
 		self.throttle_dist		= 46
 	elseif unitType == 4 then -- hammerhead/sidefire
 		self.unitType			= 'hammerhead'
 		self.w 					= 96
 		self.h 					= 144
-		self.fireRate 			= V.k_defaultFireRate
-		self.hp 				= 3
+		self.fireRate 			= V.k_hammerheadFireRate
+		self.hp 				= 2
 
 		self.gfx 				= gfx_hammerhead
 		self.throttle_gfx 		= gfx_throttle1
@@ -272,14 +278,13 @@ function Keadani:spawn(unitType, x, y, r)
 		self.unitType			= 'koltar'
 		self.w 					= 160
 		self.h 					= 48
-		self.fireRate 			= V.k_defaultFireRate
+		self.fireRate 			= V.k_koltarFireRate
 		self.hp 				= 3
 		self.spec 				= {oddShot = true}
 
 		self.gfx 				= gfx_koltar
 		self.throttle_gfx 		= gfx_throttle1
 		self.throttle_dist		= 46
-	-- elseif unitType == 6 then -- gemini, the bomb dropper
 	end
 
 	self.x 					= x
@@ -293,7 +298,7 @@ function Keadani:spawn(unitType, x, y, r)
 	-- local velo_y = velo_y or V.k_defaultVeloY
 	-- self.velo.y = velo_y
 
-	local velocity = velo or V.k_defaultVeloY
+
 
 	self.velo.x = velocity * math.cos(r)
 	self.velo.y = velocity * math.sin(r)

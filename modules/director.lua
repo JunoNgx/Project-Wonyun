@@ -231,3 +231,4 @@ function wonyunBulletCapture(wonyun)
 		end
 	end
 end
+

@@ -3,10 +3,12 @@
 G = {
 	version = 'pre-alpha',
 	debugMode = false,
-	debugMode = true,
+	-- debugMode = true,
 	hallucinativeMode = false,
 	sensitivity = 100
 }
+
+-- Data saving and loading
 
 Progress = {
 	attempts = 1,
@@ -18,17 +20,15 @@ Progress = {
 }
 
 function LoadProgress()
-	if not love.filesystem.exists("ProgressFile") then
-		love.filesystem.newFile("ProgressFile")
-			-- love.filesystem.write("ProgFile", Progress)
-
+	if not love.filesystem.exists("Progress") then
+		love.filesystem.newFile("Progress")
 	else
-
+		Progress = Tserial.unpack(love.filesystem.read('Progress'))
 	end
 end
 
 function SaveProgress()
-	-- Progress = love.filesystem.read("ProgFile")
+	love.filesystem.write('Progress', Tserial.pack(Progress))
 end
 
 
@@ -55,9 +55,9 @@ end
 -- Gameplay tuning variables
 
 V = {
-	margin_rtlt = 200,
+	margin_rtlt = 350,
 	margin_top = 500,
-	margin_bottom = 200,
+	margin_bottom = 250,
 
 	-- Control
 	inputRecordRate = 0.05,
@@ -81,9 +81,20 @@ V = {
 	w_parts_rSpd_fire = 800,
 
 	-- Keadani
-	k_defaultVeloY = 100,
+	k_defaultVelo = 100,
 	k_defaultFireRate = 1.5,
+
 	k_rileyFireRate = 1.5,
+
+	k_augustusFireRate = 1.5,
+
+	k_dulceFireRate = 0.8,
+	k_dulceVelo = 300,
+
+	k_hammerheadFireRate = 2,
+
+	k_koltarFireRate = 0.7,
+
 
 	-- Meteor
 	m_defaultSize = 48,
@@ -93,7 +104,7 @@ V = {
 	-- Bullets
 	-- bf_veloY = -1000,
 
-	be_defaultVelo = 400,
+	be_defaultVelo = 300,
 	-- be_veloY = 300,
 
 	b_captureVelo = 1000,
@@ -166,6 +177,9 @@ V = {
 
 	-- Drones
 	drone_velo = 200,
+
+	-- Carcasses
+	c_velo = 200,
 
 	--UI
 

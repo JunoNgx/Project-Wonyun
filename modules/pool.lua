@@ -61,6 +61,12 @@ function Pool:init()
 		local drone = Drone()
 		table.insert(self.drone, drone)
 	end
+
+	self.carcass = {}
+	for i = 1, 32 do
+		local carcass = Carcass()
+		table.insert(self.carcass, drone)
+	end
 	
 end
 

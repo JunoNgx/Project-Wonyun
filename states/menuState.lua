@@ -24,6 +24,7 @@ function menu:enter()
 	}
 
 	LoadSettings()
+	if love.system.getOS() == 'Android' then Input.mode = 'touch' end
 end
 
 function menu:update(dt)

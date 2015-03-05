@@ -7,6 +7,7 @@ function Roadie:init()
 	self.trench1 = {}
 	self.trench2 = {}
 	self.trench3 = {}
+	self.carcass = {}
 	self.trench4 = {}
 	initStars()
 
@@ -66,6 +67,17 @@ function Roadie:update(dt)
 		end
 	end
 
+	for i, object in ipairs(self.carcass) do
+		if object.exists then
+			object:update(dt)
+		else
+			if object.typeid == 'carcass' then
+				table.insert(Pool.carcass, object)
+			end
+			table.remove(self.carcass, i)
+		end
+	end
+
 	for i, object in ipairs(self.trench4) do
 		if object.exists then
 			object:update(dt)
@@ -103,6 +115,10 @@ function Roadie:draw()
 	end
 
 	for i, object in ipairs(self.trench3) do
+		object:draw()
+	end	
+
+	for i, object in ipairs(self.carcass) do
 		object:draw()
 	end	
 

@@ -52,7 +52,7 @@ function Wonyun:init(extraAmmo, hp, weaponLevel, bulletCaptureEquipped)
 	self.gfx_barrier 	= gfx_wonyun_barrier
 
 	self.throttle_gfx 	= gfx_throttle1
-	self.throttle_dist	= 32
+	self.throttle_dist	= 40
 end
 
 function Wonyun:update(dt)
@@ -164,27 +164,29 @@ function Wonyun:update(dt)
 			self.parts.bulletDir_a = 0
 		end
 
-		if self.parts.rhombus_mode == 'ready' then
-			if self.parts.rhombus_a > 7 then
-				self.parts.rhombus_a = self.parts.rhombus_a - V.w_parts_rSpd_ready * dt
-				self.parts.rhombus_r = self.parts.rhombus_r + V.w_parts_rSpd_ready * dt
-			else
-				self.parts.rhombus_a = 0
+		if self.bulletCaptureEquipped then
+			if self.parts.rhombus_mode == 'ready' then
+				if self.parts.rhombus_a > 7 then
+					self.parts.rhombus_a = self.parts.rhombus_a - V.w_parts_rSpd_ready * dt
+					self.parts.rhombus_r = self.parts.rhombus_r + V.w_parts_rSpd_ready * dt
+				else
+					self.parts.rhombus_a = 0
+				end
+			elseif self.parts.rhombus_mode == 'fire' then
+				if self.parts.rhombus_a > 7 then
+					self.parts.rhombus_a = self.parts.rhombus_a - V.w_parts_rSpd_fire * dt
+					self.parts.rhombus_r = self.parts.rhombus_r - V.w_parts_rSpd_fire * dt
+				else
+					self.parts.rhombus_a = 0
+				end
 			end
-		elseif self.parts.rhombus_mode == 'fire' then
-			if self.parts.rhombus_a > 7 then
-				self.parts.rhombus_a = self.parts.rhombus_a - V.w_parts_rSpd_fire * dt
-				self.parts.rhombus_r = self.parts.rhombus_r - V.w_parts_rSpd_fire * dt
-			else
-				self.parts.rhombus_a = 0
-			end
-		end
 
-		-- Flash the rhombus when ready to fire
-		if self.parts.rhombus_mode == 'fire' and self:readyToCapture() then
-			self.parts.rhombus_r = 16
-			self.parts.rhombus_a = 255
-			self.parts.rhombus_mode = 'ready'
+			-- Flash the rhombus when ready to fire
+			if self.parts.rhombus_mode == 'fire' and self:readyToCapture() then
+				self.parts.rhombus_r = 16
+				self.parts.rhombus_a = 255
+				self.parts.rhombus_mode = 'ready'
+			end
 		end
 
 	end
@@ -249,7 +251,7 @@ function Wonyun:draw()
 
 	-- Barrier
 	if self.hp > 2 then 
-		love.graphics.setColor(255, 255, 255, 255)
+		love.graphics.setColor(0, 147, 174, 255)
 		Jutils.draw(self.gfx_barrier, self.x, self.y, self.r)
 	end
 
@@ -269,8 +271,8 @@ function Wonyun:draw()
 		love.graphics.setColor(0, 0, 255, 255)
 		love.graphics.rectangle('line', self.x - self.w2/2, self.y - self.h2/2, self.w2, self.h2)
 
-		love.graphics.setColor(250, 240, 90,255)
-		love.graphics.circle('line', self.x, self.y, gRes.w * 0.075)
+		-- love.graphics.setColor(250, 240, 90,255)
+		-- love.graphics.circle('line', self.x, self.y, gRes.w * 0.075)
 	end
 end
 
@@ -354,14 +356,16 @@ end
 ----------------------------
 
 function Wonyun:captureBullet()
-	if self:readyToCapture() then
-		wonyunBulletCapture(self)
-		self.captureProcess = V.w_captureReloadTime
+	if self.bulletCaptureEquipped then
+		if self:readyToCapture() then
+			wonyunBulletCapture(self)
+			self.captureProcess = V.w_captureReloadTime
 
-		-- Visual thingies
-		self.parts.rhombus_r = 256
-		self.parts.rhombus_a = 255
-		self.parts.rhombus_mode = 'fire'
+			-- Visual thingies
+			self.parts.rhombus_r = 256
+			self.parts.rhombus_a = 255
+			self.parts.rhombus_mode = 'fire'
+		end
 	end
 end
 
