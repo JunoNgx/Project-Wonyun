@@ -213,7 +213,7 @@ function Wonyun:draw()
 	end
 
 	-- Quadrilateral indicating bullet capture
-	love.graphics.setColor(0, 255, 255, self.parts.rhombus_a)
+	love.graphics.setColor(240, 240, 120, self.parts.rhombus_a)
 	love.graphics.setLineWidth(5)
 	love.graphics.polygon('line',
 		self.x + self.parts.rhombus_r, self.y,
@@ -261,6 +261,42 @@ function Wonyun:draw()
 		Jutils.draw(self.gfx_armor, self.x, self.y, self.r)
 	end
 
+	-- Indicator
+	if self:readyToFire() then
+		local dist = - 32
+		-- love.graphics.setColor(62, 136, 205)
+		love.graphics.setColor(123, 185, 235)
+		Jutils.draw(gfx_indicator,
+			self.x + dist * math.cos(self.r - math.pi/5),
+			self.y + dist * math.sin(self.r - math.pi/5),
+			self.r)
+	end
+
+	if self:readyToCapture() then
+		local dist = - 36
+		love.graphics.setColor(240, 240, 120)
+		Jutils.draw(gfx_indicator,
+			self.x + dist * math.cos(self.r - math.pi/4),
+			self.y + dist * math.sin(self.r - math.pi/4),
+			self.r)
+
+	end
+
+
+	-- Ammo Counter
+	local ammoDist = - 36
+
+	if not G.hallucinativeMode then
+		love.graphics.setColor(240, 240, 240)
+	else
+		love.graphics.setColor(20, 20, 20)
+	end
+	love.graphics.setFont(ammoFont)
+	love.graphics.printf(self.ammo,
+		self.x + ammoDist * math.cos(self.r + math.pi/5), self.y + ammoDist * math.sin(self.r + math.pi/5),
+		ammoFont:getWidth(self.ammo), 'center', self.r + math.pi/2,
+		1, 1,
+		ammoFont:getWidth(self.ammo)/2, ammoFont:getHeight(self.ammo)/2)
 
 	if G.debugMode then
 		love.graphics.setLineWidth(1)

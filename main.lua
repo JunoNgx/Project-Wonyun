@@ -19,6 +19,7 @@ require 'modules/a_Preload'
 -- States inclusion
 require 'states/introState'
 require 'states/menuState'
+require 'states/clearState'
 require 'states/playState'
 require 'states/resultState'
 require 'states/endingState'
@@ -55,6 +56,7 @@ function love.load()
 	-- Gamestate.switch(ending)
    -- Gamestate.switch(result)
    -- Gamestate.switch(menu)
+   -- Gamestate.switch(clear)
 
 end
 

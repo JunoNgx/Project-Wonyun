@@ -67,7 +67,7 @@ V = {
 	distanceDestination = 250000,
 
 	-- Wonyun/player
-	w_ReloadTime1 = 0.2,
+	w_ReloadTime1 = 0.4,
 	w_ReloadTime2 = 1.5,
 	w_ReloadTime3 = 3,
 	w_dpadVelo = 700,
@@ -177,6 +177,7 @@ V = {
 
 	-- Drones
 	drone_velo = 200,
+	drone_dueSpawnDist = 40000,
 
 	-- Carcasses
 	c_velo = 200,

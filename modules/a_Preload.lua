@@ -18,6 +18,7 @@ function preload()
 
 	-- Play
 	counterFont = love.graphics.newFont('assets/SFSquareHead.ttf', 20)
+	ammoFont = love.graphics.newFont('assets/SFSquareHeadCond.ttf', 18)
 	-- counterFont:setFilter('nearest','nearest')
 
 
@@ -28,6 +29,7 @@ function preload()
 	gfx_wonyun_armor 	= love.graphics.newImage('assets/wonyun_armor.png')
 	gfx_wonyun_barrier 	= love.graphics.newImage('assets/wonyun_barrier.png')
 	gfx_parts_arrow 	= love.graphics.newImage('assets/wonyun_parts_arrow.png')
+	gfx_indicator		= love.graphics.newImage('assets/wonyun_indicator.png')
 
 	gfx_riley 			= love.graphics.newImage('assets/riley.png')
 	gfx_augustus 		= love.graphics.newImage('assets/augustus.png')

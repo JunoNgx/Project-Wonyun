@@ -52,7 +52,7 @@ function play:enter()
 	Alarm:after(1, function() play.state = 'inPlay' end)
 
 	-- entities
-	p = Wonyun(50, 3, 3, true)
+	p = Wonyun(5, 3, 3, true)
 	table.insert(Director.alive, p)
 
 	-- debug codes
