@@ -102,9 +102,9 @@ end
 function result:touchpressed(id, x, y)
 	if self.lifetime > 1 then
 		if (x > 0.2 and x < 0.4 and y > 0.7 and y < 0.8) then
-			Gamestate.switch(play)
-		elseif (x > 0.6 and x < 0.8 and y > 0.7 and y < 0.8) then
 			Gamestate.switch(intro)
+		elseif (x > 0.6 and x < 0.8 and y > 0.7 and y < 0.8) then
+			Gamestate.switch(play)
 		end
 	end
 end

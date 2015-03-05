@@ -47,9 +47,9 @@ end
 
 function clear:touchpressed(id, x, y)
 	if (x > 0.2 and x < 0.4 and y > 0.6 and y < 0.7) then
-		clearProgress()
-	elseif (x > 0.6 and x < 0.8 and y > 0.6 and y < 0.7) then
 		Gamestate.pop()
+	elseif (x > 0.6 and x < 0.8 and y > 0.6 and y < 0.7) then
+		clearProgress()
 	end
 end
 
