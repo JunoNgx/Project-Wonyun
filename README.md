@@ -1,6 +1,52 @@
 Project Wonyun, the long lost sequel and prequel to rymdangra saga.
 
 
+Revamp kaedeni assets
+
+Firing behaviour
+bullet capture
+Diegetic UI ammo counter
+
+UI distance counter
+UI incoming
+
+Bitmap font
+Revamp main menu
+Revamp result
+Revamp pause menu
+Revamp main menu background
+
+
+
+
+
+
+
+
+
+
+
+TODO
+
+typeid and baseid are now a mess
+
+
+Known bug
+
+Player unpredicatably moves upon starting playState
+Android taking Gamepad as initial Input
+Bullet capture indicator not lit right away upon start
+-- bullets are not recycling [Too few of them. Now there are 700]
+
+-- Dulce from 2101 drops bombs less frequently [Cause we're moving upwards]
+
+
+
+
+
+
+
+
 Create basic object
 Create inheritance
 Resize player
@@ -9,18 +55,8 @@ Resize enemy
 Movable smokes
 Create bitmap fonts
 
-
-
-
-
 Resize main menu
 Resize remaining menu
-
-
-
-
-
-
 
 TODO list
 

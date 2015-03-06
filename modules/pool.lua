@@ -4,7 +4,7 @@ function Pool:init()
 
 	-- Keadani base, hostiles
 	self.keadani = {}
-	for i = 1, 50 do
+	for i = 1, 100 do
 		local keadani = Keadani()
 		table.insert(Pool.keadani, keadani)
 	end
@@ -18,7 +18,7 @@ function Pool:init()
 
 	-- Bullet base
 	self.bullet = {}
-	for i = 1, 100 do
+	for i = 1, 700 do
 		local bullet = Bullet()
 		table.insert(Pool.bullet, bullet)
 	end
@@ -57,13 +57,13 @@ function Pool:init()
 	end
 
 	self.drone = {}
-	for i = 1, 400 do
+	for i = 1, 70 do
 		local drone = Drone()
 		table.insert(self.drone, drone)
 	end
 
 	self.carcass = {}
-	for i = 1, 32 do
+	for i = 1, 24 do
 		local carcass = Carcass()
 		table.insert(self.carcass, drone)
 	end

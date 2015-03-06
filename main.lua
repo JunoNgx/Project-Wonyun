@@ -112,7 +112,7 @@ end
 
 function love.joystickadded()
    Input:GamepadAssign()
-   Input.mode = 'gamepad'
+   -- Input.mode = 'gamepad'
 end
 
 function love.joystickremoved()

@@ -8,6 +8,7 @@ require 'modules/director'
 require 'modules/roadie'
 require 'modules/assistant'
 require 'modules/camera'
+require 'modules/spawner'
 
 -- Entities
 require 'entities/star'
@@ -58,14 +59,14 @@ function play:enter()
 	-- debug codes
 
 	-- enemy spawn
-	Timer.addPeriodic(1, function()
-		local x = love.math.random(gRes.w)
-		local y = 0
-		local r = love.math.random(8,23)/10
+	-- Timer.addPeriodic(1, function()
+	-- 	local x = love.math.random(gRes.w)
+	-- 	local y = 0
+	-- 	local r = love.math.random(8,23)/10
 
-		-- spawnKeadani(love.math.random(1,5), x, y, r)
-		spawnKeadani(3, x, y, r)
-		end)
+	-- 	-- spawnKeadani(love.math.random(1,5), x, y, r)
+	-- 	spawnKeadani(3, x, y, r)
+	-- 	end)
 
 	-- Sky filter
 	filter = {opacity = 255}
@@ -74,14 +75,14 @@ function play:enter()
 		end)
 
 	-- Meteor
-	Timer.addPeriodic(1, function()
-		local x = love.math.random(gRes.w)
-		local y = 0 - 300
-		local r = love.math.random(8,23)/10
-		-- local r = math.pi/2
+	-- Timer.addPeriodic(1, function()
+	-- 	local x = love.math.random(gRes.w)
+	-- 	local y = 0 - 300
+	-- 	local r = love.math.random(8,23)/10
+	-- 	-- local r = math.pi/2
 
-		spawnMeteor(x, y, r)
-		end)
+	-- 	spawnMeteor(x, y, r)
+	-- 	end)
 
 	-- Spawn Light
 	Timer.addPeriodic(2.5, function()
@@ -89,42 +90,42 @@ function play:enter()
 		end)
 
 	-- Trench
-	Timer.addPeriodic(0.3, function()
-		spawnTrench('l', 4)
-		end)
-	Timer.addPeriodic(0.5, function()
-		spawnTrench('l', 3)
-		end)
-	Timer.addPeriodic(0.7, function()
-		spawnTrench('l', 2)
-		end)
-	Timer.addPeriodic(0.9, function()
-		spawnTrench('l', 1)
-		end)
+	-- Timer.addPeriodic(0.3, function()
+	-- 	spawnTrench('l', 4)
+	-- 	end)
+	-- Timer.addPeriodic(0.5, function()
+	-- 	spawnTrench('l', 3)
+	-- 	end)
+	-- Timer.addPeriodic(0.7, function()
+	-- 	spawnTrench('l', 2)
+	-- 	end)
+	-- Timer.addPeriodic(0.9, function()
+	-- 	spawnTrench('l', 1)
+	-- 	end)
 
-	Timer.addPeriodic(0.3, function() -- 160/400 = 0.4 ~ 0.35
-		spawnTrench('r', 4)
-		end)
-	Timer.addPeriodic(0.5, function() -- 160/400 = 0.4 ~ 0.35
-		spawnTrench('r', 3)
-		end)
-	Timer.addPeriodic(0.7, function()
-		spawnTrench('r', 2)
-		end)
-	Timer.addPeriodic(0.9, function()
-		spawnTrench('r', 1)
-		end)
+	-- Timer.addPeriodic(0.3, function() -- 160/400 = 0.4 ~ 0.35
+	-- 	spawnTrench('r', 4)
+	-- 	end)
+	-- Timer.addPeriodic(0.5, function() -- 160/400 = 0.4 ~ 0.35
+	-- 	spawnTrench('r', 3)
+	-- 	end)
+	-- Timer.addPeriodic(0.7, function()
+	-- 	spawnTrench('r', 2)
+	-- 	end)
+	-- Timer.addPeriodic(0.9, function()
+	-- 	spawnTrench('r', 1)
+	-- 	end)
 
 	-- Drone
-	Timer.addPeriodic(5, function()
-		spawnDrone(
-			love.math.random(gRes.w),
-			-- 600,
-			0,
-			love.math.random(8,23)/10,
-			love.math.random(1,3))
-			-- 1)
-		end)
+	-- Timer.addPeriodic(5, function()
+	-- 	spawnDrone(
+	-- 		love.math.random(gRes.w),
+	-- 		-- 600,
+	-- 		0,
+	-- 		love.math.random(8,23)/10,
+	-- 		love.math.random(1,3))
+	-- 		-- 1)
+	-- 	end)
 
 	-- _dr = Drone()
 	-- _dr:spawn( 600, 0, math.pi/2, )
@@ -210,7 +211,7 @@ function play:draw()
 	-- love.graphics.print(tostring(p.velo.x), 0, 20)
 	-- love.graphics.print(tostring(p.velo.y), 0, 40)
 	-- love.graphics.print(tostring(Input.mode.dx), 0, 60)
-	-- love.graphics.print('Keadani '..tostring(#Pool.keadani), 0, 80)
+	love.graphics.print('Bullet '..tostring(#Pool.bullet), 0, 80)
 	-- love.graphics.print('Dust in play : '..tostring(#Assistant.t1), 0, 100)
 	-- love.graphics.print('trench4 : '..tostring(#Roadie.t4), 0, 120)
 	-- love.graphics.print(tostring(Input.T.isDown), 0, 140)
@@ -346,6 +347,29 @@ function play:keypressed(k)
 		elseif play.state == 'paused' then
 			play:resume()
 		end
+	end
+
+	if k == '1' then
+		-- spawnFormation(formaCode)
+		spawnFormation(3001)
+	elseif k == '2' then
+		spawnFormation(3002)
+	elseif k == '3' then
+		spawnFormation(3303)
+	elseif k == '4' then
+		spawnFormation(3404)
+	elseif k == '5' then
+		spawnFormation(2002)
+	elseif k == '6' then
+		spawnFormation(1001)
+	elseif k == '7' then
+		spawnFormation(1001)
+	elseif k == '8' then
+		spawnFormation(1001)
+	elseif k == '9' then
+		spawnFormation(1001)
+	elseif k == '0' then
+		spawnFormation(1001)
 	end
 
 end
