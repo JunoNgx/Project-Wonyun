@@ -8,7 +8,7 @@ require 'modules/director'
 require 'modules/roadie'
 require 'modules/assistant'
 require 'modules/camera'
-require 'modules/spawner'
+require 'modules/formation'
 
 -- Entities
 require 'entities/star'
@@ -351,19 +351,19 @@ function play:keypressed(k)
 
 	if k == '1' then
 		-- spawnFormation(formaCode)
-		spawnFormation(3001)
+		spawnFormation(7601)
 	elseif k == '2' then
-		spawnFormation(3002)
+		spawnFormation(7602)
 	elseif k == '3' then
-		spawnFormation(3303)
+		spawnFormation(7603)
 	elseif k == '4' then
-		spawnFormation(3404)
+		spawnFormation(7701)
 	elseif k == '5' then
-		spawnFormation(2002)
+		spawnFormation(7702)
 	elseif k == '6' then
-		spawnFormation(1001)
+		spawnFormation(7704)
 	elseif k == '7' then
-		spawnFormation(1001)
+		spawnFormation(9999)
 	elseif k == '8' then
 		spawnFormation(1001)
 	elseif k == '9' then

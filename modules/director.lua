@@ -3,11 +3,11 @@ Director = {
 }
 
 function Director:init()
-	Director.alive = {}
-	Director.distanceTravelled = 0
+	self.alive = {}
+	self.distanceTravelled = 0
 
 	-- The two buttons at two corner
-	Director.buttons = {
+	self.buttons = {
 		switchWeapon = {
 			x 			= 48,
 			y 			= 48,
@@ -31,6 +31,12 @@ function Director:init()
 		x = V.ui_DistanceBar_x + 20,
 		y = V.ui_DistanceBar_y_bottom,
 	}
+
+	-- Spawner
+	self.spawner = {
+		isOn = true,
+		due = love.math.random(V.spawnDueMin, V.spawnDueMax)
+	}
 end
 
 -- ======================= --
@@ -42,6 +48,15 @@ function Director:update(dt)
 
 	local distanceBarLength = V.ui_DistanceBar_y_bottom - V.ui_DistanceBar_y_top
 	self.pointer.y = V.ui_DistanceBar_y_bottom - distanceBarLength * (self.distanceTravelled / V.distanceDestination)
+
+	if self.spawner.due >= 0 then
+		self.spawner.due = self.spawner.due - dt
+	else
+		if self.spawner.isOn then
+			spawnFormation(spawnCodeList[love.math.random(1, #spawnCodeList)])
+			self.spawner.due = love.math.random(V.spawnDueMin, V.spawnDueMax)
+		end
+	end
 end
 
 

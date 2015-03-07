@@ -66,6 +66,9 @@ V = {
 	-- Gameplay
 	distanceDestination = 250000,
 
+	spawnDueMin = 2,
+	spawnDueMax = 5,
+
 	-- Wonyun/player
 	w_ReloadTime1 = 0.4,
 	w_ReloadTime2 = 1.5,
@@ -91,9 +94,9 @@ V = {
 	k_dulceFireRate = 0.8,
 	k_dulceVelo = 300,
 
-	k_hammerheadFireRate = 2,
+	k_hammerheadFireRate = 1.5,
 
-	k_koltarFireRate = 0.7,
+	k_koltarFireRate = 0.5,
 
 
 	-- Meteor
@@ -187,7 +190,6 @@ V = {
 	ui_DistanceBar_x = 34,
 	ui_DistanceBar_y_top = 120,
 	ui_DistanceBar_y_bottom = 680,
-
 
 }
 
