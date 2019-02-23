@@ -1,3 +1,15 @@
+### Project Wonyun
+
+In January 2019, upon making some life changing decision, I found an old repo in bitbucket, which was no less than a forgotten project. The source was written for love2d 0.92, which was before love2d officially supported Android. The touch control unfortunately broke and doesn't work as of time of writing.
+
+What shocked me more than most was how shockingly feature-complete this was. Barring some polishing and balancing, a lot of feature is functioning and playable, including multiple weapons, regenerating shield, and the game's signature ability: bullet capture, which signified its central gameplay around ammo management.'
+
+I had a great trip of nolstagia upon finding this and decided to make it public for everyone.
+
+
+
+-----------------------------
+
 Project Wonyun, the long lost sequel and prequel to rymdangra saga.
 
 
